@@ -15,8 +15,10 @@ ActiveRecord::Schema.define(:version => 20140131182159) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "explainable_id"
+    t.string   "explainable_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "indicators", :force => true do |t|
