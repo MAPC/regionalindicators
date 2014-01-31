@@ -11,11 +11,25 @@ describe Explanation do
 
   it { should respond_to :narrative }
   it { should respond_to :narrative_html }
-  # it { should respond_to :sources }
+  it { should respond_to :sources }
   # it { should respond_to :visualization }
 
-  it "should render Markdown to HTML" do
+  it "renders narrative Markdown to HTML" do
     @explanation.narrative_html.should eq("<h1>Accessible Construction</h1>\n\n<ul>\n<li>bullet</li>\n<li>bullet</li>\n</ul>\n")
+  end
+
+  describe "with no narrative" do
+    before { @explanation.narrative = nil }
+    it "returns an empty string" do
+      @explanation.narrative_html.should eq("")
+    end
+  end
+
+  describe "with an empty narrative" do
+    before { @explanation.narrative = "" }
+    it "returns an empty string" do
+      @explanation.narrative_html.should eq("")
+    end
   end
 
 end
