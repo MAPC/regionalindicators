@@ -1,8 +1,11 @@
 class Indicator < ActiveRecord::Base
   attr_accessible :title, :units
+
+  belongs_to :objective
+
   has_one :explanation, as: :explainable
   has_many :snapshots
-  has_many :tags, as: :taggable
+  has_many :issue_areas, as: :taggable
 
   # def current_value
   # end

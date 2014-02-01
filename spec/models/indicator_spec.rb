@@ -12,10 +12,12 @@ describe Indicator do
 
   it { should respond_to :title }
   
-  it { should respond_to :snapshots }
   it { should respond_to :explanation }
+  it { should respond_to :issue_areas }
+  it { should respond_to :objective }
   # it { should respond_to :projects }
-  it { should respond_to :tags }
+  it { should respond_to :snapshots }
+  
 
   # it { should respond_to :current_value }
   # it { should respond_to :earliest_value }

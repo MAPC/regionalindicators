@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140131232940) do
+ActiveRecord::Schema.define(:version => 20140201010427) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -21,11 +21,40 @@ ActiveRecord::Schema.define(:version => 20140131232940) do
     t.datetime "updated_at",       :null => false
   end
 
+  create_table "goals", :force => true do |t|
+    t.integer  "number"
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "topic_area_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "indicators", :force => true do |t|
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "units"
+  end
+
+  create_table "issue_areas", :force => true do |t|
+    t.string   "color"
+    t.string   "css_class"
+    t.string   "icon"
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "objectives", :force => true do |t|
+    t.integer  "number"
+    t.string   "title"
+    t.integer  "goal_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "snapshots", :force => true do |t|
@@ -49,16 +78,20 @@ ActiveRecord::Schema.define(:version => 20140131232940) do
     t.datetime "updated_at",     :null => false
   end
 
-  create_table "tags", :force => true do |t|
-    t.string   "color"
-    t.string   "css_class"
-    t.string   "icon"
+  create_table "subjects", :force => true do |t|
     t.string   "title"
     t.string   "slug"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "subject_area_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "topic_areas", :force => true do |t|
+    t.string   "abbr"
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "subtitle"
   end
 
 end
