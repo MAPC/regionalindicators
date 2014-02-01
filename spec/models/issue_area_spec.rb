@@ -11,11 +11,12 @@ describe IssueArea do
   end
 
   it { should respond_to :color }
+  it { should respond_to :css_class }
+  it { should respond_to :datacommon_url }
   it { should respond_to :icon }
   it { should respond_to :slug }
   it { should respond_to :title }
-  it { should respond_to :css_class }
-
+  
   it { should respond_to :taggable }
   # it { should respond_to :indicators }
 end

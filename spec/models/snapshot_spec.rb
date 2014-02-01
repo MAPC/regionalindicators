@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe Snapshot do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should respond_to :date }
+  it { should respond_to :rank }
+  it { should respond_to :units }
+  it { should respond_to :value }
 end
