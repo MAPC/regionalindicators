@@ -1,8 +1,6 @@
 class IssueArea < ActiveRecord::Base
-  attr_accessible :css_class,
-                  :datacommon_url,
+  attr_accessible :datacommon_url,
                   :icon,
-                  :slug,
                   :title
   belongs_to :taggable, polymorphic: true
 
@@ -12,5 +10,11 @@ class IssueArea < ActiveRecord::Base
   validates :icon, presence: true
   validates :slug, presence: true, length: { maximum: 30, minimum: 8 }
   validates :datacommon_url, presence: true, format: { with: DATACOMMON_REGEX }
+
+  def css_class
+    self.slug
+  end
+
+  include SlugExtension
 
 end
