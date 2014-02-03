@@ -84,18 +84,53 @@ describe Indicator do
       @indicator.snapshot_in(2005).should == snap3
     end
 
-      describe "current value" do
-        it "gives the current snapshot's value" do
-          @indicator.current_value.should == @indicator.current_snapshot.value
-        end
+    describe "current value" do
+      it "gives the current snapshot's value" do
+        @indicator.current_value.should == @indicator.current_snapshot.value
       end
+    end
 
-      describe "current rank" do
-        it "gives the current snapshot's rank" do
-          @indicator.current_rank.should == @indicator.current_snapshot.rank
-        end
+    describe "current rank" do
+      it "gives the current snapshot's rank" do
+        @indicator.current_rank.should == @indicator.current_snapshot.rank
       end
+    end
 
+    describe "past value" do
+      it "gives the past snapshot's value" do
+        @indicator.value_in(2000).should == @indicator.snapshot_in(2000).value
+      end
+    end
+
+    describe "past rank" do
+      it "gives the past snapshot's rank" do
+        @indicator.rank_in(2000).should == @indicator.snapshot_in(2000).rank
+      end
+    end
+
+    describe "with no rank, past value" do
+      it "gives the past snapshot's value" do
+        @indicator.value_in.should == @indicator.snapshot_in.value
+      end
+    end
+
+    describe "with no rank, past rank" do
+      it "gives the past snapshot's rank" do
+        @indicator.rank_in.should == @indicator.snapshot_in.rank
+      end
+    end
+
+    describe "value delta" do
+      it "gives the difference in year values" do
+        @indicator.value_delta(2000).should == 88
+      end
+    end
+
+    describe "rank delta" do
+      it "gives the difference in year ranks" do
+        @indicator.rank_delta(2000).should == 13
+      end
+    end
   end
 
   describe "snapshots in the same year" do
