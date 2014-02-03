@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140201024940) do
+ActiveRecord::Schema.define(:version => 20140203192115) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(:version => 20140201024940) do
   create_table "snapshots", :force => true do |t|
     t.datetime "date"
     t.integer  "value"
-    t.string   "units"
     t.integer  "rank"
     t.integer  "indicator_id"
     t.datetime "created_at",   :null => false
@@ -82,7 +81,6 @@ ActiveRecord::Schema.define(:version => 20140201024940) do
 
   create_table "subjects", :force => true do |t|
     t.string   "title"
-    t.string   "slug"
     t.integer  "subject_area_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false

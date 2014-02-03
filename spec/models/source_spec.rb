@@ -12,6 +12,8 @@ describe Source do
                                         comment: 'This is good data.')
   end
 
+  subject { @source }
+
   it { should respond_to :comment }
   it { should respond_to :title }
   it { should respond_to :author }
@@ -34,7 +36,7 @@ describe Source do
   end
 
   describe "when title is too short" do
-    before { @source.title = "a" * 6 }
+    before { @source.title = "a" * 7 }
     it { should_not be_valid }
   end 
 
@@ -49,7 +51,7 @@ describe Source do
   end
 
   describe "when author is too short" do
-    before { @source.author = "a" * 6 }
+    before { @source.author = "a" * 7 }
     it { should_not be_valid }
   end 
 
@@ -58,16 +60,14 @@ describe Source do
     it { should_not be_valid }
   end
 
-  # describe "when date is blank" do
-  #   before { @source.date = DateTime.now }
-  #   it { should_not be_valid }
-  # end
+  describe "when date is blank" do
+    before { @source.date = " " }
+    it { should_not be_valid }
+  end
 
-  # describe "when date is in an incorrect format" do
-  #   before { @source.date = "two weeks ago" }
-  #   it { should_not be_valid }
-  # end
-
-
+  describe "when date is in an incorrect format" do
+    before { @source.date = "two weeks ago" }
+    it { should_not be_valid }
+  end
 
 end

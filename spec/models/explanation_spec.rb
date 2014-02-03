@@ -28,7 +28,7 @@ describe Explanation do
   describe "with an empty narrative" do
     before { @explanation.narrative = "" }
     it "returns an empty string" do
-      @explanation.narrative_html.should eq("")
+      @explanation.narrative_html.should == ""
     end
   end
 
