@@ -1,5 +1,5 @@
 class Indicator < ActiveRecord::Base
-  attr_accessible :title, :units, :number
+  attr_accessible :title, :number, :units
 
   belongs_to :objective
 
@@ -7,32 +7,26 @@ class Indicator < ActiveRecord::Base
   has_many :snapshots
   has_many :issue_areas, as: :taggable
 
+  validates :title, presence: true, length: { maximum: 160, minimum: 8 }
+  validates :number, presence: true
+  validates :units, presence: true, length: { maximum: 140 }
 
-  def value_in(year=2000)
+  def current_snapshot
+    # self.snapshots.order_by('created_at').limit(1)
   end
 
-  def rank_in(year=2000)
+  def snapshot_in(year=2000)
+    # self.snapshots.find_by_date( Date.new(year) ).limit(1)
   end
 
   def current_value
-  end
-
-  def earliest_value
-  end
-
-  def current_value
-  end
-
-  def earliest_value
+    # current_snapshot.value
   end
 
   def value_in_2000_at_earliest
   end
 
-  def value_delta(since=2000)
-  end
-
-  def rank_delta(since=2000)
+  def value_delta
   end
 
 end
