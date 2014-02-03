@@ -11,22 +11,44 @@ class Indicator < ActiveRecord::Base
   validates :number, presence: true
   validates :units, presence: true, length: { maximum: 140 }
 
-  def current_snapshot
-    # self.snapshots.order_by('created_at').limit(1)
-  end
+  DEFAULT_YEAR = 2000
 
-  def snapshot_in(year=2000)
-    # self.snapshots.find_by_date( Date.new(year) ).limit(1)
+  def current_snapshot
+    self.snapshots.order('date DESC').limit(1).first
   end
 
   def current_value
-    # current_snapshot.value
+    current_snapshot.value
   end
 
-  def value_in_2000_at_earliest
+  def current_rank
+    current_snapshot.rank
   end
 
-  def value_delta
+  def snapshot_in(year=DEFAULT_YEAR)
+    date = DateTime.new(year.to_i)
+    self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
   end
+
+  def value_in(year=DEFAULT_YEAR)
+    # snapshot_in(year).value
+  end
+
+  def rank_in(year=DEFAULT_YEAR)
+    # snapshot_in(year).rank
+  end
+  
+  def snapshot_since(year=DEFAULT_YEAR)
+  end
+
+  def value_delta(year=DEFAULT_YEAR)
+    # current_value - value_in(year)
+  end
+
+  def rank_delta(year=DEFAULT_YEAR)
+    # current_rank - rank_in(year)
+  end
+
+  private
 
 end

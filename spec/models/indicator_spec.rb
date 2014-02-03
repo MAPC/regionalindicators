@@ -23,9 +23,15 @@ describe Indicator do
 
   # it { should respond_to :projects }
 
+  it { should respond_to :current_snapshot }
   it { should respond_to :current_value }
-  it { should respond_to :value_in_2000_at_earliest }
+  it { should respond_to :current_rank }
+  it { should respond_to :snapshot_in }
+  it { should respond_to :value_in }
+  it { should respond_to :rank_in }
+  it { should respond_to :snapshot_since }
   it { should respond_to :value_delta }
+  it { should respond_to :rank_delta }
 
   describe "when title is not present" do
     before { @indicator.title = " " }
@@ -56,5 +62,53 @@ describe Indicator do
     before { @indicator.units = "a" * 141 }
     it { should_not be_valid }
   end
+
+  describe "snapshots" do
+
+    before { @indicator.save }
+
+    let!(:snap2) { @indicator.snapshots.create(date: Date.new(2000),     rank: 14, value: 12)  }
+    let!(:snap1) { @indicator.snapshots.create(date: Time.now,           rank: 1,  value: 100) }
+    let!(:snap3) { @indicator.snapshots.create(date: Date.new(2005,5),   rank: 8,  value: 40)  }
+    let!(:snap4) { @indicator.snapshots.create(date: Date.new(2009,1,4), rank: 3,  value: 80)  }
+
+    it "returns the current_snapshot" do
+      @indicator.current_snapshot.should == snap1
+    end
+
+    it "returns the snapshot in the year 2000" do
+      @indicator.snapshot_in(2000).should == snap2
+    end
+
+    it "returns the snapshot in the year 2005" do
+      @indicator.snapshot_in(2005).should == snap3
+    end
+
+      describe "current value" do
+        it "gives the current snapshot's value" do
+          @indicator.current_value.should == @indicator.current_snapshot.value
+        end
+      end
+
+      describe "current rank" do
+        it "gives the current snapshot's rank" do
+          @indicator.current_rank.should == @indicator.current_snapshot.rank
+        end
+      end
+
+  end
+
+  describe "snapshots in the same year" do
+
+    before { @indicator.save }
+    let!(:snap2) { @indicator.snapshots.create(date: Date.new(2000,5), rank: 2,  value: 100) }
+    let!(:snap1) { @indicator.snapshots.create(date: Date.new(2000,6), rank: 1,  value: 10) }
+    
+    
+    it "returns the most recent snapshot in the year" do
+      @indicator.snapshot_in(2000).should == snap1
+    end
+  end
+
 
 end
