@@ -13,21 +13,12 @@ class Indicator < ActiveRecord::Base
 
   DEFAULT_YEAR = 2000
 
-  def current_snapshot
-    self.snapshots.order('date DESC').limit(1).first
-  end
-
   def current_value
     current_snapshot.value
   end
 
   def current_rank
     current_snapshot.rank
-  end
-
-  def snapshot_in(year=DEFAULT_YEAR)
-    date = DateTime.new(year.to_i)
-    self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
   end
 
   def value_in(year=DEFAULT_YEAR)
@@ -52,5 +43,15 @@ class Indicator < ActiveRecord::Base
   end
 
   private
+
+    def current_snapshot
+      self.snapshots.order('date DESC').limit(1).first
+    end
+
+    def snapshot_in(year=DEFAULT_YEAR)
+      date = DateTime.new(year.to_i)
+      self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
+    end
+
 
 end
