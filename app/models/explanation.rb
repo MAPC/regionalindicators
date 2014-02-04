@@ -6,7 +6,7 @@ class Explanation < ActiveRecord::Base
   validates :narrative, length: { maximum: 1500 }
 
   def narrative_html
-    BlueCloth.new( narrative ).to_html
+    BlueCloth.new( narrative ).to_html.html_safe
   end
 
 end

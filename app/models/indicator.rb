@@ -35,7 +35,7 @@ class Indicator < ActiveRecord::Base
   end
 
   def value_delta(year=DEFAULT_YEAR)
-    current_value - value_in(year)
+    current_value - value_in(year) || nil
   end
 
   def rank_delta(year=DEFAULT_YEAR)

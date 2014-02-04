@@ -1,3 +1,49 @@
-<h1><%= @indicator.title %></h1>
-Value: <%= @indicator.value %>
-Rank:  <%= @indicator.rank %>
+<h1 class="page-header"><%= @indicator.title %></h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 indicator value">
+      <%= @indicator.units %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 indicator value">
+      <%= @indicator.value %>
+    </div>
+    <div class="col-md-4 indicator value-delta">
+      <!-- @indicator.value_delta -->
+    </div>
+    <div class="col-md-4 indicator rank">
+      <%= @indicator.rank %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 indicator narrative">
+      <%= @indicator.explanation.narrative_html %>
+    </div>
+
+    <div class="col-md-12 indicator visualization">
+      <!-- @indicator.explanation.visualization -->
+    </div>
+
+    <div class="col-md-12 indicator sources">
+      Sources: <%= @indicator.explanation.sources %>
+    </div>
+
+    <div class="col-md-12 indicator issue-areas">
+      <!-- @indicator.explanation.issue-areas -->
+    </div>
+
+    <div class="col-md-12 indicator goals">
+      <!-- @indicator.goals -->
+    </div>
+
+    <div class="col-md-12 indicator objectives">
+      <!-- @indicator.objectives -->
+    </div>
+
+  </div>
+
+</div>
