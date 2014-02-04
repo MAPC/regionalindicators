@@ -12,8 +12,9 @@ gem 'validates_timeliness', '~> 3.0'
 
 gem 'bootstrap-sass', '2.1'
 
-group :development do
+group :development, :test do
   gem 'rspec-rails'
+  gem 'capybara', '1.1.2'
 end
 
 # Gems used only for assets and not required
