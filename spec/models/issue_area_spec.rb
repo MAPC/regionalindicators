@@ -24,7 +24,7 @@ describe IssueArea do
   end
 
   describe "when title is too short" do
-    before { @issue_area.title = "LOL" }
+    before { @issue_area.title = "House" }
     it { should_not be_valid }
   end
 

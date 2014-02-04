@@ -30,7 +30,7 @@ describe TopicArea do
 
   describe "when subtitle is not present" do
     before { @topic_area.subtitle = " " }
-    it { should_not be_valid }
+    it { should be_valid }
   end
 
   describe "when subtitle is too long" do

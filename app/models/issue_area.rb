@@ -6,9 +6,8 @@ class IssueArea < ActiveRecord::Base
 
   DATACOMMON_REGEX = /metrobostondatacommon.org/
 
-  validates :title, presence: true, length: { maximum: 35, minimum: 8 }
+  validates :title, presence: true, length: { maximum: 35, minimum: 6 }
   validates :icon, presence: true
-  validates :slug, presence: true, length: { maximum: 30, minimum: 8 }
   validates :datacommon_url, presence: true, format: { with: DATACOMMON_REGEX }
 
   include SlugExtension
