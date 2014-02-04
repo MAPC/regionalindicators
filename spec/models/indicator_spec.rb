@@ -23,15 +23,16 @@ describe Indicator do
 
   # it { should respond_to :projects }
 
-  it { should respond_to :current_snapshot }
   it { should respond_to :current_value }
   it { should respond_to :current_rank }
-  it { should respond_to :snapshot_in }
   it { should respond_to :value_in }
   it { should respond_to :rank_in }
   it { should respond_to :snapshot_since }
   it { should respond_to :value_delta }
   it { should respond_to :rank_delta }
+
+  it { should respond_to :value }
+  it { should respond_to :rank }
 
   describe "when title is not present" do
     before { @indicator.title = " " }

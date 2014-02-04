@@ -10,6 +10,8 @@ gem 'pg'
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
 
+gem 'bootstrap-sass', '2.1'
+
 group :development do
   gem 'rspec-rails'
 end

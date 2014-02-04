@@ -42,6 +42,9 @@ class Indicator < ActiveRecord::Base
     (current_rank - rank_in(year)) * -1
   end
 
+  alias_method :value, :current_value
+  alias_method :rank,  :current_rank
+
   private
 
     def current_snapshot
