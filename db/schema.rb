@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140204185048) do
+ActiveRecord::Schema.define(:version => 20140205165916) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -84,12 +84,31 @@ ActiveRecord::Schema.define(:version => 20140204185048) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "tags", :force => true do |t|
+    t.string   "color"
+    t.string   "css_class"
+    t.string   "icon"
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "topic_areas", :force => true do |t|
     t.string   "abbr"
     t.string   "title"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "subtitle"
+  end
+
+  create_table "visualizations", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
