@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140204185048) do
+ActiveRecord::Schema.define(:version => 20140204215839) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20140204185048) do
     t.string   "units"
     t.integer  "number"
     t.integer  "objective_id"
+    t.integer  "subject_id"
   end
 
   create_table "issue_areas", :force => true do |t|
@@ -82,6 +83,7 @@ ActiveRecord::Schema.define(:version => 20140204185048) do
     t.integer  "subject_area_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "topic_area_id"
   end
 
   create_table "topic_areas", :force => true do |t|
