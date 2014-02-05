@@ -40,9 +40,9 @@ Regionalindicators::Application.configure do
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_credentials => {
-      :bucket => ENV['metrofuture'],
-      :access_key_id => ENV['AKIAJSM3LYIDLZMOWHBA'],
-      :secret_access_key => ENV['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']
+      :bucket => ENV['S3_BUCKET_NAME'],
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   }
 end

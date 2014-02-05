@@ -2,6 +2,7 @@ class Indicator < ActiveRecord::Base
   attr_accessible :title, :number, :units
 
   belongs_to :objective
+  belongs_to :subject
 
   has_one :explanation, as: :explainable
   has_many :snapshots
@@ -35,7 +36,7 @@ class Indicator < ActiveRecord::Base
   end
 
   def value_delta(year=DEFAULT_YEAR)
-    current_value - value_in(year) || nil
+    current_value - value_in(year)
   end
 
   def rank_delta(year=DEFAULT_YEAR)
@@ -48,12 +49,19 @@ class Indicator < ActiveRecord::Base
   private
 
     def current_snapshot
+      return empty_snapshot if self.snapshots.empty?
       self.snapshots.order('date DESC').limit(1).first
     end
 
     def snapshot_in(year=DEFAULT_YEAR)
+      return empty_snapshot if self.snapshots.empty?
       date = DateTime.new(year.to_i)
       self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
+    end
+
+    def empty_snapshot
+      # lets other methods call .value and .rank without errors
+      OpenStruct.new(value: nil, rank: nil)
     end
 
 

@@ -1,0 +1,9 @@
+<h3 class="<%= subject.slug %>" id="<%= subject.slug %>">
+  <%= subject.title %>
+</h3>
+
+<%= render partial: 'explanation', 
+           locals: { explanation: subject.explanation} %>
+
+<%= render partial:   'indicator',
+           collection: subject.indicators %>

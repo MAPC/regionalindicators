@@ -10,6 +10,7 @@ describe Subject do
   it { should respond_to :title }  
   it { should respond_to :explanation }
   it { should respond_to :slug }
+  it { should respond_to :indicators }
 
   describe "when title is not present" do
     before { @subject.title = " " }

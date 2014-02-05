@@ -1,0 +1,18 @@
+<h1 class="page-header <%= @topic_area.slug %>" id="<%= @topic_area.slug %>">
+  <%= @topic_area.title %>
+</h1>
+  
+<div class="col-md-9" data-spy="scroll" data-target="bs-sidebar">
+  <%= render partial: 'subject', collection: @topic_area.subjects %>
+</div>
+
+<div class="col-md-3">
+  <div class="bs-sidebar hidden-print affix-top">
+    <ul class="nav bs-sidenav">
+      <%= render partial: 'scrollspy/subject',
+                 collection: @topic_area.subjects %>
+    </ul>
+  </div>
+</div>
+
+

@@ -128,8 +128,83 @@ def indicators
 end
 
 
+def reports
+
+  count = 1
+
+  CSV.foreach('db/fixtures/sample_reports.csv', headers: true) do |row|
+    # puts row.inspect
+
+    # Indicator
+    ind_id = count
+
+    # Snapshot
+    date  = row[7]
+    rank  = row[8]
+    value = row[9]
+
+    # Topic Area
+    ta_id        = row[0]
+    ta_narrative = row[1]
+
+    # Subject 
+    subj_title     = row[2]
+    subj_narrative = row[3]
+
+    # Indicator Explanation
+    exp_narrative = row[5]
+
+    # Source
+    src_author = row[11]
+    src_date   = row[13]
+    src_title  = row[14]
+    src_url    = row[15]
+    
+    
+
+    topic_area = TopicArea.find(ta_id)
+
+    subject = Subject.find_by_title(subj_title)
+
+    if subject.nil?
+      subject = topic_area.subjects.create(title: subj_title)
+    end
+    puts subject.inspect
+
+    subj_explanation = subject.create_explanation(narrative: subj_narrative)
+    puts subj_explanation.inspect
+
+    indicator   = Indicator.find(ind_id)
+    snapshot    = indicator.snapshots.create(value: value, date: date, rank: rank)
+    puts indicator.snapshots
+    
+    subject.indicators << indicator
+    puts subject.indicators
+
+
+    explanation = indicator.create_explanation(narrative: exp_narrative)
+    puts explanation.inspect
+
+    # source = Source.find_by_title(src_title)
+    # if source.nil?
+    source      = explanation.sources.create(title:  src_title, 
+                                             url:    src_url, 
+                                             author: src_author, 
+                                             date:   DateTime.new(src_date.to_i))
+    # end
+    puts source.inspect
+
+    count += 1
+
+  end
+end
+
+
+
 # topic_areas
 # goals
 # objectives
 # issue_areas
-indicators
+# indicators
+# reports
+
