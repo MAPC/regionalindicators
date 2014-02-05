@@ -1,0 +1,11 @@
+<li>
+  <a href="#<%= subject.slug %>">
+    <%= subject.title %>
+  </a>
+  <% if subject.indicators %>
+    <ul class="nav">
+      <%= render partial:   'scrollspy/indicator', 
+                 collection: subject.indicators %>
+    </ul>
+  <% end %>
+<li>

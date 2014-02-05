@@ -1,0 +1,2 @@
+module TopicAreasHelper
+end

@@ -1,0 +1,7 @@
+<%= render partial: 'hero', locals: { topic_area: @topic_areas.shift } %>
+
+<div class="container">
+  <div class="row">
+    <%= render partial: 'topic_area', collection: @topic_areas %>
+  </div>
+</div>
