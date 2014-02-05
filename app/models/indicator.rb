@@ -49,16 +49,19 @@ class Indicator < ActiveRecord::Base
   private
 
     def current_snapshot
-      if self.snapshots.empty?
-        OpenStruct.new(value: nil)
-      else
-        self.snapshots.order('date DESC').limit(1).first
-      end
+      return empty_snapshot if self.snapshots.empty?
+      self.snapshots.order('date DESC').limit(1).first
     end
 
     def snapshot_in(year=DEFAULT_YEAR)
+      return empty_snapshot if self.snapshots.empty?
       date = DateTime.new(year.to_i)
       self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
+    end
+
+    def empty_snapshot
+      # lets other methods call .value and .rank without errors
+      OpenStruct.new(value: nil, rank: nil)
     end
 
 
