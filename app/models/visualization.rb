@@ -1,5 +1,5 @@
 class Visualization < ActiveRecord::Base
-  attr_accessible :title, :file
+  attr_accessible :title, :file, :delete_file
   attr_accessor :delete_file
   belongs_to :explanation
 
@@ -14,10 +14,21 @@ class Visualization < ActiveRecord::Base
         				    },
         				    path: "resources/:id/:style/:basename.:extension",
         				    default_url: "/assets/missing-resource.png",
-          					styles: { small: ['400x300>', :jpg] }
+          					styles: lambda { |a|
+                                  if a.instance.is_image?
+                                    { small: ['400x300>', :jpg] }
+                                  else
+                                    {}
+                                  end
+                            }
 
   before_validation { self.file.clear if self.delete_file == '1' }
 
-  validates_attachment :file, content_type: { content_type: /\Aimage\/.*\Z/ }
+  validates_attachment :file, content_type: { content_type: [/\Aimage\/.*\Z/, 'text/html'] }
+
+  def is_image?
+    # return false unless file.content_type
+    ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'].include?(file.content_type)
+  end
  
 end
