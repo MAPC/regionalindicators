@@ -98,18 +98,6 @@ ActiveRecord::Schema.define(:version => 20140206151303) do
     t.integer  "topic_area_id"
   end
 
-  create_table "tags", :force => true do |t|
-    t.string   "color"
-    t.string   "css_class"
-    t.string   "icon"
-    t.string   "title"
-    t.string   "slug"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
   create_table "topic_areas", :force => true do |t|
     t.string   "abbr"
     t.string   "title"
@@ -136,5 +124,15 @@ ActiveRecord::Schema.define(:version => 20140206151303) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "visualizations", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
 
 end
