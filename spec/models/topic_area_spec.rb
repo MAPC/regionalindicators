@@ -13,6 +13,10 @@ describe TopicArea do
   it { should respond_to :goals }
   it { should respond_to :subjects }
   it { should respond_to :slug }
+  it { should respond_to :visible }
+  it { should respond_to :visible? }
+  it { should respond_to :featured }
+  it { should respond_to :featured? }
 
   describe "when title is not present" do
     before { @topic_area.title = " " }

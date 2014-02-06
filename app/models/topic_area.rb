@@ -1,6 +1,11 @@
 class TopicArea < ActiveRecord::Base
-  attr_accessible :abbr, :title, :subtitle,
-                  :goal_ids, :subject_ids
+  attr_accessible :abbr,
+                  :title,
+                  :subtitle,
+                  :visible,
+                  :featured,
+                  :goal_ids,
+                  :subject_ids
   has_many :goals
   has_many :subjects
   has_one :explanation, as: :explainable
@@ -9,5 +14,13 @@ class TopicArea < ActiveRecord::Base
   validates :subtitle, allow_blank: true, length: { maximum: 140, minimum: 8 }
 
   include SlugExtension
+
+  def visible?
+    self.visible
+  end
+
+  def featured?
+    self.featured
+  end
 
 end
