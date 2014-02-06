@@ -7,6 +7,7 @@ describe TopicArea do
   subject { @topic_area }
 
   it { should respond_to :abbr }
+  it { should respond_to :explanation }
   it { should respond_to :title }
   it { should respond_to :subtitle }
   it { should respond_to :goals }

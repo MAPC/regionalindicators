@@ -1,5 +1,9 @@
 Regionalindicators::Application.routes.draw do
 
+  devise_for :users
+
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
   root to: 'static_pages#home'
 
   match '/about',     to: 'static_pages#about'

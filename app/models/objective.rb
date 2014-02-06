@@ -1,5 +1,7 @@
 class Objective < ActiveRecord::Base
-  attr_accessible :title, :number
+  attr_accessible :title, :number,
+                  :goal_id, :indicator_ids
+
   belongs_to :goal
   has_many :indicators
 
