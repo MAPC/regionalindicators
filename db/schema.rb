@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20140205181940) do
-=======
-ActiveRecord::Schema.define(:version => 20140204215839) do
->>>>>>> 0e4583c4097b1b41ac3e888965df354d5508393d
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
