@@ -4,5 +4,6 @@ class RemoveSlugFromIssueArea < ActiveRecord::Migration
   end
 
   def down
+    add_column :issue_areas, :slug, :string
   end
 end
