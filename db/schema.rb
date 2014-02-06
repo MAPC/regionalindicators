@@ -98,6 +98,18 @@ ActiveRecord::Schema.define(:version => 20140206151303) do
     t.integer  "topic_area_id"
   end
 
+  create_table "tags", :force => true do |t|
+    t.string   "color"
+    t.string   "css_class"
+    t.string   "icon"
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "topic_areas", :force => true do |t|
     t.string   "abbr"
     t.string   "title"

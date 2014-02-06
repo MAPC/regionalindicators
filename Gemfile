@@ -9,6 +9,8 @@ gem 'pg'
 
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
+gem 'paperclip', '~> 3.0'
+gem 'aws-sdk'
 
 gem 'rails_admin'
 
