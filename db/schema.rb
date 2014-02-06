@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205235026) do
+ActiveRecord::Schema.define(:version => 20140206151303) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -93,9 +93,8 @@ ActiveRecord::Schema.define(:version => 20140205235026) do
 
   create_table "subjects", :force => true do |t|
     t.string   "title"
-    t.integer  "subject_area_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "topic_area_id"
   end
 
