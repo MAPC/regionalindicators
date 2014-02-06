@@ -1,5 +1,10 @@
 class Indicator < ActiveRecord::Base
-  attr_accessible :title, :number, :units
+  attr_accessible :title,
+                  :number,
+                  :units,
+                  :snapshot_ids,
+                  :subject_id,
+                  :explanation_attributes
 
   belongs_to :objective
   belongs_to :subject
@@ -7,6 +12,8 @@ class Indicator < ActiveRecord::Base
   has_one :explanation, as: :explainable
   has_many :snapshots
   has_many :issue_areas, as: :taggable
+
+  accepts_nested_attributes_for :explanation
 
   validates :title, presence: true, length: { maximum: 160, minimum: 8 }
   validates :number, presence: true

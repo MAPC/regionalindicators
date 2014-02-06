@@ -1,9 +1,5 @@
 class AddObjectiveIDtoIndicators < ActiveRecord::Migration
-  def up
+  def change
     add_column :indicators, :objective_id, :integer
-  end
-
-  def down
-    remove_column :indicators, :objective_id
   end
 end

@@ -1,5 +1,8 @@
 class Subject < ActiveRecord::Base
-  attr_accessible :title
+  attr_accessible :title,
+                  :indicator_ids,
+                  :topic_area_id
+
   belongs_to :topic_area
 
   has_many :indicators

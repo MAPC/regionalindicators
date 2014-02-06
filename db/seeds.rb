@@ -34,59 +34,35 @@ end
 def goals
 
   # first loop
-  CSV.foreach('db/fixtures/goals.csv', headers: true) do |row|
-
-    puts row.inspect
-
-    number        = row[0]
-    id            = number
-    title         = row[1]
-    topic_area_id = row[2]
+  CSV.foreach('db/fixtures/export_goals.csv', headers: true) do |row|
 
     begin
-      goal = Goal.find(id)
+      goal = Goal.find row['id']
     rescue ActiveRecord::RecordNotFound
-      topic_area = TopicArea.find(topic_area_id)
-      topic_area.goals.create(id: number, number: number, title: title)
+      topic_area = TopicArea.find row['topic_area_id']
+      goal = topic_area.goals.create( id:          row['id'],
+                                      number:      row['number'],
+                                      title:       row['title'],
+                                      description: row['description'] )
     ensure
       puts goal.inspect
     end
-  end
-
-  CSV.foreach('db/fixtures/metrofuture.csv', headers: true) do |row|
-    
-    puts row.inspect
-
-    id          = row[6].to_i
-    description = row[5]
-
-    next if id == nil
-    next if id == 0
-
-    goal = Goal.find(id)
-
-    if goal.description.blank?
-      goal.description = description
-      goal.save
-    end
-
-    puts goal.inspect
   end
 end
 
 
 def objectives
   CSV.foreach('db/fixtures/metrofuture.csv', headers: true) do |row|
-    
-    goal_id = row[6]
-    number  = row[7].to_s.gsub(/^\d+\./, '')
-    title   = row[8].to_s
 
-    next if (goal_id.nil? || goal_id.to_i == 0)
+    number  = row['objective_number'].to_s.gsub(/^\d+\./, '')
+    title   = row['objective_title'].to_s
 
-    goal      = Goal.find(goal_id)
-    objective = goal.objectives.create(number: number, title: title)
-    puts objective.inspect
+    objective = Objective.find_by_title title 
+    if objective.nil?
+      goal      = Goal.find row['goal_number']
+      objective = goal.objectives.create(number: number, title: title)
+      puts objective.inspect
+    end
   end
 end
 
@@ -114,14 +90,16 @@ end
 def indicators
   CSV.foreach('db/fixtures/metrofuture.csv', headers: true) do |row|
 
-    id               = row[0]
-    title            = row[9]
-    objective_title  = row[8].to_s
+    id               = row['indicator_id']
+    title            = row['indicator_title']
+    objective_title  = row['objective_title'].to_s
 
-    objective = Objective.find_by_title(objective_title)
-    next if objective.nil?
+    objective = Objective.find_by_title objective_title
     
-    indicator = objective.indicators.create(id: id, number: id, title: title)
+    indicator = objective.indicators.create(id: id,
+                                            number: id,
+                                            title: title || "input title",
+                                            units: "placeholder")
     puts indicator.inspect
 
   end
@@ -203,8 +181,8 @@ end
 
 # topic_areas
 # goals
-# objectives
+objectives
+indicators
 # issue_areas
-# indicators
 # reports
 

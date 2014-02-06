@@ -12,7 +12,7 @@ gem 'validates_timeliness', '~> 3.0'
 gem 'paperclip', '~> 3.0'
 gem 'aws-sdk'
 
-gem 'bootstrap-sass', '2.1'
+gem 'rails_admin'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -47,3 +47,6 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+
+gem "devise"
