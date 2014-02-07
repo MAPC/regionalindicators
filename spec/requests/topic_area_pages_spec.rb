@@ -15,10 +15,11 @@ describe "Report pages" do
 
         let!(:not_featured) { TopicArea.create(title: "Sustainable Growth Patterns",
                                        subtitle: "What makes a sustainable region?",
+                                       visible: true,
                                        featured: false) }
         before { visit root_path }
         it { should have_content('MAPC Regional Indicators') }
-        it { should have_selector('h1', text: 'Prosperity') }
+        it { should have_selector('h1', text: 'Prosperity') ; save_and_open_page }
         it { should have_selector('h3', text: not_featured.title ) }
       end
 

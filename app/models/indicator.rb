@@ -53,6 +53,8 @@ class Indicator < ActiveRecord::Base
   alias_method :value, :current_value
   alias_method :rank,  :current_rank
 
+  include SlugExtension
+
 
   rails_admin do
     list do
