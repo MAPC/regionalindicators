@@ -13,6 +13,7 @@ class TopicArea < ActiveRecord::Base
 
   validates :title, presence: true, length: { maximum: 100, minimum: 8 }
   validates :subtitle, allow_blank: true, length: { maximum: 140, minimum: 8 }
+  validate :featured_limit
 
   before_save :check_visible
 
@@ -45,5 +46,12 @@ class TopicArea < ActiveRecord::Base
     def check_visible
       self.visible = true if self.featured == true
     end
+
+    def featured_limit
+      if self.class.featured.count >= 3
+        errors.add(:base, "No more than 3 Topic Areas can be featured.")
+      end
+    end
+
 
 end

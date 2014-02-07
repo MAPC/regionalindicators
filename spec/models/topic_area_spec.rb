@@ -81,5 +81,17 @@ describe TopicArea do
     end
   end
 
+  describe "when 3 are featured" do
+    let!(:ta1) { TopicArea.create(title: "A Placeholder Title", featured: true) }
+    let!(:ta2) { TopicArea.create(title: "A Placeholder Title", featured: true) }
+    let!(:ta3) { TopicArea.create(title: "A Placeholder Title", featured: true) }
+    
+    before { @topic_area.featured = true }
+    it { should_not be_valid }
+  end
+
+
+
+
 
 end
