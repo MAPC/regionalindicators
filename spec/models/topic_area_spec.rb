@@ -58,5 +58,28 @@ describe TopicArea do
       @topic_area.slug.should == 'corporate-civic-engagement'
     end
   end
-  
+
+  describe "if featured but not visible" do
+    before do 
+      @topic_area.featured = true
+      @topic_area.visible  = false
+      @topic_area.save
+    end
+    it "should set visible to true before saving" do
+      @topic_area.visible.should == true
+    end
+  end
+
+  describe "if not featured and not visible" do
+    before do 
+      @topic_area.featured = false
+      @topic_area.visible  = false
+      @topic_area.save
+    end
+    it "should set visible to true before saving" do
+      @topic_area.visible.should == false
+    end
+  end
+
+
 end

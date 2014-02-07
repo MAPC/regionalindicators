@@ -6,12 +6,19 @@ class TopicArea < ActiveRecord::Base
                   :featured,
                   :goal_ids,
                   :subject_ids
+
   has_many :goals
   has_many :subjects
   has_one :explanation, as: :explainable
 
   validates :title, presence: true, length: { maximum: 100, minimum: 8 }
   validates :subtitle, allow_blank: true, length: { maximum: 140, minimum: 8 }
+
+  before_save :check_visible
+
+  scope :featured,     where(featured: true)
+  scope :not_featured, where(featured: false)
+  scope :visible,      where(visible:  true)
 
   include SlugExtension
 
@@ -32,5 +39,11 @@ class TopicArea < ActiveRecord::Base
       field :featured
     end
   end
+
+  private
+
+    def check_visible
+      self.visible = true if self.featured == true
+    end
 
 end
