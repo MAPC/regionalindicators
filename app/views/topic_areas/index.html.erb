@@ -1,7 +1,9 @@
-<%= render partial: 'hero', locals: { topic_area: @topic_areas.shift } %>
+<div class="jumbotron">
+  <%= render partial: 'featured', collection: @topic_areas[:featured] %>
+</div>
 
 <div class="container">
   <div class="row">
-    <%= render @topic_areas %>
+    <%= render partial: 'topic_area', collection: @topic_areas[:not_featured] %>
   </div>
 </div>

@@ -18,8 +18,10 @@ class TopicArea < ActiveRecord::Base
   before_save :check_visible
 
   scope :featured,     where(featured: true)
-  scope :not_featured, where(featured: false)
   scope :visible,      where(visible:  true)
+
+  scope :not_featured, where(featured: false, visible: true)
+  scope :not_visible,  where(visible: false)
 
   include SlugExtension
 
@@ -48,7 +50,7 @@ class TopicArea < ActiveRecord::Base
     end
 
     def featured_limit
-      if self.class.featured.count >= 3
+      if self.featured && self.class.featured.count >= 3
         errors.add(:base, "No more than 3 Topic Areas can be featured.")
       end
     end
