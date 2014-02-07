@@ -2,3 +2,7 @@
 
 <%= render partial: 'source',
            collection: explanation.sources %>
+
+<% if explanation.visualization %>
+  <%= render partial: 'visualization', locals: { viz: explanation.visualization } %>
+<% end %>

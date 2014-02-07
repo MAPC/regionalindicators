@@ -13,7 +13,7 @@ class Visualization < ActiveRecord::Base
           						secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
         				    },
         				    path: "resources/:id/:style/:basename.:extension",
-        				    default_url: "/assets/missing-resource.png",
+        				    default_url: "/404.html",
           					styles: lambda { |a|
                                   if a.instance.is_image?
                                     { small: ['400x300>', :jpg] }
