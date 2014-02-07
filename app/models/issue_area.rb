@@ -13,4 +13,12 @@ class IssueArea < ActiveRecord::Base
   include SlugExtension
   alias_method :css_class, :slug
 
+  rails_admin do
+    list do
+      field :id
+      field :title
+      field :icon
+    end
+  end
+
 end

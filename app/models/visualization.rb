@@ -30,5 +30,17 @@ class Visualization < ActiveRecord::Base
     # return false unless file.content_type
     ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'].include?(file.content_type)
   end
+
+  rails_admin do
+    list do
+      field :id
+      field :file
+      field :updated_at do
+        pretty_value do
+          value.strftime("%-d %b %Y %H:%M")
+        end
+      end 
+    end
+  end
  
 end

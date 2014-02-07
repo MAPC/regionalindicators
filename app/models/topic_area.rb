@@ -23,4 +23,14 @@ class TopicArea < ActiveRecord::Base
     self.featured
   end
 
+  rails_admin do
+    list do
+      field :id
+      field :title
+      field :subtitle
+      field :visible
+      field :featured
+    end
+  end
+
 end

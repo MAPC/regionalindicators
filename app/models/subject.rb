@@ -12,4 +12,12 @@ class Subject < ActiveRecord::Base
 
   include SlugExtension
   
+  rails_admin do
+    list do
+      field :id
+      field :title
+      field :topic_area
+    end
+  end
+
 end
