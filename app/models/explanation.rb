@@ -19,4 +19,20 @@ class Explanation < ActiveRecord::Base
     BlueCloth.new( narrative ).to_html.html_safe
   end
 
+  rails_admin do
+    list do
+      field :id
+      field :narrative
+      field :explainable_type do
+        label "for"
+      end
+      field :explainable do
+        label "What's being explained:"
+      end
+      field :explainable_id do
+        label "Explaining ID#"
+      end
+    end
+  end
+
 end

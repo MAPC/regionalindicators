@@ -13,6 +13,10 @@ describe TopicArea do
   it { should respond_to :goals }
   it { should respond_to :subjects }
   it { should respond_to :slug }
+  it { should respond_to :visible }
+  it { should respond_to :visible? }
+  it { should respond_to :featured }
+  it { should respond_to :featured? }
 
   describe "when title is not present" do
     before { @topic_area.title = " " }
@@ -54,5 +58,40 @@ describe TopicArea do
       @topic_area.slug.should == 'corporate-civic-engagement'
     end
   end
-  
+
+  describe "if featured but not visible" do
+    before do 
+      @topic_area.featured = true
+      @topic_area.visible  = false
+      @topic_area.save
+    end
+    it "should set visible to true before saving" do
+      @topic_area.visible.should == true
+    end
+  end
+
+  describe "if not featured and not visible" do
+    before do 
+      @topic_area.featured = false
+      @topic_area.visible  = false
+      @topic_area.save
+    end
+    it "should set visible to true before saving" do
+      @topic_area.visible.should == false
+    end
+  end
+
+  describe "when 3 are featured" do
+    let!(:ta1) { TopicArea.create(title: "A Placeholder Title", featured: true) }
+    let!(:ta2) { TopicArea.create(title: "A Placeholder Title", featured: true) }
+    let!(:ta3) { TopicArea.create(title: "A Placeholder Title", featured: true) }
+    
+    before { @topic_area.featured = true }
+    it { should_not be_valid }
+  end
+
+
+
+
+
 end

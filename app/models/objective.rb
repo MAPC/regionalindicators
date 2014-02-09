@@ -17,4 +17,17 @@ class Objective < ActiveRecord::Base
     !self.goal.nil?
   end
 
+
+  rails_admin do
+    list do
+      field :id
+      field :full_number
+      field :title
+      field :goal_id do
+        label "Goal ID"
+      end
+      field :goal
+    end
+  end
+
 end

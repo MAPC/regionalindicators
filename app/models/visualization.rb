@@ -13,7 +13,7 @@ class Visualization < ActiveRecord::Base
           						secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
         				    },
         				    path: "resources/:id/:style/:basename.:extension",
-        				    default_url: "/assets/missing-resource.png",
+        				    default_url: "/404.html",
           					styles: lambda { |a|
                                   if a.instance.is_image?
                                     { small: ['400x300>', :jpg] }
@@ -29,6 +29,18 @@ class Visualization < ActiveRecord::Base
   def is_image?
     # return false unless file.content_type
     ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'].include?(file.content_type)
+  end
+
+  rails_admin do
+    list do
+      field :id
+      field :file
+      field :updated_at do
+        pretty_value do
+          value.strftime("%-d %b %Y %H:%M")
+        end
+      end 
+    end
   end
  
 end

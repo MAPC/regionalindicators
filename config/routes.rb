@@ -4,7 +4,7 @@ Regionalindicators::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  root to: 'static_pages#home'
+  root to: 'topic_areas#index'
 
   match '/about',     to: 'static_pages#about'
   match '/contact',   to: 'static_pages#contact'

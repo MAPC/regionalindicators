@@ -53,6 +53,21 @@ class Indicator < ActiveRecord::Base
   alias_method :value, :current_value
   alias_method :rank,  :current_rank
 
+  include SlugExtension
+
+
+  rails_admin do
+    list do
+      field :id
+      field :number
+      field :title
+      field :units
+      field :value
+      field :rank
+    end
+  end
+
+
   private
 
     def current_snapshot

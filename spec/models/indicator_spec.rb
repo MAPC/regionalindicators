@@ -21,6 +21,7 @@ describe Indicator do
   it { should respond_to :objective }
   it { should respond_to :snapshots }
   it { should respond_to :subject }
+  it { should respond_to :slug }
 
   # it { should respond_to :projects }
 
