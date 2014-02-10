@@ -34,6 +34,9 @@ describe "Report pages" do
         before { visit root_path }
         it { should have_selector('h1', text: 'Prosperity') }
         it { should have_selector('h1', text: featured2.title ) }
+
+        it { should have_selector('li', text: featured.title ) }
+        it { should have_selector('li', text: featured2.title ) }
       end
     end
 
@@ -45,9 +48,15 @@ describe "Report pages" do
       let!(:not_featured2) { TopicArea.create(title: "Sustainable Growth Patterns",
                                      subtitle: "What makes a sustainable region?",
                                      featured: false) }
+
+      let!(:not_visible) { TopicArea.create(title: "Sustainable Growth Patterns",
+                                     subtitle: "What makes a sustainable region?",
+                                     featured: false,
+                                     visible: false) }
       before { visit root_path }
       it { should have_selector('h1', text: not_featured.title ) }
       it { should have_selector('h3', text: not_featured2.title ) }
+      it { should_not have_content( not_visible.title ) }
     end
 
   end
