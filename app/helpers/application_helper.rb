@@ -5,7 +5,7 @@ module ApplicationHelper
   end
 
   def issue_area_icons
-    render partial: 'shared/issue_area', collection: IssueArea.order('title')
+    render partial: 'shared/issue_area', collection: IssueArea.ordered
   end
 
 end

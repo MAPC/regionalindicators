@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140207225956) do
+ActiveRecord::Schema.define(:version => 20140210200951) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20140207225956) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "datacommon_url"
+    t.integer  "sort_order"
   end
 
   create_table "objectives", :force => true do |t|

@@ -14,22 +14,30 @@ $public-safety:             #990033;
 $technology:                #000066;
 $transportation:            #FF6633;
 
+$text-color: #FFFFFF;
+$inverse-text-color: #999999;
+
+
 .issue-area-icons {
   width: 100%
 }
 
 .issue-area-icon {
   display: block;
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   margin: 10px 10px;
   float: left;
   font-size: 12px;
-  color: #FFFFFF;
+  color: $text-color;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .arts-culture {
   background-color: $arts-culture;
+  color: $inverse-text-color;
 }
 
 .civic-vitality-governance {
@@ -62,6 +70,7 @@ $transportation:            #FF6633;
 
 .land-use-zoning {
   background-color: $land-use-zoning;
+  color: $inverse-text-color;
 }
 
 .public-health {
