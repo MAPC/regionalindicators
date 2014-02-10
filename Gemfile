@@ -6,12 +6,12 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg', '0.12.2'  
-
+gem 'sunspot_rails'
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
 gem 'paperclip', '~> 3.0'
 gem 'aws-sdk'
-
+gem 'progress_bar'
 gem 'rails_admin'
 
 group :production do

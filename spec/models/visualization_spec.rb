@@ -7,7 +7,10 @@ describe Visualization do
   subject { @visualization }
 
   it { should respond_to :title }
+  it { should validate_attachment_content_type(:file).
+                allowing('image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg', 'text/html') }
   it { should have_attached_file(:file) }
+
 
   describe "when title is blank" do
     before { @visualization.title = " " }
@@ -23,5 +26,4 @@ describe Visualization do
     before { @visualization.title = "a" * 201 }
     it { should_not be_valid }
   end
-
 end
