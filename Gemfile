@@ -13,6 +13,7 @@ gem 'paperclip', '~> 3.0'
 gem 'aws-sdk'
 
 gem 'rails_admin'
+gem 'cancan'
 
 group :development, :test do
   gem 'rspec-rails'

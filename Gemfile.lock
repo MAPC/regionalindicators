@@ -40,6 +40,7 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.0.4)
+    cancan (1.6.10)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -211,6 +212,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   bluecloth
+  cancan
   capybara (= 1.1.2)
   coffee-rails (~> 3.2.1)
   devise
