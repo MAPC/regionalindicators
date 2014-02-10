@@ -179,8 +179,8 @@ end
 
 
 
-# topic_areas
-# goals
+topic_areas
+goals
 objectives
 indicators
 # issue_areas
