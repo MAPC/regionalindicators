@@ -5,7 +5,7 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
+gem 'pg', '0.12.2'  
 
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
@@ -14,11 +14,16 @@ gem 'aws-sdk'
 
 gem 'rails_admin'
 
+group :production do
+  gem 'pg', '0.12.2'
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
   gem 'launchy'
+  gem 'pg', '0.12.2'  
 end
 
 # Gems used only for assets and not required

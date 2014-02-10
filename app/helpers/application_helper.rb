@@ -5,6 +5,10 @@ module ApplicationHelper
     dropdown_content(options)
   end
 
+  def issue_area_icons
+    options = IssueArea.all.collect { |i| i.icon.to_s }.join(', ')
+  end
+
   private
 
     def link_list_item(topic_area)
