@@ -9,13 +9,21 @@ gem 'pg'
 
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
+
+gem 'twitter-typeahead-rails'
+gem 'bootstrap-typeahead-rails'
+
 gem 'paperclip', '~> 3.0'
 gem 'aws-sdk'
 
 gem 'rails_admin'
 gem 'cancan'
 
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+
 group :development, :test do
+  gem 'progress_bar'
   gem 'rspec-rails'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
