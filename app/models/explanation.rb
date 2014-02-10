@@ -11,7 +11,7 @@ class Explanation < ActiveRecord::Base
   has_many :sources
   has_one :visualization
 
-  accepts_nested_attributes_for :visualization
+  accepts_nested_attributes_for :visualization, reject_if: lambda { |v| v[:title].blank? && v[:file_file_name].blank? }
 
   validates :narrative, length: { maximum: 1500 }
 
