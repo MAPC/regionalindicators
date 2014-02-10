@@ -10,6 +10,9 @@ Regionalindicators::Application.routes.draw do
   match '/contact',   to: 'static_pages#contact'
   match '/dashboard', to: 'static_pages#dashboard'
 
+  match '/search',  to: 'search#search'
+  match '/suggest', to: 'search#suggest'
+
   resources :indicators
   resources :issue_areas
   resources :topic_areas

@@ -18,13 +18,6 @@
 
 $(document).ready(function () {
 
-  $('.typeahead').typeahead({ local: [ "Mercury",
-                                       "Venus",
-                                       "Earth",
-                                       "Mars",
-                                       "Jupiter",
-                                       "Saturn",
-                                       "Uranus",
-                                       "Neptune" ] })
+  $('.typeahead').typeahead({ prefetch: '/suggest.json' })
 
 })
