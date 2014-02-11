@@ -11,7 +11,7 @@ class SearchController < ApplicationController
   def suggest
     @suggestions = []
     [TopicArea, IssueArea, Goal].each do |klass|
-      @suggestions.concat( klass.all.map { |e| "#{e.title} (#{klass.name.titleize})" } )
+      @suggestions.concat( klass.all.map { |e| e.title } )
     end
 
     render json: @suggestions

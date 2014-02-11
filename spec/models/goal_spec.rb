@@ -15,6 +15,7 @@ describe Goal do
   it { should respond_to :title }
   it { should respond_to :topic_area }
   it { should respond_to :objectives }
+  it { should respond_to :indicators }
 
   describe "when title is not present" do
     before { @goal.title = " " }

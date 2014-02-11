@@ -4,7 +4,8 @@ class Indicator < ActiveRecord::Base
                   :units,
                   :snapshot_ids,
                   :subject_id,
-                  :explanation_attributes
+                  :explanation_attributes,
+                  :issue_area_ids
 
   belongs_to :objective
   belongs_to :subject

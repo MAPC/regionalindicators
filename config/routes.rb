@@ -1,5 +1,7 @@
 Regionalindicators::Application.routes.draw do
 
+  get "issue_areas/show"
+
   devise_for :users
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
@@ -16,6 +18,7 @@ Regionalindicators::Application.routes.draw do
   resources :indicators
   resources :issue_areas
   resources :topic_areas
+  resources :goals
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

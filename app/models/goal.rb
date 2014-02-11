@@ -9,6 +9,10 @@ class Goal < ActiveRecord::Base
 
   include SlugExtension
 
+  def indicators
+    self.objectives.map { |o| o.indicators }.flatten
+  end
+
   searchable do
     text :title
     text :description

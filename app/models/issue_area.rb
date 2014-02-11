@@ -3,8 +3,9 @@ class IssueArea < ActiveRecord::Base
                   :icon,
                   :title,
                   :sort_order
-  belongs_to :taggable, polymorphic: true
 
+  belongs_to :taggable, polymorphic: true
+  
   DATACOMMON_REGEX = /metrobostondatacommon.org/
 
   validates :title, presence: true, length: { maximum: 35, minimum: 6 }
@@ -15,6 +16,10 @@ class IssueArea < ActiveRecord::Base
 
   include SlugExtension
   alias_method :css_class, :slug
+
+  def indicators
+    Array(self.taggable).keep_if { |e| e.class.name == "Indicator" }
+  end
 
   rails_admin do
     list do

@@ -1,0 +1,11 @@
+<%= render partial: 'issue_area', object: @issue_area %>
+
+<h1><%= @issue_area.title %></h1>
+
+<br/>
+<br/>
+
+<%= render partial: 'indicators/indicator', collection: @issue_area.indicators %>
+
+<br/>
+<br/>
