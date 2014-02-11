@@ -2,6 +2,7 @@ class IssueArea < ActiveRecord::Base
   attr_accessible :datacommon_url,
                   :icon,
                   :title
+
   belongs_to :taggable, polymorphic: true
 
   DATACOMMON_REGEX = /metrobostondatacommon.org/

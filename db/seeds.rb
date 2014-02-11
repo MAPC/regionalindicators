@@ -183,6 +183,6 @@ topic_areas
 goals
 objectives
 indicators
-# issue_areas
-# reports
+issue_areas
+reports
 
