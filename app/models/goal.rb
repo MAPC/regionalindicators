@@ -9,6 +9,11 @@ class Goal < ActiveRecord::Base
 
   include SlugExtension
 
+  searchable do
+    text :title
+    text :description
+  end
+
   rails_admin do
     list do
       field :id

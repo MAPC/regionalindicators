@@ -55,6 +55,9 @@ class Indicator < ActiveRecord::Base
 
   include SlugExtension
 
+  searchable do
+    text :title
+  end
 
   rails_admin do
     list do
