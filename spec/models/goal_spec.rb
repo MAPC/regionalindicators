@@ -9,6 +9,8 @@ describe Goal do
 
   subject { @goal }
 
+  it { should be_valid }
+
   it { should respond_to :description }
   it { should respond_to :number }
   it { should respond_to :slug }

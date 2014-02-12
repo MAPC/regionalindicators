@@ -6,6 +6,8 @@ describe TopicArea do
 
   subject { @topic_area }
 
+  it { should be_valid }
+
   it { should respond_to :abbr }
   it { should respond_to :explanation }
   it { should respond_to :title }

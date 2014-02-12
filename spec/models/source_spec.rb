@@ -15,6 +15,8 @@ describe Source do
 
   subject { @source }
 
+  it { should be_valid }
+
   it { should respond_to :comment }
   it { should respond_to :title }
   it { should respond_to :author }
@@ -72,6 +74,9 @@ describe Source do
   end
 
   describe "when assigned to many explanations" do
+    let(:first_indicator) { Indicator.create(narrative: 'Sample narrative') }
+    let(:other_indicator) { Indicator.create(narrative: 'Sample narrative') }
+
     before do
       first_explanation.sources << @source
       other_explanation.sources << @source

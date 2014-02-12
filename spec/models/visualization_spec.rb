@@ -5,6 +5,8 @@ describe Visualization do
   before { @visualization = Visualization.new(title: "A Map") }
 
   subject { @visualization }
+
+  it { should be_valid }
   
   describe "when title is blank" do
     before { @visualization.title = " " }
