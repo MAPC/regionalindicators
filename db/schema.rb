@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140210200951) do
+ActiveRecord::Schema.define(:version => 20140212193922) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -19,6 +19,11 @@ ActiveRecord::Schema.define(:version => 20140210200951) do
     t.string   "explainable_type"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+  end
+
+  create_table "explanations_sources", :force => true do |t|
+    t.integer "explanation_id"
+    t.integer "source_id"
   end
 
   create_table "goals", :force => true do |t|
@@ -87,9 +92,8 @@ ActiveRecord::Schema.define(:version => 20140210200951) do
     t.datetime "date"
     t.text     "comment"
     t.string   "author"
-    t.integer  "explanation_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "subjects", :force => true do |t|

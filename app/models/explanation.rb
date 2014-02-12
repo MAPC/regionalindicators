@@ -8,7 +8,7 @@ class Explanation < ActiveRecord::Base
 
   belongs_to :explainable, polymorphic: true
 
-  has_many :sources
+  has_and_belongs_to_many :sources
   has_one :visualization
 
   accepts_nested_attributes_for :visualization, reject_if: lambda { |v| v[:title].blank? && v[:file_file_name].blank? }

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Source do
 
-  let(:explanation) {       Explanation.create(narrative: 'Sample narrative') }
+  let(:first_explanation) { Explanation.create(narrative: 'Sample narrative') }
   let(:other_explanation) { Explanation.create(narrative: 'Sample narrative') }
 
   before do
@@ -21,12 +21,12 @@ describe Source do
   it { should respond_to :date }
   it { should respond_to :url }
 
-  it { should respond_to :explanation }
+  it { should respond_to :explanations }
 
   describe "accessible attributes" do
     it "should not allow access to explanation_id" do
       expect do
-        Source.new(explanation_id: explanation.id)
+        Source.new(explanation_id: first_explanation.id)
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
@@ -71,7 +71,17 @@ describe Source do
     it { should_not be_valid }
   end
 
-  pending "belongs to many explanations" do
+  describe "when assigned to many explanations" do
+    before do
+      first_explanation.sources << @source
+      other_explanation.sources << @source
+    end
+    
+    it "both retain the source" do
+      first_explanation.sources.first.should == @source
+      other_explanation.sources.first.should == @source
+    end
+
   end
 
 end
