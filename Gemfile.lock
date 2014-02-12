@@ -83,6 +83,7 @@ GEM
       railties (>= 3.2, < 5.0)
     haml (4.0.5)
       tilt
+    high_voltage (2.1.0)
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.1)
@@ -242,6 +243,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   factory_girl_rails
+  high_voltage (~> 2.1.0)
   jquery-rails
   launchy
   paperclip (~> 3.0)
