@@ -2,14 +2,15 @@ require 'spec_helper'
 
 describe Source do
 
-  let(:explanation) { Explanation.create(narrative: 'Sample narrative') }
+  let(:explanation) {       Explanation.create(narrative: 'Sample narrative') }
+  let(:other_explanation) { Explanation.create(narrative: 'Sample narrative') }
 
   before do
-    @source = explanation.sources.build(title:   'A New Way of Measuring Debt',
-                                        author:  'Boston Architectural College',
-                                        date:     Time.now,
-                                        url:     'http://the-bac.edu',
-                                        comment: 'This is good data.')
+    @source = Source.new( title:   'A New Way of Measuring Debt',
+                          author:  'Boston Architectural College',
+                          date:     Time.now,
+                          url:     'http://the-bac.edu',
+                          comment: 'This is good data.')
   end
 
   subject { @source }
@@ -68,6 +69,9 @@ describe Source do
   describe "when date is in an incorrect format" do
     before { @source.date = "two weeks ago" }
     it { should_not be_valid }
+  end
+
+  pending "belongs to many explanations" do
   end
 
 end
