@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212183634) do
+ActiveRecord::Schema.define(:version => 20140212220418) do
 
   create_table "community_types", :force => true do |t|
     t.string   "abbr"
@@ -83,6 +83,14 @@ ActiveRecord::Schema.define(:version => 20140212183634) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "number"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.integer  "department_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "funding_source_id"
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -192,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20140212183634) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.boolean  "admin",                  :default => false
+    t.integer  "department_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
