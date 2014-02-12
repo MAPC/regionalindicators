@@ -6,8 +6,8 @@ describe Subregion do
 
   subject { @subregion }
   
-it {should respond_to :name }
-it {should respond_to :abbr }
+  it {should respond_to :name }
+  it {should respond_to :abbr }
 
   describe "when name is blank" do
     before { @subregion.name = " " }

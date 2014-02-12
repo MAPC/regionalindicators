@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140211201939) do
+ActiveRecord::Schema.define(:version => 20140212165638) do
 
   create_table "community_types", :force => true do |t|
     t.string   "abbr"
@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(:version => 20140211201939) do
   create_table "municipalities", :force => true do |t|
     t.integer  "muni_id"
     t.string   "name"
-    t.integer  "community_type_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "community_type_id"
   end
 
   create_table "objectives", :force => true do |t|
@@ -126,10 +126,11 @@ ActiveRecord::Schema.define(:version => 20140211201939) do
   end
 
   create_table "subregions", :force => true do |t|
-    t.string   "abbr"
     t.string   "name"
+    t.string   "abbr"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "muni_id"
   end
 
   create_table "subregions_municipalities", :force => true do |t|

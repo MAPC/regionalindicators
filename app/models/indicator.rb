@@ -87,5 +87,4 @@ class Indicator < ActiveRecord::Base
       OpenStruct.new(value: nil, rank: nil)
     end
 
-
 end
