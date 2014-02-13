@@ -4,7 +4,8 @@ class Indicator < ActiveRecord::Base
                   :units,
                   :snapshot_ids,
                   :subject_id,
-                  :explanation_attributes
+                  :explanation_attributes,
+                  :issue_area_ids
 
   belongs_to :objective
   belongs_to :subject
@@ -85,6 +86,5 @@ class Indicator < ActiveRecord::Base
       # lets other methods call .value and .rank without errors
       OpenStruct.new(value: nil, rank: nil)
     end
-
 
 end

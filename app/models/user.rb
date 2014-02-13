@@ -4,9 +4,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  belongs_to :department
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :admin
   # attr_accessible :title, :body
+
+
 
   VALID_MAPC_EMAIL = /\A[\w+\-.]+@mapc\.org\z/i
   validates :email, presence: true, format: { with: VALID_MAPC_EMAIL }
@@ -25,6 +28,4 @@ class User < ActiveRecord::Base
       field :reset_password_sent_at
     end
   end
-
-
 end

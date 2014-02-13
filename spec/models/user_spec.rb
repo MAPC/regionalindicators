@@ -26,4 +26,12 @@ describe User do
     end
   end
 
+  before { @user = User.new(email: 'hello@mapc.org', password: 'thisIsANiceLongSecurePassword') }
+
+  describe "when user is an administrator" do
+    it "should be valid" do
+      
+    end
+  end
+
 end
