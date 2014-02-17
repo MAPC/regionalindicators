@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212220418) do
+ActiveRecord::Schema.define(:version => 20140217151754) do
 
   create_table "community_types", :force => true do |t|
     t.string   "abbr"
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20140212220418) do
     t.integer  "community_type_id"
   end
 
+  add_index "municipalities", ["community_type_id"], :name => "index_municipalities_on_community_type_id"
+
   create_table "objectives", :force => true do |t|
     t.string   "title"
     t.integer  "goal_id"
@@ -92,6 +94,9 @@ ActiveRecord::Schema.define(:version => 20140212220418) do
     t.datetime "updated_at",        :null => false
     t.integer  "funding_source_id"
   end
+
+  add_index "projects", ["department_id"], :name => "index_projects_on_department_id"
+  add_index "projects", ["funding_source_id"], :name => "index_projects_on_funding_source_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -162,6 +167,8 @@ ActiveRecord::Schema.define(:version => 20140212220418) do
     t.datetime "updated_at",  :null => false
     t.string   "abbr"
   end
+
+  add_index "substrategies", ["strategy_id"], :name => "index_substrategies_on_strategy_id"
 
   create_table "tags", :force => true do |t|
     t.string   "color"
