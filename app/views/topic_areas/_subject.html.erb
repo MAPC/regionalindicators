@@ -2,8 +2,10 @@
   <%= subject.title %>
 </h2>
 
-<%= render partial: 'explanation', 
-           locals: { explanation: subject.explanation} %>
+<% if subject.explanation %>
+  <%= render partial: 'explanation',
+             locals: { explanation: subject.explanation } %>
+<% end %>    
 
 <%= render partial:   'indicator',
            collection: subject.indicators %>
