@@ -29,18 +29,18 @@ describe "StaticPages" do
     end
   end
 
-  pending "About page" do
-    before { visit '/about' ; save_and_open_page }
+  describe "About page" do
+    before { visit '/about' }
     it { should have_content( about.title ) }
   end
 
-  pending "Contact page" do
-    before { visit '/contact' ; save_and_open_page }
+  describe "Contact page" do
+    before { visit '/contact' }
     it { should have_content( contact.title ) }
   end
 
   describe "Dashboard page" do
-    before { visit '/dashboard' ; save_and_open_page }
+    before { visit '/dashboard' }
     it { should have_content( dashboard.title ) }
   end
 end
