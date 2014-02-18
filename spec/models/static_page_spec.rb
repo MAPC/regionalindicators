@@ -3,7 +3,9 @@ require 'spec_helper'
 describe StaticPage do
   
   before { @page = StaticPage.new(title: "About",
-                                  content: "This is the _about_ page!") }
+                                  content: "This is the _about_ page!",
+                                  top: false,
+                                  sort_order: 1) }
 
   subject { @page }
 
@@ -15,16 +17,19 @@ describe StaticPage do
 
   it { should be_valid }
 
-  describe "without a top boolean" do
-  end
-
   describe "without a sort order" do
+    before { @page.sort_order = nil }
+    it { should be_valid }
   end
 
   describe "without a title" do
+    before { @page.title = ' ' }
+    it { should_not be_valid }
   end
 
   describe "without content" do
+    before { @page.content = ' ' }
+    it { should_not be_valid }
   end
 
   describe "with a weird title" do
@@ -35,11 +40,11 @@ describe StaticPage do
     end
   end
 
-  describe "when saving"
+  describe "when saving" do
     before { @page.save }
 
     it "should have a slug_id" do
-      @page.slug_id.should != nil
+      @page.slug_id.should_not == nil
     end
 
     it "should have the right slug_id" do
@@ -50,7 +55,5 @@ describe StaticPage do
       @page.slug_id.should == @page.slug
     end
   end
-
-
 
 end

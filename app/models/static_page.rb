@@ -3,7 +3,11 @@ class StaticPage < ActiveRecord::Base
 
   before_save :set_slug_id
 
-  scope :navbar, where('sort_order IS NOT NULL').where('top IS TRUE').order('sort_order')
+  validates :title, presence: true
+  validates :content, presence: true
+
+
+  scope :navbar,  where('sort_order IS NOT NULL').where('top IS TRUE').order('sort_order')
   scope :ordered, where('sort_order IS NOT NULL').order('sort_order')
   scope :alpha,   order('title ASC')
 
