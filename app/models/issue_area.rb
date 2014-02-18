@@ -4,7 +4,7 @@ class IssueArea < ActiveRecord::Base
                   :title,
                   :sort_order
 
-  belongs_to :taggable, polymorphic: true
+  has_and_belongs_to_many :indicators
   
   DATACOMMON_REGEX = /metrobostondatacommon.org/
 

@@ -7,6 +7,8 @@ describe Objective do
 
   subject { @objective }
 
+  it { should be_valid }
+
   it { should respond_to :number }
   it { should respond_to :title }
   it { should respond_to :goal }

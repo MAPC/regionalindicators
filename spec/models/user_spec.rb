@@ -4,6 +4,10 @@ describe User do
   
   before { @user = User.new(email: 'hello@mapc.org', password: 'thisIsANiceLongSecurePassword') }
 
+  subject { @user }
+
+  it { should be_valid }
+
   describe "when email does not contain MAPC" do
     it "should be invalid" do 
 

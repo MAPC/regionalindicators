@@ -2,17 +2,20 @@ require 'spec_helper'
 
 describe Source do
 
-  let(:explanation) { Explanation.create(narrative: 'Sample narrative') }
+  let(:first_explanation) { Explanation.create(narrative: 'Sample narrative') }
+  let(:other_explanation) { Explanation.create(narrative: 'Sample narrative') }
 
   before do
-    @source = explanation.sources.build(title:   'A New Way of Measuring Debt',
-                                        author:  'Boston Architectural College',
-                                        date:     Time.now,
-                                        url:     'http://the-bac.edu',
-                                        comment: 'This is good data.')
+    @source = Source.new( title:   'A New Way of Measuring Debt',
+                          author:  'Boston Architectural College',
+                          date:     Time.now,
+                          url:     'http://the-bac.edu',
+                          comment: 'This is good data.')
   end
 
   subject { @source }
+
+  it { should be_valid }
 
   it { should respond_to :comment }
   it { should respond_to :title }
@@ -20,12 +23,12 @@ describe Source do
   it { should respond_to :date }
   it { should respond_to :url }
 
-  it { should respond_to :explanation }
+  it { should respond_to :explanations }
 
   describe "accessible attributes" do
     it "should not allow access to explanation_id" do
       expect do
-        Source.new(explanation_id: explanation.id)
+        Source.new(explanation_id: first_explanation.id)
       end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
@@ -68,6 +71,22 @@ describe Source do
   describe "when date is in an incorrect format" do
     before { @source.date = "two weeks ago" }
     it { should_not be_valid }
+  end
+
+  describe "when assigned to many explanations" do
+    let(:first_indicator) { Indicator.create(narrative: 'Sample narrative') }
+    let(:other_indicator) { Indicator.create(narrative: 'Sample narrative') }
+
+    before do
+      first_explanation.sources << @source
+      other_explanation.sources << @source
+    end
+    
+    it "both retain the source" do
+      first_explanation.sources.first.should == @source
+      other_explanation.sources.first.should == @source
+    end
+
   end
 
 end

@@ -12,7 +12,7 @@ class Indicator < ActiveRecord::Base
 
   has_one :explanation, as: :explainable
   has_many :snapshots
-  has_many :issue_areas, as: :taggable
+  has_and_belongs_to_many :issue_areas
 
   accepts_nested_attributes_for :explanation
 
