@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212204349) do
+ActiveRecord::Schema.define(:version => 20140212230701) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -95,6 +95,16 @@ ActiveRecord::Schema.define(:version => 20140212204349) do
     t.datetime "date"
     t.text     "comment"
     t.string   "author"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "static_pages", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "slug_id"
+    t.boolean  "top"
+    t.integer  "sort_order"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

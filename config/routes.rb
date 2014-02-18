@@ -8,10 +8,6 @@ Regionalindicators::Application.routes.draw do
 
   root to: 'topic_areas#index'
 
-  match '/about',     to: 'static_pages#about'
-  match '/contact',   to: 'static_pages#contact'
-  match '/dashboard', to: 'static_pages#dashboard'
-
   match '/search',  to: 'search#search'
   match '/suggest', to: 'search#suggest'
 
@@ -19,6 +15,7 @@ Regionalindicators::Application.routes.draw do
   resources :issue_areas
   resources :topic_areas
   resources :goals
+  resources :static_pages, path: ''
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

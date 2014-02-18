@@ -1,13 +1,5 @@
 class StaticPagesController < ApplicationController
-  def home
-  end
-
-  def about
-  end
-
-  def contact
-  end
-
-  def dashboard
+  def show
+    @page = StaticPage.find_by_slug_id params[:id]
   end
 end

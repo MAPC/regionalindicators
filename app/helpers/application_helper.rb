@@ -8,4 +8,8 @@ module ApplicationHelper
     render partial: 'issue_areas/issue_area', collection: IssueArea.ordered
   end
 
+  def navbar_items
+    render partial: 'shared/nav_item', collection: StaticPage.navbar
+  end
+
 end
