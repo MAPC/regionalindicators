@@ -22,8 +22,6 @@ gem 'cancan'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 
-gem 'high_voltage', '~> 2.1.0'
-
 group :development, :test do
   gem 'progress_bar'
   gem 'rspec-rails'
