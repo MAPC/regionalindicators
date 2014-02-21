@@ -9,6 +9,8 @@ describe Explanation do
 
   subject { @explanation }
 
+  it { should be_valid }
+
   it { should respond_to :narrative }
   it { should respond_to :narrative_html }
   it { should respond_to :sources }

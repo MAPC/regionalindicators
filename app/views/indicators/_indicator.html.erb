@@ -1,1 +1,4 @@
-<%= indicator.title %> | Value: <%= indicator.current_value %> | Rank: <%= indicator.current_rank %>
+<div class="indicator <%= indicator.slug %>">
+  <%= link_to indicator.title, indicator_path(indicator) %>
+  <em>Indicator</em>
+</div>

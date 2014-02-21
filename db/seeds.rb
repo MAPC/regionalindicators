@@ -73,11 +73,12 @@ def issue_areas
     title       = row[0]
     url         = row[1]
     icon        = row[2]
+    sort_order  = row[3]
 
     issue_area = IssueArea.find_by_title(title)
 
     if issue_area.nil?
-      issue_area = IssueArea.new(title: title, datacommon_url: url, icon: icon)
+      issue_area = IssueArea.new(title: title, datacommon_url: url, icon: icon, sort_order: sort_order)
     end
 
     issue_area.save

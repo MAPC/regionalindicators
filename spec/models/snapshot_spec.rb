@@ -10,6 +10,8 @@ describe Snapshot do
 
   subject { @snapshot }
 
+  it { should be_valid }
+
   it { should respond_to :date }
   it { should respond_to :rank }
   it { should respond_to :value }

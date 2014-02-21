@@ -1,6 +1,7 @@
 class Source < ActiveRecord::Base
   attr_accessible :author, :comment, :date, :title, :url
-  belongs_to :explanation
+  
+  has_and_belongs_to_many :explanations
 
   validates :title, presence: true, length: { maximum: 200, minimum: 8 }
   validates :author, presence: true, length: { maximum: 140, minimum: 8 }

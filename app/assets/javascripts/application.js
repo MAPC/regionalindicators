@@ -13,4 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
+//= require twitter/typeahead.min
 //= require_tree .
+
+$(document).ready(function () {
+
+  $('.typeahead').typeahead({ prefetch: '/suggest.json' })
+
+})

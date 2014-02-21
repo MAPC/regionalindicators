@@ -15,3 +15,8 @@
 /tmp
 
 .DS_Store
+
+/solr/data/*
+/solr/development/*
+/solr/test/*
+/log/sunspot*

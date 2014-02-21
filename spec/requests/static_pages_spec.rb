@@ -1,33 +1,46 @@
 require 'spec_helper'
 
 describe "StaticPages" do
-  
+
+  subject { page }
+
+  let!(:about)     { FactoryGirl.create(:static_page, title: 'About') }
+  let!(:contact)   { FactoryGirl.create(:static_page, title: 'Contact', sort_order: 2) }
+  let!(:dashboard) { FactoryGirl.create(:static_page, title: 'Dashboard', sort_order: 3, top: false) }
+
+  let!(:featured)  { FactoryGirl.create(:topic_area, title: 'Prosperity',  featured: true) }
+  let!(:visible)   { FactoryGirl.create(:topic_area, title: 'Sustainable', featured: false) }
+  let!(:invisible) { FactoryGirl.create(:topic_area, title: 'State of Equity',      visible: false) }
+
   describe "Home page" do
-    it "should have the content 'Regional Indicators'" do
-      visit root_path
-      page.should have_content('Regional Indicators')
+    before { visit root_path }
+    it { should have_content('Regional Indicators') }
+
+    describe "nav bar" do
+      it { should have_selector('li', text: 'Topical Reports') }
+
+      it { should have_selector('li', text: featured.title) }
+      it { should have_selector('li', text: visible.title) }
+      it { should_not have_selector('li', text: invisible.title) }
+
+      it { should have_selector('li', text: about.title) }
+      it { should have_selector('li', text: contact.title ) }
+      it { should_not have_selector('li', text: dashboard.title) }
     end
   end
 
   describe "About page" do
-    it "should have the content 'About'" do
-      visit about_path
-      page.should have_content('About')
-    end
+    before { visit '/about' }
+    it { should have_content( about.title ) }
   end
 
   describe "Contact page" do
-    it "should have the content 'Contact'" do
-      visit contact_path
-      page.should have_content('Contact')
-    end
+    before { visit '/contact' }
+    it { should have_content( contact.title ) }
   end
 
   describe "Dashboard page" do
-    it "should have the content 'Indicators Dashboard'" do
-      visit dashboard_path
-      page.should have_content('Indicators Dashboard')
-    end
+    before { visit '/dashboard' }
+    it { should have_content( dashboard.title ) }
   end
-
 end

@@ -9,12 +9,15 @@ describe Goal do
 
   subject { @goal }
 
+  it { should be_valid }
+
   it { should respond_to :description }
   it { should respond_to :number }
   it { should respond_to :slug }
   it { should respond_to :title }
   it { should respond_to :topic_area }
   it { should respond_to :objectives }
+  it { should respond_to :indicators }
 
   describe "when title is not present" do
     before { @goal.title = " " }

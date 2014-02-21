@@ -4,14 +4,15 @@ class Indicator < ActiveRecord::Base
                   :units,
                   :snapshot_ids,
                   :subject_id,
-                  :explanation_attributes
+                  :explanation_attributes,
+                  :issue_area_ids
 
   belongs_to :objective
   belongs_to :subject
 
   has_one :explanation, as: :explainable
   has_many :snapshots
-  has_many :issue_areas, as: :taggable
+  has_and_belongs_to_many :issue_areas
 
   accepts_nested_attributes_for :explanation
 
@@ -55,6 +56,9 @@ class Indicator < ActiveRecord::Base
 
   include SlugExtension
 
+  searchable do
+    text :title
+  end
 
   rails_admin do
     list do

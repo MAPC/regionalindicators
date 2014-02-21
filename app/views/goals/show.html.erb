@@ -1,0 +1,8 @@
+<h1 class="page-header"><%= @goal.number %> | <%= @goal.title %></h1>
+<p>
+  <%= @goal.description %>
+</p>
+
+<% if @goal.indicators %>
+  <%= render partial: 'indicators/indicator', collection: @goal.indicators %>
+<% end %>

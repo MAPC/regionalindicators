@@ -1,23 +1,15 @@
 module ApplicationHelper
 
-  def dropdown_for_topic_areas
-    options = TopicArea.visible.map {|ta| link_list_item ta }.join('')
-    dropdown_content(options)
+  def topic_areas_options
+    render partial: 'shared/list_item', collection: TopicArea.visible
   end
 
-  private
+  def issue_area_icons
+    render partial: 'issue_areas/issue_area', collection: IssueArea.ordered
+  end
 
-    def link_list_item(topic_area)
-      "<li><a href='#{topic_area_path(topic_area)}'>#{topic_area.title}</a></li>"
-    end
-
-    def dropdown_content(options)
-      str = <<-EOS
-        <ul class="dropdown-menu">
-          #{options}
-        </ul>
-      EOS
-      str.html_safe
-    end
+  def navbar_items
+    render partial: 'shared/nav_item', collection: StaticPage.navbar
+  end
 
 end

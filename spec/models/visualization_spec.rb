@@ -6,9 +6,8 @@ describe Visualization do
 
   subject { @visualization }
 
-  it { should respond_to :title }
-  it { should have_attached_file(:file) }
-
+  it { should be_valid }
+  
   describe "when title is blank" do
     before { @visualization.title = " " }
     it { should_not be_valid }

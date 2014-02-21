@@ -7,6 +7,8 @@ describe Subject do
 
   subject { @subject }
 
+  it { should be_valid }
+
   it { should respond_to :title }  
   it { should respond_to :explanation }
   it { should respond_to :slug }
