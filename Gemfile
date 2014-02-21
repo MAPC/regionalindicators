@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'unicorn'
 
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
@@ -24,10 +25,15 @@ gem 'sunspot_solr'
 
 group :development, :test do
   gem 'progress_bar'
+
   gem 'rspec-rails'
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
   gem 'launchy'
+
+  gem 'capistrano',      '~> 2.0'
+  gem 'net-ssh',         '2.7.0'
+  gem 'net-ssh-gateway', '1.2.0'
 end
 
 # Gems used only for assets and not required
@@ -49,12 +55,6 @@ gem 'jquery-rails'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
