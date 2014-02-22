@@ -26,7 +26,7 @@ if env == 'production'
 
   # feel free to point this anywhere accessible on the filesystem
   user 'deployer', 'admin'
-  shared_path = '/home/deployer/apps/regionalindicators/shared'
+  shared_path = '/home/deployer/apps/staging.regionalindicators.org/shared'
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"
