@@ -22,7 +22,7 @@ pid '/tmp/unicorn.regionalindicators.pid'
 if env == 'production'
   # Help ensure your application will always spawn in the
   # symlinked 'current' directory that Capistrano sets up
-  working_directory '/home/deployer/apps/regionalindicators/current'
+  working_directory '/home/deployer/apps/staging.regionalindicators.org/current'
 
   # feel free to point this anywhere accessible on the filesystem
   user 'deployer', 'admin'
