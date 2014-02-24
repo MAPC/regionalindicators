@@ -25,7 +25,7 @@ if env == 'production'
   working_directory '/home/deployer/apps/staging.regionalindicators.org/current'
 
   # feel free to point this anywhere accessible on the filesystem
-  user 'deployer', 'admin'
+  user 'deployer', 'staff'
   shared_path = '/home/deployer/apps/staging.regionalindicators.org/shared'
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
