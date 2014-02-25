@@ -154,17 +154,17 @@ namespace :foreman do
 
   desc "Start the application services"
   task :start, roles: :app do
-    run "rvmsudo start #{application}"
+    sudo "start #{application}"
   end
 
   desc "Stop the application services"
   task :stop, roles: :app do
-    run "rvmsudo stop #{application}"
+    sudo "stop #{application}"
   end
 
   desc "Restart the application services"
   task :restart, roles: :app do
-    run "rvmsudo start #{application} || rvmsudo restart #{application}"
+    sudo "start #{application} || restart #{application}"
   end
 end
 
