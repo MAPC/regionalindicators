@@ -7,6 +7,7 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 gem 'unicorn'
+gem 'foreman'
 
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
