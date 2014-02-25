@@ -154,12 +154,12 @@ namespace :foreman do
 
   desc "Start the application services"
   task :start, roles: :app do
-    sudo "start #{application}"
+    run "#{try_sudo} start #{application}"
   end
 
   desc "Stop the application services"
   task :stop, roles: :app do
-    sudo "stop #{application}"
+    run "#{try_sudo} stop #{application}"
   end
 
   desc "Restart the application services"
