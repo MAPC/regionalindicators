@@ -1,7 +1,5 @@
 require 'bundler/capistrano'
 
-default_run_options[:pty] = true
-
 set :application,   "regionalindicators.org"
 set :scm,           :git 
 set :repository,    "git@github.com:MAPC/regionalindicators.git" 
@@ -156,17 +154,17 @@ namespace :foreman do
 
   desc "Start the application services"
   task :start, roles: :app do
-    run "sudo start #{application}"
+    run "rvmsudo start #{application}"
   end
 
   desc "Stop the application services"
   task :stop, roles: :app do
-    run "sudo stop #{application}"
+    run "rvmsudo stop #{application}"
   end
 
   desc "Restart the application services"
   task :restart, roles: :app do
-    run "sudo start #{application} || sudo restart #{application}"
+    run "rvmsudo start #{application} || rvmsudo restart #{application}"
   end
 end
 
