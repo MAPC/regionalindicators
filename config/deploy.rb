@@ -105,7 +105,11 @@ namespace :deploy do
 
   desc "Zero-downtime restart of Unicorn"
   task :restart, except: { no_release: true } do
-    run "kill -s USR2 `cat /tmp/unicorn.regionalindicators.pid`"
+    begin
+      run "kill -s USR2 `cat /tmp/unicorn.regionalindicators.pid`"
+    rescue
+      # It wasn't running. No problem.
+    end
   end
 
   desc "Start Unicorn"

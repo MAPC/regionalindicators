@@ -20,3 +20,5 @@
 /solr/development/*
 /solr/test/*
 /log/sunspot*
+
+.env
