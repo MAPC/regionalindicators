@@ -40,7 +40,7 @@ describe "Report pages" do
       let!(:not_featured2) { FactoryGirl.create(:topic_area, title: "Prosperity") }
       let!(:not_visible)   { FactoryGirl.create(:topic_area, title: "State of Equity", visible: false) }
 
-      before { visit root_path ; save_and_open_page }
+      before { visit root_path }
       
       it { should have_selector('h1', text: not_featured.title ) }
       it { should have_selector('h3', text: not_featured2.title ) }

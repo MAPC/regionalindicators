@@ -58,27 +58,6 @@ after_fork do |server, worker|
     ActiveRecord::Base.establish_connection
   end
 
-  
-  begin
-    uid, gid = Process.euid, Process.egid
-    user, group = 'deployer', 'staff'
-    target_uid = Etc.getpwnam(user).uid
-    target_gid = Etc.getgrnam(group).gid
-    worker.tmp.chown(target_uid, target_gid)
-    if uid != target_uid || gid != target_gid
-      Process.initgroups(user, target_gid)
-      Process::GID.change_privilege(target_gid)
-      Process::UID.change_privilege(target_uid)
-    end
-  rescue => e
-    if RAILS_ENV == 'development'
-      STDERR.puts "couldn't change user, oh well"
-    else
-      raise e
-    end
-  end
-
-
   # if preload_app is true, then you may also want to check and restart
   # any other shared sockets/descriptors such as Memcached and Redis.
   # TokyoCabinet file handles are safe to reuse between any number of

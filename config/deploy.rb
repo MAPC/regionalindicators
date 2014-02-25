@@ -40,11 +40,14 @@ default_environment["RUBY_VERSION"] = "ruby-2.0.0-p247"
 
 default_run_options[:shell] = 'bash'
 
+after 'deploy:update', 'foreman:export'
+after 'deploy:update', 'foreman:restart'
+
 namespace :deploy do
   desc 'Deploy your application'
   task :default do
     update
-    restart
+    # restart
   end
 
   desc 'Set up your git-based deployment app'
@@ -142,6 +145,33 @@ namespace :deploy do
     end
   end
 end
+
+namespace :foreman do
+  desc "Export the Procfile and environments to Ubuntu's upstart scripts"
+  task :export, roles: :app do
+    run "cd #{current_path} && #{try_sudo} bundle exec foreman export -e .env upstart /etc/init -a #{application} -u #{user} -l #{shared_path}/log"
+  end
+
+  desc "Start the application services"
+  task :start, roles: :app do
+    sudo "start #{application}"
+  end
+
+  desc "Stop the application services"
+  task :stop, roles: :app do
+    sudo "stop #{application}"
+  end
+
+  desc "Restart the application services"
+  task :restart, roles: :app do
+    run "#{try_sudo} start #{application} || #{try_sudo} restart #{application}"
+  end
+end
+
+
+
+
+
 
 def run_rake(cmd)
   run "cd #{current_path}; #{rake} #{cmd}"
