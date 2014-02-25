@@ -1,5 +1,7 @@
 require 'bundler/capistrano'
 
+default_run_options[:pty] = true
+
 set :application,   "regionalindicators.org"
 set :scm,           :git 
 set :repository,    "git@github.com:MAPC/regionalindicators.git" 
@@ -8,7 +10,7 @@ set :migrate_target, :current
 set :ssh_options,  { forward_agent: true } 
 set :rails_env,     "production"
 set :deploy_to,    "/home/deployer/apps/staging.regionalindicators.org"
-set :normalize_asset_timestamps, false 
+set :normalize_asset_timestamps, false
 
 set :user,    "deployer" 
 set :group,   "admin"
