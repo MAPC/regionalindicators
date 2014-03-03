@@ -19,6 +19,8 @@
 /solr/data/*
 /solr/development/*
 /solr/test/*
+/solr/pids/*
+
 /log/sunspot*
 
 .env

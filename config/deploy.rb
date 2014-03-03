@@ -169,9 +169,20 @@ namespace :foreman do
   end
 end
 
+namespace :solr do
+  desc "Start the Solr server"
+  task :start do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake sunspot:solr:start"
+  end
 
+  task :stop do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake sunspot:solr:start"
+  end
 
-
+  task :reindex do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake sunspot:solr:reindex"
+  end
+end
 
 
 def run_rake(cmd)
