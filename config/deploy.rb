@@ -1,23 +1,21 @@
 require 'bundler/capistrano'
+require 'capistrano/ext/multistage'
+
+set :stages, %w(staging production)
+set :default_stage, 'staging'
 
 set :application,   "regionalindicators.org"
 set :scm,           :git 
 set :repository,    "git@github.com:MAPC/regionalindicators.git" 
-set :branch,        "origin/master" 
+
 set :migrate_target, :current 
 set :ssh_options,  { forward_agent: true } 
 set :rails_env,     "production"
-set :deploy_to,     "/home/deployer/apps/staging.regionalindicators.org"
+
 set :normalize_asset_timestamps, false
 set :assets_role,   [:app]
 
-set :user,    "deployer" 
-set :group,   "admin"
 set :use_sudo, false 
-
-role :web, "10.10.10.89"
-role :app, "10.10.10.89" 
-role :db,  "10.10.10.89", primary: true 
 
 set(:latest_release)  { fetch(:current_path) } 
 set(:release_path)    { fetch(:current_path) } 
