@@ -41,9 +41,10 @@ audio:not([controls]) {
 }
 
 html {
-  font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+  color: #d72c2c;
+  background-color: #77ff7c;
 }
 
 body {
@@ -462,7 +463,6 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   line-height: 1.1;
 }

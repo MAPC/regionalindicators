@@ -14,9 +14,241 @@ $public-safety:             #990033;
 $technology:                #000066;
 $transportation:            #FF6633;
 
+$sustainable:				rgba(252,95,88,1);
+$vitality:					rgba(255,35,100,1);
+$prosperity:				rgba(100,30,120,1);
+$transportation:			rgba(150,50,150,1);
+$healthy:					rgba(25,100,10,1);
+
 $text-color: #000000;
 $inverse-text-color: #000000;
 
+$headings:					rgba(154,58,54,1);
+$subheadings:				rgba(252,95,88,1);
+$links:						rgba(240,83,110,1);
+$linkshover:				rgba(204,70,93,1);
+
+/* fonts */
+@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Rokkitt:400,700);
+
+/* basic typography */
+
+html {font-family: 'Lato', sans-serif;
+
+}
+
+p {
+	font-family: 'Lato', sans-serif;
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 28px;
+}
+
+a {color: $links;}
+
+a:hover {color: $linkshover;
+	    transition: all 0.3s ease-in-out 0s;		
+	-webkit-transition: all 0.3s ease-in-out 0s;
+}
+
+body {
+	font-family: 'Lato', sans-serif;
+	padding-top: 60px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: 'Rokkitt', serif;
+  color: $subheadings;
+}
+
+h1 {
+	letter-spacing: 2px;
+	color: $headings;
+}
+
+.sustainable-growth {
+	background-color: $sustainable;
+	color: #fff;
+	padding: 10px 15px;
+	margin: 40px 0 20px;
+	}
+
+.community-vitality {
+	background-color: $vitality;
+	color: #fff;
+	padding: 10px 15px;
+	margin: 40px 0 20px;
+	}
+
+.regional-prosperity {
+	background-color: $prosperity;
+	color: #fff;
+	padding: 10px 15px;
+	margin: 40px 0 20px;
+	}
+
+.transportation-choices {
+	background-color: $transportation;
+	color: #fff;
+	padding: 10px 15px;
+	margin: 40px 0 20px;
+	}
+
+.healthy-environment {
+	background-color: $healthy;
+	color: #fff;
+	padding: 10px 15px;
+	margin: 40px 0 20px;
+	}
+
+/* navigation */
+
+/*.navbar {
+	padding: 10px 0;
+} */
+
+.navbar-default {
+    background-color: rgba(0,0,0,1);
+    border-color: #000000;
+}
+
+/* title */
+.navbar-default .navbar-brand {
+	font-family: 'Rokkitt';
+	font-size: 24px;
+    color: #fff;
+    transition: all 0.3s ease-in-out 0s;		
+	-webkit-transition: all 0.3s ease-in-out 0s;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #5E5E5E;
+}
+
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+    transition: all 0.3s ease-in-out 0s;		
+	-webkit-transition: all 0.3s ease-in-out 0s;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #333;
+    background-color: #c0c0c0;
+    transition: all 0.3s ease-in-out 0s;		
+	-webkit-transition: all 0.3s ease-in-out 0s;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #D5D5D5;
+}
+
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
+
+/* mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #333;
+    }
+}
+
+/* scroll spy */
+
+.bs-sidenav {
+	color: #701717;
+}
+
+
+.bs-sidenav.active {
+	font-weight: 700;
+	color: #701717;
+}
+
+
+
+/* form-group search */
+.form-group {background-color: #ffffff;}
+	
+/* Jumbotron */
+
+.jumbotron {
+    margin-bottom: 0px;
+    background-image: url(http://www.hdwallpapers.in/walls/abstract_color_background_picture_8016-wide.jpg);
+    background-position: 0% 25%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+
+/* buttons */
+
+.btn {
+	background: #fff;
+	background-image: none;
+	border:1px solid #999;
+	color: #999;
+	letter-spacing: 1px;
+	text-decoration: none ! important;
+	text-shadow: none;
+	transition: all 0.3s ease-in-out 0s;		
+	-webkit-transition: all 0.3s ease-in-out 0s;		
+}
+.btn:hover {
+	background: #333;
+	color: #fff;
+}
+
+/* icons */
 
 .issue-area-icons {
   width: 100%
