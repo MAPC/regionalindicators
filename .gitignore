@@ -9,6 +9,8 @@
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
+metrofuture_development
+metrofuture_test
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
@@ -17,6 +19,9 @@
 .DS_Store
 
 /solr/data/*
-/solr/development/*
-/solr/test/*
+/solr/development
+/solr/test
 /log/sunspot*
+
+.env
+.test
