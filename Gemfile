@@ -5,12 +5,8 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-<<<<<<< HEAD
 gem 'pg'
 gem 'unicorn'
-=======
-gem 'sqlite3'
->>>>>>> design
 
 gem 'bluecloth'
 gem 'validates_timeliness', '~> 3.0'
@@ -35,13 +31,11 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'launchy'
 
-<<<<<<< HEAD
   gem 'capistrano',      '~> 2.0'
   gem 'net-ssh',         '2.7.0'
   gem 'net-ssh-gateway', '1.2.0'
-=======
+
   gem 'sqlite3' # for convenience of the designer
->>>>>>> design
 end
 
 # Gems used only for assets and not required
