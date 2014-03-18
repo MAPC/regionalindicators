@@ -21,8 +21,8 @@ gem 'aws-sdk'
 gem 'rails_admin'
 gem 'cancan'
 
-gem 'sunspot_rails'
-gem 'sunspot_solr'
+# gem 'sunspot_rails'
+# gem 'sunspot_solr'
 
 group :development, :test do
   gem 'progress_bar'
