@@ -6,4 +6,5 @@
            locals: { explanation: subject.explanation} %>
 
 <%= render partial:   'indicator',
-           collection: subject.indicators %>
+           collection: subject.indicators,
+           locals: { subject: subject.slug } %>

@@ -1,4 +1,4 @@
-<h3 class="<%= indicator.slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
+<h3 class="<%= subject %> <%= indicator.slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
 
 <% if indicator.explanation %>
   <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
