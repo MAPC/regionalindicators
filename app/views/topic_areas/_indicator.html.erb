@@ -1,5 +1,20 @@
 <h3 class="<%= subject %> <%= indicator.slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
 
+<div class="<%= indicator.slug %> value">
+  Value:
+  <%= indicator.value %>
+</div>
+
+<div class="<%= indicator.slug %> delta">
+  Change since 2000:
+  
+</div>
+
+<div class="<%= indicator.slug %> rank">
+  Rank:
+  <%= indicator.rank %>
+</div>
+
 <% if indicator.explanation %>
   <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
 <% end %>
