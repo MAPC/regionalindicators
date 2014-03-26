@@ -6,6 +6,10 @@ describe Visualization do
 
   subject { @visualization }
 
+  it { should respond_to :data }
+  it { should respond_to :d3 }
+  it { should respond_to :slug }
+
   it { should be_valid }
   
   describe "when title is blank" do

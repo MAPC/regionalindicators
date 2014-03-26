@@ -40,7 +40,6 @@ Regionalindicators::Application.configure do
   
   config.paperclip_defaults = {
     storage: :filesystem,
-    path: "public/resources/:id/:style/:basename.:extension",
     default_url: "/404.html"
   }
 end

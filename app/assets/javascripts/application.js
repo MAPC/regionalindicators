@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require twitter/typeahead.min
+//= require d3.v3
+//= require miso.ds.deps.ie.0.4.1
 //= require_tree .
 
 $(document).ready(function () {

@@ -6,5 +6,5 @@
   <%= render partial: 'visualizations/visualization', 
              locals: { viz:              explanation.visualization,
                        explainable_id:   explanation.explainable.id,
-                       explainable_type: explanation.explainable.class.name } %>
+                       explainable_type: explanation.explainable.class.name.downcase } %>
 <% end %>
