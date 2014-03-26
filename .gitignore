@@ -18,9 +18,10 @@ metrofuture_test
 
 .DS_Store
 
-/solr/data/*
-/solr/development
-/solr/test
+solr/data/*
+solr/development/*
+solr/test/*
+
 /log/sunspot*
 
 .env
