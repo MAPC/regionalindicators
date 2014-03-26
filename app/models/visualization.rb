@@ -1,45 +1,37 @@
 class Visualization < ActiveRecord::Base
-  attr_accessible :title, :file, :delete_file
+  attr_accessible :title, :d3, :data, :delete_file
   attr_accessor :delete_file
+  
   belongs_to :explanation
 
+  has_attached_file :d3,   path: "public/viz/:basename.:extension"
+  has_attached_file :data, path: "public/viz/data/:basename.:extension"
+  
+  before_validation { self.file.clear if self.delete_file == '1' }
+  
   validates :title, presence: true, length: { maximum: 200, minimum: 4 }
 
-  has_attached_file :file,
-           					storage: :s3,
-        				    s3_credentials: {
-          						bucket:            ENV['S3_BUCKET_NAME'],
-          						access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
-          						secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
-        				    },
-        				    path: "resources/:id/:style/:basename.:extension",
-        				    default_url: "/404.html",
-          					styles: lambda { |a|
-                                  if a.instance.is_image?
-                                    { small: ['400x300>', :jpg] }
-                                  else
-                                    {}
-                                  end
-                            }
+  validates_attachment :d3,   content_type: { content_type: [/\A.*\/.*javascript\z/, 'text/html'] }
+  validates_attachment :data, content_type: { content_type: ['text/csv'] }
 
-  before_validation { self.file.clear if self.delete_file == '1' }
-
-  validates_attachment :file, content_type: { content_type: [/\Aimage\/.*\Z/, 'text/html'] }
-
-  def is_image?
-    # return false unless file.content_type
-    ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'].include?(file.content_type)
+  def slug
+    exp = self.explanation.explainable
+    "#{exp.class.name.downcase}-#{exp.id}"
   end
 
   rails_admin do
     list do
       field :id
-      field :file
+      field :d3
+      field :data
       field :updated_at do
         pretty_value do
           value.strftime("%-d %b %Y %H:%M")
         end
-      end 
+      end
+      field :explanation do
+        read_only true
+      end
     end
   end
  

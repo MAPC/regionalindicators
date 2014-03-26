@@ -35,6 +35,8 @@ group :development, :test do
   gem 'capistrano',      '~> 2.0'
   gem 'net-ssh',         '2.7.0'
   gem 'net-ssh-gateway', '1.2.0'
+
+  gem 'sqlite3' # for convenience of the designer
 end
 
 # Gems used only for assets and not required

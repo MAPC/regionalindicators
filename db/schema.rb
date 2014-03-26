@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212230701) do
+ActiveRecord::Schema.define(:version => 20140326201251) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -150,11 +150,15 @@ ActiveRecord::Schema.define(:version => 20140212230701) do
     t.string   "title"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
     t.integer  "explanation_id"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+    t.string   "d3_file_name"
+    t.string   "d3_content_type"
+    t.integer  "d3_file_size"
+    t.datetime "d3_updated_at"
   end
 
 end

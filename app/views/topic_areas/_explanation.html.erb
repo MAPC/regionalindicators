@@ -3,5 +3,8 @@
 <%= render partial: 'source', collection: explanation.sources %>
 
 <% if explanation.visualization %>
-  <%= render partial: 'visualization', locals: { viz: explanation.visualization } %>
+  <%= render partial: 'visualizations/visualization', 
+             locals: { viz:              explanation.visualization,
+                       explainable_id:   explanation.explainable.id,
+                       explainable_type: explanation.explainable.class.name.downcase } %>
 <% end %>
