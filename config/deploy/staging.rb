@@ -1,4 +1,4 @@
-server '10.10.10.89', :app, :web, :db, primary: true
+Couserver '10.10.10.89', :app, :web, :db, primary: true
 
 set :user,      'deployer'
 set :group,     'staff'
