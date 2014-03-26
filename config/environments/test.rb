@@ -34,4 +34,11 @@ Regionalindicators::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # S3 bucket
+  config.paperclip_defaults = {
+    storage: :filesystem,
+    path: "public/resources/:id/:style/:basename.:extension",
+    default_url: "/404.html"
+  }
 end

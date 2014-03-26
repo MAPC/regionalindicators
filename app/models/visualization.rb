@@ -6,15 +6,15 @@ class Visualization < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 200, minimum: 4 }
 
   has_attached_file :file,
-           					storage: :s3,
-        				    s3_credentials: {
-          						bucket:            ENV['S3_BUCKET_NAME'],
-          						access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
-          						secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
-        				    },
-        				    path: "resources/:id/:style/:basename.:extension",
-        				    default_url: "/404.html",
-          					styles: lambda { |a|
+                    storage: :s3,
+                    s3_credentials: {
+                      bucket:            ENV['S3_BUCKET_NAME'],
+                      access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+                      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+                    },
+                    path: "resources/:id/:style/:basename.:extension",
+                    default_url: "/404.html",
+                    styles: lambda { |a|
                                   if a.instance.is_image?
                                     { small: ['400x300>', :jpg] }
                                   else
