@@ -96,7 +96,7 @@ namespace :deploy do
     CMD
 
     # precompile the assets
-    run "cd #{latest_release}; bundle exec rake assets:precompile"
+    # run "cd #{latest_release}; bundle exec rake assets:precompile"
 
     if fetch(:normalize_asset_timestamps, true)
       stamp = Time.now.utc.strftime("%Y%m%d%H%M.%S")
