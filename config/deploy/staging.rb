@@ -4,5 +4,5 @@ ssh_options[:keys] = ["~/.ssh/id_rsa"]
 set :user,      'deployer'
 set :group,     'staff'
 
-set :branch,    'origin/master'
+set :branch,    'origin/stage'
 set :deploy_to, "/home/#{user}/apps/#{stage}.#{application}"
