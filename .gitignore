@@ -9,8 +9,8 @@
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
-metrofuture_development
-metrofuture_test
+/db/*backup
+/db/*test
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
