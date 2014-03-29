@@ -1,12 +1,14 @@
-<div class="jumbotron">
+<% content_for :jumbotron do %>
+  <div class="jumbotron">
 
-  <% if @topic_areas[:featured].length > 0 %>
-    <%= render partial: 'featured', collection: @topic_areas[:featured] %>
-  <% else %>
-    <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].first } %>
-  <% end %>
+    <% if @topic_areas[:featured].length > 0 %>
+      <%= render partial: 'featured', collection: @topic_areas[:featured] %>
+    <% else %>
+      <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].first } %>
+    <% end %>
 
-</div>
+  </div>
+<% end %>
 
 <div class="container">
   <div class="row">

@@ -1,4 +1,4 @@
-<h2 class="<%= subject.slug %>" id="<%= subject.slug %>">
+<h2 class="<%= topic_area_slug %> <%= subject.slug %>" id="<%= subject.slug %>">
   <%= subject.title %>
 </h2>
 
@@ -8,4 +8,6 @@
 <% end %>    
 
 <%= render partial:   'indicator',
-           collection: subject.indicators %>
+           collection: subject.indicators,
+           locals:   { subject_slug:    subject.slug,
+                       topic_area_slug: topic_area_slug } %>

@@ -205,6 +205,24 @@ h1 {
 
 .bs-sidenav {
 	color: #701717;
+  li {
+    font-weight: 400;
+    ul {
+      display: none;
+      padding-left: 10px;
+    }
+
+    &.active {
+      font-weight: 800;
+      ul {
+        display: block;
+        li.active {
+          font-weight: 400;
+          border-left: 2px #F0F solid;
+        }
+      }
+    }
+  }
 }
 
 
