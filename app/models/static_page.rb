@@ -7,7 +7,7 @@ class StaticPage < ActiveRecord::Base
   validates :content, presence: true
 
 
-  scope :navbar,  where('sort_order IS NOT NULL').where('top IS TRUE').order('sort_order')
+  scope :navbar,  where('sort_order IS NOT NULL').where(top: true).order('sort_order')
   scope :ordered, where('sort_order IS NOT NULL').order('sort_order')
   scope :alpha,   order('title ASC')
 

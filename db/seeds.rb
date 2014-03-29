@@ -181,9 +181,9 @@ end
 
 
 topic_areas
-goals
-objectives
-indicators
-issue_areas
+# goals
+# objectives
+# indicators
+# issue_areas
 # reports
 
