@@ -12,9 +12,12 @@
 
 <div class="col-md-3 myscrollspy">
   <div class="bs-sidebar hidden-print affix">
-    <ul class="nav bs-sidenav">
-      <%= render partial: 'scrollspy/subject', collection: @topic_area.subjects %>
-    </ul>
+    <!-- scroll spy container issue -->
+    <div class="col-md-6">
+	    <ul class="nav bs-sidenav">
+	      <%= render partial: 'scrollspy/subject', collection: @topic_area.subjects %>
+	    </ul>
+    </div>
   </div>
 </div>
 

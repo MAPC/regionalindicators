@@ -135,7 +135,6 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
-    pg (0.17.1)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     progress_bar (1.0.0)
@@ -278,7 +277,6 @@ DEPENDENCIES
   net-ssh (= 2.7.0)
   net-ssh-gateway (= 1.2.0)
   paperclip (~> 3.0)
-  pg
   progress_bar
   rails (= 3.2.13)
   rails_admin
