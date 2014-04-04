@@ -8,7 +8,7 @@ $education:                 #006699;
 $environment-energy:        #91E248;
 $geographic-boundaries:     #999999;
 $housing:                   #FF9900;
-$land-use-zoning:           #FFFF33;
+$land-use-zoning:           #FFEE2C;
 $public-health:             #CC3300;
 $public-safety:             #990033;
 $technology:                #000066;
@@ -17,16 +17,18 @@ $transportation:            #FF6633;
 $sustainable:				rgba(252,95,88,1);
 $vitality:					rgba(255,35,100,1);
 $prosperity:				rgba(100,30,120,1);
-$transportation:			rgba(150,50,150,1);
-$healthy:					rgba(25,100,10,1);
+$transportation:	  rgba(150,50,150,1);
+$healthy:					  rgba(25,100,10,1);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
 
 $headings:					rgba(0,0,0,1);
 $subheadings:				rgba(39,39,39,1);
-$links:						#787878;
-$linkshover:				#646464;
+$links:					 #787878;
+$linkshover:		 #646464;
+
+$soft-highlight: #F5F5F5;
 
 /* fonts */
 @import url(http://fonts.googleapis.com/css?family=Lato);
@@ -97,7 +99,7 @@ h1 {
 	}
 	
 h2.sustainable-growth {
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $sustainable;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -105,7 +107,7 @@ h2.sustainable-growth {
 	}
 
 h3.sustainable-growth {
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $sustainable;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -119,7 +121,7 @@ h3.sustainable-growth {
 	}
 	
 h2.community-vitality {
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $vitality;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -127,7 +129,7 @@ h2.community-vitality {
 	}
 
 h3.community-vitality {
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $vitality;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -141,7 +143,7 @@ h3.community-vitality {
 	}
 
 h2.regional-prosperity{
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $prosperity;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -149,7 +151,7 @@ h2.regional-prosperity{
 	}
 
 h3.regional-prosperity{
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $prosperity;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -164,7 +166,7 @@ h3.regional-prosperity{
 	}
 	
 h2.transportation-choices {	
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $transportation;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -172,7 +174,7 @@ h2.transportation-choices {
 	}
 	
 h3.transportation-choices {
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $transportation;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -186,7 +188,7 @@ h3.transportation-choices {
 	}
 	
 h2.healthy-environment {	
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $healthy;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -194,7 +196,7 @@ h2.healthy-environment {
 	}
 	
 h3.healthy-environment {
-	background-color: #fafafa;
+	background-color: $soft-highlight;
 	color: $transportation;
 	padding: 10px 5px;
 	margin: 40px 0 20px;
@@ -305,7 +307,7 @@ h3.healthy-environment {
         display: block;
         li.active {
           font-weight: 400;
-          background-color: #fafafa;
+          background-color: $soft-highlight;
         }
       }
     }
