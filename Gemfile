@@ -18,6 +18,7 @@ gem 'bootstrap-typeahead-rails'
 gem 'paperclip', '~> 3.0'
 gem 'aws-sdk'
 
+gem 'devise'
 gem 'rails_admin'
 gem 'cancan'
 
@@ -61,6 +62,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
-
-
-gem "devise"
