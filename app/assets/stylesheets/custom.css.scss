@@ -1,5 +1,11 @@
 /* colors */
 
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('/assets/glyphicons-halflings-regular.eot');
+  src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
 $arts-culture:              #FFCC00;
 $civic-vitality-governance: #00CCCC;
 $demographics:              #660066;
@@ -14,19 +20,19 @@ $public-safety:             #990033;
 $technology:                #000066;
 $transportation:            #FF6633;
 
-$sustainable:				rgba(252,95,88,1);
-$vitality:					rgba(255,35,100,1);
-$prosperity:				rgba(100,30,120,1);
-$transportation:	  rgba(150,50,150,1);
-$healthy:					  rgba(25,100,10,1);
+$sustainable:       rgba(252,95,88,1);
+$vitality:          rgba(255,35,100,1);
+$prosperity:        rgba(100,30,120,1);
+$transportation:    rgba(150,50,150,1);
+$healthy:           rgba(25,100,10,1);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
 
-$headings:					rgba(0,0,0,1);
-$subheadings:				rgba(39,39,39,1);
-$links:					 #787878;
-$linkshover:		 #646464;
+$headings:          rgba(0,0,0,1);
+$subheadings:       rgba(39,39,39,1);
+$links:          #787878;
+$linkshover:     #646464;
 
 $soft-highlight: #F5F5F5;
 
@@ -37,7 +43,7 @@ $soft-highlight: #F5F5F5;
 /* basic typography */
 
 body {
-	padding-top: 200px;
+  padding-top: 200px;
 }
 
 html {font-family: 'Lato', sans-serif;
@@ -45,29 +51,29 @@ html {font-family: 'Lato', sans-serif;
 }
 
 p {
-	font-family: 'Lato', sans-serif;
-	font-size: 18px;
-	font-weight: 200;
-	line-height: 28px;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 28px;
 }
 
 floatleft {
-	float:left;
+  float:left;
 }
 
 a {
-	color: $links;
+  color: $links;
 }
 
 a:hover {
-	color: $linkshover;
-	transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+  color: $linkshover;
+  transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 
 body {
-	font-family: 'Lato', sans-serif;
-	padding-top: 60px;
+  font-family: 'Lato', sans-serif;
+  padding-top: 60px;
 }
 
 h1,
@@ -87,125 +93,129 @@ h6,
 }
 
 h1 {
-	letter-spacing: 2px;
-	color: $headings;
+  letter-spacing: 2px;
+  color: $headings;
 }
 
 .sustainable-growth {
-	background-color: $sustainable;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
-	
+  background-color: $sustainable;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
 h2.sustainable-growth {
-	background-color: $soft-highlight;
-	color: $sustainable;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	border-bottom: 2px solid $sustainable;
-	}
+  background-color: $soft-highlight;
+  color: $sustainable;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $sustainable;
+  }
 
 h3.sustainable-growth {
-	background-color: $soft-highlight;
-	color: $sustainable;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	}
+  background-color: $soft-highlight;
+  color: $sustainable;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
 
 .community-vitality {
-	background-color: $vitality;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
-	
+  background-color: $vitality;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
 h2.community-vitality {
-	background-color: $soft-highlight;
-	color: $vitality;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	border-bottom: 2px solid $vitality;
-	}
+  background-color: $soft-highlight;
+  color: $vitality;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $vitality;
+  }
 
 h3.community-vitality {
-	background-color: $soft-highlight;
-	color: $vitality;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	}
-	
+  background-color: $soft-highlight;
+  color: $vitality;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
+  
 .regional-prosperity {
-	background-color: $prosperity;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
+  background-color: $prosperity;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
 
 h2.regional-prosperity{
-	background-color: $soft-highlight;
-	color: $prosperity;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	border-bottom: 2px solid $prosperity;
-	}
+  background-color: $soft-highlight;
+  color: $prosperity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $prosperity;
+  }
 
 h3.regional-prosperity{
-	background-color: $soft-highlight;
-	color: $prosperity;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	}
-	
+  background-color: $soft-highlight;
+  color: $prosperity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
+  
 
 .transportation-choices {
-	background-color: $transportation;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
-	
-h2.transportation-choices {	
-	background-color: $soft-highlight;
-	color: $transportation;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	border-bottom: 2px solid $transportation;
-	}
-	
+  background-color: $transportation;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.transportation-choices { 
+  background-color: $soft-highlight;
+  color: $transportation;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $transportation;
+  }
+  
 h3.transportation-choices {
-	background-color: $soft-highlight;
-	color: $transportation;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
+  background-color: $soft-highlight;
+  color: $transportation;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
 }
 
 .healthy-environment {
-	background-color: $healthy;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
-	
-h2.healthy-environment {	
-	background-color: $soft-highlight;
-	color: $healthy;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
-	border-bottom: 2px solid $healthy;
-	}
-	
+  background-color: $healthy;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.healthy-environment {  
+  background-color: $soft-highlight;
+  color: $healthy;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $healthy;
+  }
+  
 h3.healthy-environment {
-	background-color: $soft-highlight;
-	color: $transportation;
-	padding: 10px 5px;
-	margin: 40px 0 20px;
+  background-color: $soft-highlight;
+  color: $transportation;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+}
+
+button {font-weight: 200;
+  text-transform: uppercase;
 }
 
 /* navigation */
 
 /*.navbar {
-	padding: 10px 0;
+  padding: 10px 0;
 } */
 
 .navbar-default {
@@ -215,11 +225,11 @@ h3.healthy-environment {
 
 /* title */
 .navbar-default .navbar-brand {
-	font-family: 'Rokkitt';
-	font-size: 24px;
+  font-family: 'Rokkitt';
+  font-size: 24px;
     color: #fff;
-    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -229,15 +239,15 @@ h3.healthy-environment {
 /* link */
 .navbar-default .navbar-nav > li > a {
     color: #fff;
-    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #333;
     background-color: #c0c0c0;
-    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-nav > .active > a, 
 .navbar-default .navbar-nav > .active > a:hover, 
@@ -293,7 +303,7 @@ h3.healthy-environment {
 /* scroll spy */
 
 .bs-sidenav {
-	color: #787878;
+  color: #787878;
   li {
     font-weight: 400;
     ul {
@@ -316,15 +326,15 @@ h3.healthy-environment {
 
 
 .bs-sidenav.active {
-	font-weight: 700;
-	color: #646464;
+  font-weight: 700;
+  color: #646464;
 }
 
 
 
 /* form-group search */
 .form-group {background-color: #ffffff;}
-	
+  
 /* Jumbotron */
 
 .jumbotron {
@@ -339,19 +349,19 @@ h3.healthy-environment {
 /* buttons */
 
 .btn {
-	background: #fff;
-	background-image: none;
-	border:1px solid #999;
-	color: #999;
-	letter-spacing: 1px;
-	text-decoration: none ! important;
-	text-shadow: none;
-	transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;		
+  background: #fff;
+  background-image: none;
+  border:1px solid #999;
+  color: #999;
+  letter-spacing: 1px;
+  text-decoration: none ! important;
+  text-shadow: none;
+  transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;    
 }
 .btn:hover {
-	background: #333;
-	color: #fff;
+  background: #333;
+  color: #fff;
 }
 
 /* icons */
@@ -362,11 +372,12 @@ h3.healthy-environment {
 
 .issue-area-icon {
   display: block;
-  width: 85px;
-  height: 85px;
+  width: 80px;
+  height: 80px;
   margin: 10px 5px;
   float: left;
   font-size: 12px;
+  font-weight: 200;
   color: $text-color;
   border-radius: 50%;
   text-align: center;
@@ -464,7 +475,11 @@ h3.healthy-environment {
   background-color: $geographic-boundaries;
 }
 
-
+.footer {
+  position: relative;
+  width: 100%;
+  bottom: 0;
+}
 
 
 
