@@ -330,6 +330,11 @@ button {font-weight: 200;
   color: #646464;
 }
 
+/* Temp fix for keeping the sidebar roughly in the column. */
+.bs-sidenav {
+  max-width: 250px;
+}
+
 
 
 /* form-group search */
