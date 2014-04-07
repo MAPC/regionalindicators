@@ -1,19 +1,19 @@
 <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
 
-<div class="<%= indicator.slug %> value">
-  Value:
+<button type="button" class="alert alert-success <%= indicator.slug %> value">
+  <span class="glyphicon glyphicon-thumbs-up"></span> Value:
   <%= indicator.value %>
-</div>
+</button>
 
-<div class="<%= indicator.slug %> delta">
-  Change since 2000:
+<button type="button" class="alert alert-success <%= indicator.slug %> delta">
+  <span class="glyphicon glyphicon-thumbs-up"></span> Change since 2000:
   
-</div>
+</button>
 
-<div class="<%= indicator.slug %> rank">
-  Rank:
+<button type="button" class="alert alert-danger <%= indicator.slug %> rank">
+  <span class="glyphicon glyphicon-thumbs-down"></span> Rank:
   <%= indicator.rank %>
-</div>
+</button>
 
 <% if indicator.explanation %>
   <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
