@@ -30,6 +30,10 @@ class Indicator < ActiveRecord::Base
     current_snapshot.rank
   end
 
+  def current_rank?
+    !current_snapshot.rank.nil?
+  end
+
   def value_in(year=DEFAULT_YEAR)
     snapshot_in(year).value
   end
@@ -53,6 +57,7 @@ class Indicator < ActiveRecord::Base
 
   alias_method :value, :current_value
   alias_method :rank,  :current_rank
+  alias_method :rank?, :current_rank?
 
   include SlugExtension
 
