@@ -24,6 +24,15 @@ gem 'cancan'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 
+
+group :development do
+  gem 'capistrano',      '~> 2.0'
+  gem 'net-ssh',         '2.7.0'
+  gem 'net-ssh-gateway', '1.2.0'
+  gem 'capistrano-unicorn', :require => false
+end
+
+
 group :development, :test do
   gem 'progress_bar'
 
@@ -31,11 +40,7 @@ group :development, :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
   gem 'launchy'
-
-  gem 'capistrano',      '~> 2.0'
-  gem 'net-ssh',         '2.7.0'
-  gem 'net-ssh-gateway', '1.2.0'
-
+  
   gem 'sqlite3' # for convenience of the designer
 end
 
