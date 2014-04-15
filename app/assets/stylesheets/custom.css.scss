@@ -1,5 +1,11 @@
 /* colors */
 
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('/assets/glyphicons-halflings-regular.eot');
+  src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
 $arts-culture:              #FFCC00;
 $civic-vitality-governance: #00CCCC;
 $demographics:              #660066;
@@ -8,25 +14,27 @@ $education:                 #006699;
 $environment-energy:        #91E248;
 $geographic-boundaries:     #999999;
 $housing:                   #FF9900;
-$land-use-zoning:           #FFFF33;
+$land-use-zoning:           #FFEE2C;
 $public-health:             #CC3300;
 $public-safety:             #990033;
 $technology:                #000066;
 $transportation:            #FF6633;
 
-$sustainable:				rgba(252,95,88,1);
-$vitality:					rgba(255,35,100,1);
-$prosperity:				rgba(100,30,120,1);
-$transportation:			rgba(150,50,150,1);
-$healthy:					rgba(25,100,10,1);
+$sustainable:       rgba(252,95,88,1);
+$vitality:          rgba(255,35,100,1);
+$prosperity:        rgba(100,30,120,1);
+$transportation:    rgba(150,50,150,1);
+$healthy:           rgba(25,100,10,1);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
 
-$headings:					rgba(154,58,54,1);
-$subheadings:				rgba(252,95,88,1);
-$links:						rgba(240,83,110,1);
-$linkshover:				rgba(204,70,93,1);
+$headings:          rgba(0,0,0,1);
+$subheadings:       rgba(39,39,39,1);
+$links:          #787878;
+$linkshover:     #646464;
+
+$soft-highlight: #F5F5F5;
 
 /* fonts */
 @import url(http://fonts.googleapis.com/css?family=Lato);
@@ -34,27 +42,38 @@ $linkshover:				rgba(204,70,93,1);
 
 /* basic typography */
 
+body {
+  padding-top: 200px;
+}
+
 html {font-family: 'Lato', sans-serif;
 
 }
 
 p {
-	font-family: 'Lato', sans-serif;
-	font-size: 18px;
-	font-weight: 200;
-	line-height: 28px;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 28px;
 }
 
-a {color: $links;}
+floatleft {
+  float:left;
+}
 
-a:hover {color: $linkshover;
-	    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+a {
+  color: $links;
+}
+
+a:hover {
+  color: $linkshover;
+  transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 
 body {
-	font-family: 'Lato', sans-serif;
-	padding-top: 60px;
+  font-family: 'Lato', sans-serif;
+  padding-top: 60px;
 }
 
 h1,
@@ -74,49 +93,129 @@ h6,
 }
 
 h1 {
-	letter-spacing: 2px;
-	color: $headings;
+  letter-spacing: 2px;
+  color: $headings;
 }
 
 .sustainable-growth {
-	background-color: $sustainable;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
+  background-color: $sustainable;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.sustainable-growth {
+  background-color: $soft-highlight;
+  color: $sustainable;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $sustainable;
+  }
+
+h3.sustainable-growth {
+  background-color: $soft-highlight;
+  color: $sustainable;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
 
 .community-vitality {
-	background-color: $vitality;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
+  background-color: $vitality;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.community-vitality {
+  background-color: $soft-highlight;
+  color: $vitality;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $vitality;
+  }
 
+h3.community-vitality {
+  background-color: $soft-highlight;
+  color: $vitality;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
+  
 .regional-prosperity {
-	background-color: $prosperity;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
+  background-color: $prosperity;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+
+h2.regional-prosperity{
+  background-color: $soft-highlight;
+  color: $prosperity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $prosperity;
+  }
+
+h3.regional-prosperity{
+  background-color: $soft-highlight;
+  color: $prosperity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
+  
 
 .transportation-choices {
-	background-color: $transportation;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
+  background-color: $transportation;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.transportation-choices { 
+  background-color: $soft-highlight;
+  color: $transportation;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $transportation;
+  }
+  
+h3.transportation-choices {
+  background-color: $soft-highlight;
+  color: $transportation;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+}
 
 .healthy-environment {
-	background-color: $healthy;
-	color: #fff;
-	padding: 10px 15px;
-	margin: 40px 0 20px;
-	}
+  background-color: $healthy;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.healthy-environment {  
+  background-color: $soft-highlight;
+  color: $healthy;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $healthy;
+  }
+  
+h3.healthy-environment {
+  background-color: $soft-highlight;
+  color: $transportation;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+}
+
+button {font-weight: 200;
+  text-transform: uppercase;
+}
 
 /* navigation */
 
 /*.navbar {
-	padding: 10px 0;
+  padding: 10px 0;
 } */
 
 .navbar-default {
@@ -126,11 +225,11 @@ h1 {
 
 /* title */
 .navbar-default .navbar-brand {
-	font-family: 'Rokkitt';
-	font-size: 24px;
+  font-family: 'Rokkitt';
+  font-size: 24px;
     color: #fff;
-    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
@@ -140,15 +239,15 @@ h1 {
 /* link */
 .navbar-default .navbar-nav > li > a {
     color: #fff;
-    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #333;
     background-color: #c0c0c0;
-    transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-nav > .active > a, 
 .navbar-default .navbar-nav > .active > a:hover, 
@@ -204,7 +303,7 @@ h1 {
 /* scroll spy */
 
 .bs-sidenav {
-	color: #701717;
+  color: #787878;
   li {
     font-weight: 400;
     ul {
@@ -218,7 +317,7 @@ h1 {
         display: block;
         li.active {
           font-weight: 400;
-          border-left: 2px #F0F solid;
+          background-color: $soft-highlight;
         }
       }
     }
@@ -227,43 +326,47 @@ h1 {
 
 
 .bs-sidenav.active {
-	font-weight: 700;
-	color: #701717;
+  font-weight: 700;
+  color: #646464;
+}
+
+/* Temp fix for keeping the sidebar roughly in the column. */
+.bs-sidenav {
+  max-width: 250px;
 }
 
 
 
 /* form-group search */
 .form-group {background-color: #ffffff;}
-	
+  
 /* Jumbotron */
 
 .jumbotron {
-    margin-bottom: 0px;
-    background-image: url(http://www.hdwallpapers.in/walls/abstract_color_background_picture_8016-wide.jpg);
+    margin-bottom: 20px;
+    background-image: url('beautiful.jpg');
     background-position: 0% 25%;
     background-size: cover;
     background-repeat: no-repeat;
-    color: white;
+    color: #000;
 }
-
 
 /* buttons */
 
 .btn {
-	background: #fff;
-	background-image: none;
-	border:1px solid #999;
-	color: #999;
-	letter-spacing: 1px;
-	text-decoration: none ! important;
-	text-shadow: none;
-	transition: all 0.3s ease-in-out 0s;		
-	-webkit-transition: all 0.3s ease-in-out 0s;		
+  background: #fff;
+  background-image: none;
+  border:1px solid #999;
+  color: #999;
+  letter-spacing: 1px;
+  text-decoration: none ! important;
+  text-shadow: none;
+  transition: all 0.3s ease-in-out 0s;    
+  -webkit-transition: all 0.3s ease-in-out 0s;    
 }
 .btn:hover {
-	background: #333;
-	color: #fff;
+  background: #333;
+  color: #fff;
 }
 
 /* icons */
@@ -274,67 +377,114 @@ h1 {
 
 .issue-area-icon {
   display: block;
-  width: 90px;
-  height: 90px;
-  margin: 10px 10px;
+  width: 80px;
+  height: 80px;
+  margin: 10px 5px;
   float: left;
   font-size: 12px;
+  font-weight: 200;
   color: $text-color;
   border-radius: 50%;
   text-align: center;
   padding-top: 20px;
 }
 
+
+.public-safety {
+  background-color: $public-safety;
+  background-image: url("icons/public_safety.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.public-health {
+  background-color: $public-health;
+  background-image: url("icons/public_health.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.transportation {
+  background-color: $transportation;
+  background-image: url("icons/transportation.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.housing {
+  background-color: $housing;
+  background-image: url("icons/housing.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
 .arts-culture {
   background-color: $arts-culture;
-  color: $inverse-text-color;
+  background-image: url("icons/arts.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
-.civic-vitality-governance {
-  background-color: $civic-vitality-governance;
-}
-
-.demographics {
-  background-color: $demographics;
-}
-
-.economy {
-  background-color: $economy;
-}
-
-.education {
-  background-color: $education;
+.land-use-zoning {
+  background-color: $land-use-zoning;
+  background-image: url("icons/land_use.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .environment-energy {
   background-color: $environment-energy;
+  background-image: url("icons/environment.png");
+  background-repeat: no-repeat;
+  background-position: 50%;  
 }
+
+.economy {
+  background-color: $economy;
+  background-image: url("icons/economy.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.civic-vitality-governance {
+  background-color: $civic-vitality-governance;
+  background-image: url("icons/civic.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.education {
+  background-color: $education;
+  background-image: url("icons/education.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.technology {
+  background-color: $technology;
+  background-image: url("icons/technology.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.demographics {
+  background-color: $demographics;
+  background-image: url("icons/demographics.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+
 
 .geographic-boundaries {
   background-color: $geographic-boundaries;
 }
 
-.housing {
-  background-color: $housing;
+.footer {
+  position: relative;
+  width: 100%;
+  bottom: 0;
 }
 
-.land-use-zoning {
-  background-color: $land-use-zoning;
-  color: $inverse-text-color;
-}
 
-.public-health {
-  background-color: $public-health;
-}
 
-.public-safety {
-  background-color: $public-safety;
-}
-
-.technology {
-  background-color: $technology;
-}
-
-.transportation {
-  background-color: $transportation;
-}

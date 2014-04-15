@@ -20,7 +20,7 @@ class TopicArea < ActiveRecord::Base
   scope :featured,     where(featured: true)
   scope :visible,      where(visible:  true)
 
-  scope :not_featured, where(featured: false, visible: true)
+  scope :not_featured, where(visible: true).where(featured: false)
   scope :not_visible,  where(visible: false)
 
   include SlugExtension

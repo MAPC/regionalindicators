@@ -25,6 +25,5 @@ class User < ActiveRecord::Base
       field :reset_password_sent_at
     end
   end
-
-
+  
 end

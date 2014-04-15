@@ -5,7 +5,7 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'pg'
+# gem 'pg'
 gem 'unicorn'
 gem 'foreman'
 
@@ -18,6 +18,7 @@ gem 'bootstrap-typeahead-rails'
 gem 'paperclip', '~> 3.0'
 gem 'aws-sdk'
 
+gem 'devise'
 gem 'rails_admin'
 gem 'cancan'
 
@@ -66,6 +67,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
-
-
-gem "devise"
