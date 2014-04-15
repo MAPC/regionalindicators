@@ -7,7 +7,7 @@ worker_processes 4
 
 # listen on both a Unix domain socket and a TCP port,
 # we use a shorter backlog for quicker failover when busy
-listen '/tmp/staging.regionalindicators.socket', backlog: 64
+listen '/tmp/regionalindicators.socket', backlog: 64
 listen 8010
 
 # Preload our app for more specified
@@ -22,11 +22,12 @@ pid '/tmp/unicorn.regionalindicators.pid'
 if env == 'production'
   # Help ensure your application will always spawn in the
   # symlinked 'current' directory that Capistrano sets up
-  working_directory '/home/deployer/apps/staging.regionalindicators.org/current'
+  deploy_to = '/var/www/regionalindicators.org'
+  working_directory "#{deploy_to}/current"
 
   # feel free to point this anywhere accessible on the filesystem
   user 'deployer', 'staff'
-  shared_path = '/home/deployer/apps/staging.regionalindicators.org/shared'
+  shared_path = "#{deploy_to}/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"
