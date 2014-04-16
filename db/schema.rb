@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140326201251) do
+ActiveRecord::Schema.define(:version => 20140416204919) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(:version => 20140326201251) do
   end
 
   create_table "issue_areas", :force => true do |t|
-    t.string   "icon"
     t.string   "title"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false

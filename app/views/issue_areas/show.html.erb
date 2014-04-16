@@ -1,11 +1,21 @@
 <%= render partial: 'issue_area', object: @issue_area %>
 
-<h1><%= @issue_area.title %></h1>
+<h1 class='page-header'><%= @issue_area.title %></h1>
 
-<br/>
-<br/>
+<div class="row">
+  <div class="col-xs-12">
+    <% if @issue_area.has_indicators? %>
+      <%= render partial: 'indicators/indicator', collection: @issue_area.indicators %>
+    <% else %>
+      <p>
+        There are not presently any <%= @issue_area.title.downcase %>-related indicators.
+      </p>
+    <% end %>
 
-<%= render partial: 'indicators/indicator', collection: @issue_area.indicators %>
+    <p>
+      View <%= @issue_area.title.downcase %> maps and download related datasets at the
+      <%= link_to 'MetroBoston DataCommon', @issue_area.datacommon_url, target: '_blank' %>.
+    </p>
 
-<br/>
-<br/>
+  </div>
+</div>
