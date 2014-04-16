@@ -3,9 +3,8 @@ require 'spec_helper'
 describe IssueArea do
   
   before do
-    @issue_area = IssueArea.new(  icon:      '&#xf007;', 
-                                  title:     'Education Outcomes',
-                                  datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=7"  )
+    @issue_area = IssueArea.new( title:     'Education Outcomes',
+                                 datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=7"  )
   end
 
   subject { @issue_area }
@@ -13,7 +12,6 @@ describe IssueArea do
   it { should be_valid }
 
   it { should respond_to :datacommon_url }
-  it { should respond_to :icon }
   it { should respond_to :slug }
   it { should respond_to :css_class }
   it { should respond_to :title }
@@ -35,11 +33,6 @@ describe IssueArea do
 
   describe "when title is too long" do
     before { @issue_area.title = "Civic Vitality & Governance & Voting & Friends" }
-    it { should_not be_valid }
-  end
-
-  describe "when icon is missing" do
-    before { @issue_area.icon = " " }
     it { should_not be_valid }
   end
 

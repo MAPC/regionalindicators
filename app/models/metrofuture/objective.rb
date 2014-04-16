@@ -1,11 +1,13 @@
 class Objective < ActiveRecord::Base
-  attr_accessible :title, :number,
-                  :goal_id, :indicator_ids
+  attr_accessible :title,
+                  :number,
+                  :goal_id,
+                  :indicator_ids
 
   belongs_to :goal
-  has_many :indicators
+  has_many   :indicators
 
-  validates :title, presence: true, length: { maximum: 255, minimum: 8 }
+  validates :title,  presence: true, length: { maximum: 255, minimum: 8 }
   validates :number, presence: true
 
   def full_number
