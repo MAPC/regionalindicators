@@ -1,18 +1,18 @@
 <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
 
 <button type="button" class="alert <%= alert_class_for(indicator.value) %> <%= indicator.slug %> value">
-  <%= thumb_for(indicator.value) %> Value:
+  <%= thumb_for(indicator.value_delta) %> Value:
   <%= indicator.value %>
 </button>
 
 <button type="button" class="alert <%= alert_class_for(indicator.value) %> <%= indicator.slug %> delta">
-  <%= thumb_for(indicator.value) %> Change since 2000:
-  <%= indicator.value %> (just the value presently)
+  <%= thumb_for(indicator.value_delta) %> Change since 2000:
+  <%= indicator.value_delta %>
 </button>
 
 <% if indicator.rank? %>
-  <button type="button" class="alert <%= alert_class_for(indicator.current_rank) %> <%= indicator.slug %> rank">
-    <%= thumb_for(indicator.rank) %> Rank:
+  <button type="button" class="alert <%= alert_class_for(indicator.rank_delta) %> <%= indicator.slug %> rank">
+    <%= thumb_for(indicator.rank_delta) %> Rank:
       <%= indicator.rank %>
   </button>
 <% end %>
