@@ -1,18 +1,21 @@
 module TopicAreasHelper
 
+  DEFAULT_SUCCESS = 'success'
+  DEFAULT_FAILURE = 'danger'
+  DEFAULT_NEUTRAL = 'info'
+  
+
   def thumb_for(value, *args)
-    direction = words_for(value,
-                          reverse:  is_reverse?(args.first),
-                          success: 'up',
-                          failure: 'down')
-    "<span class=\"glyphicon glyphicon-thumbs-#{direction}\"></span>".html_safe
+    icon = words_for(value, reverse:  is_reverse?(args.first),
+                            success: 'thumbs-up',
+                            failure: 'thumbs-down',
+                            neutral: 'minus')
+    content_tag(:span, nil, class: "glyphicon glyphicon-#{icon}")
   end
 
+
   def alert_class_for(value, *args)
-    status = words_for(value,
-                       reverse: is_reverse?(args.first),
-                       success: 'success',
-                       failure: 'danger')
+    status = words_for(value, reverse: is_reverse?(args.first))
     "alert-#{status}".html_safe
   end
 
@@ -21,22 +24,56 @@ module TopicAreasHelper
   # reverse: true, in which case the opposite will happen
 
   def words_for(value, *args)
-    args = args.first
-    if args.fetch(:reverse, false)
-      value.to_i >= 0 ? args.fetch(:failure, 'fail') : args.fetch(:success, 'succeed')
+    @args = args.first
+    if !@args.fetch(:reverse)
+      normal_success(value)
     else
-      value.to_i >= 0 ? args.fetch(:success, 'succeed') : args.fetch(:failure, 'fail')
+      reverse_success(value)
     end
   end
 
-  # Checks if the 'reverse' argument is present and true
 
+  # Checks if the 'reverse' argument is present and true
   def is_reverse?(*args)
-    if !args.compact.empty? && args.first.has_key?(:reverse)
-      args.first[:reverse]
+    !args.compact.empty? && args.first.has_key?(:reverse) ? args.first[:reverse] : false
+  end
+
+
+  def fail
+    @args.fetch :failure, DEFAULT_FAILURE
+  end
+
+
+  def succeed
+    @args.fetch :success, DEFAULT_SUCCESS
+  end
+
+
+  def neutral
+    @args.fetch :neutral, DEFAULT_NEUTRAL
+  end
+
+
+  def normal_success(value)
+    if value.to_i > 0
+      succeed
+    elsif value.to_i < 0
+      fail
     else
-      return false
+      neutral
+    end
+  end
+
+
+  def reverse_success(value)
+    if value.to_i > 0
+      fail
+    elsif value.to_i < 0
+      succeed
+    else
+      neutral
     end
   end
 
 end
+

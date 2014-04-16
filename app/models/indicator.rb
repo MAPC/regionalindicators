@@ -52,7 +52,8 @@ class Indicator < ActiveRecord::Base
   end
 
   def rank_delta(year=DEFAULT_YEAR)
-    (current_rank - rank_in(year)) * -1
+    past_rank = rank_in(year)
+    (current_rank - past_rank) * -1 unless past_rank.nil?
   end
 
   alias_method :value, :current_value

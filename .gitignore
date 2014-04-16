@@ -27,3 +27,4 @@ solr/pids/*
 
 .env
 .test
+doc/*
