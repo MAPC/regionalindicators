@@ -16,6 +16,9 @@ describe Explanation do
   it { should respond_to :sources }
   it { should respond_to :visualization }
 
+  it { should respond_to :has_sources? }
+  it { should respond_to :has_visualization? }
+
   it "renders narrative Markdown to HTML" do
     @explanation.narrative_html.should eq("<h1>Accessible Construction</h1>\n\n<ul>\n<li>bullet</li>\n<li>bullet</li>\n</ul>\n")
   end
