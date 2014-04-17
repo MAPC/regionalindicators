@@ -235,7 +235,7 @@ def indicators
    { id: 234, number: 234, objective_id: nil, units: 'none', title: "Unemployment Gap, No High School Diploma to College Degree" },
    { id: 235, number: 235, objective_id: nil, units: 'none', title: "Unemployment Gap, Regional Urban Center to regional average" },
    { id: 236, number: 236, objective_id: nil, units: 'none', title: "Labor underutilization rate (U-6), Massachusetts" },
-   { id: 237, number: 237, objective_id: nil, units: 'none', title: "Gap between alternative unemployment rate (including workers who are marginally attached and part-time for economic reasons) and official unemployment rate" },
+   { id: 237, number: 237, objective_id: nil, units: 'none', title: "Gap between labor underutilization rate and official unemployment rate, Massachusetts" },
    { id: 238, number: 238, objective_id: nil, units: 'none', title: "Gap between total employment and number of workers in the labor force, low skill workers" },
    { id: 239, number: 239, objective_id: nil, units: 'none', title: "Gap between total employment and number of workers in the labor force, mid skill workers" },
    { id: 240, number: 240, objective_id: nil, units: 'none', title: "Gap between total employment and number of workers in the labor force, high skill workers" },
