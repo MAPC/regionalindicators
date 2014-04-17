@@ -1,0 +1,20 @@
+Indicators-subjects,
+subject_title,"The header for a collection of indicators, i.e. 'A Diverse Workforce'. Introductory narratives will be written into the subjects tab (below)."
+indicator_id,Refer to the Metrofuture master spreadsheet for indicator IDs – far left column.
+indicator_title,"We will not be importing this column, as we already have the indicators stored. This is for the data-inputter's reference & convenience only."
+issue_area_title,"Valid topic areas are viewable at  http://metrobostondatacommon.org/, on the right column under “More Data by Topics”"
+narrative,Any formatting for the narrative must be done in Markdown. A syntax guide is available here: daringfireball.net/projects/markdown/syntax.
+,
+subjects,
+subject_title,
+narrative,"The introduction for the subject, similarly formatted using Markdown."
+,
+,
+,
+sources,
+indicator_id,This will help us link to the correct indicator.
+title,Title of source.
+author,"Author(s) of source. Please select, communicate, and use a consistent style."
+date,In the format of 18 Mar 2014 (DD MMM YYYY)
+url,Please include leading http://
+comment,Any comments about the data source that may prove useful. These

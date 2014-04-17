@@ -3,9 +3,17 @@ class Source < ActiveRecord::Base
   
   has_and_belongs_to_many :explanations
 
-  validates :title, presence: true, length: { maximum: 200, minimum: 8 }
+  validates :title,  presence: true, length: { maximum: 200, minimum: 8 }
   validates :author, presence: true, length: { maximum: 140, minimum: 8 }
-  validates_datetime :date
+  validates_datetime :date, allow_blank: true
+
+  def indicators
+    self.explanations.keep_if {|e| e.explainable_type == "Indicator" }
+  end
+  
+  def subjects
+    self.explanations.keep_if {|e| e.explainable_type == "Subject" }
+  end
 
   rails_admin do
     list do

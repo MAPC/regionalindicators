@@ -25,6 +25,9 @@ describe Source do
 
   it { should respond_to :explanations }
 
+  it { should respond_to :indicators }
+  it { should respond_to :subjects }
+
   describe "accessible attributes" do
     it "should not allow access to explanation_id" do
       expect do
