@@ -1,11 +1,11 @@
 <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
 
 <button type="button" class="alert <%= alert_class_for(indicator.value) %> <%= indicator.slug %> value">
-  <%= thumb_for(indicator.value_delta) %> Value:
-  <%= indicator.value %>
+  <%= thumb_for(indicator.value) %> Value:
+  <%= indicator.value %> <%= indicator.units %>
 </button>
 
-<button type="button" class="alert <%= alert_class_for(indicator.value) %> <%= indicator.slug %> delta">
+<button type="button" class="alert <%= alert_class_for(indicator.value_delta) %> <%= indicator.slug %> delta">
   <%= thumb_for(indicator.value_delta) %> Change since 2000:
   <%= indicator.value_delta %>
 </button>

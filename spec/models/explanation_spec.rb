@@ -35,7 +35,7 @@ describe Explanation do
   end
 
   describe "when the narrative is too long" do
-    before { @explanation.narrative = "a" * 1501 }
+    before { @explanation.narrative = "a" * 3101 }
     it { should_not be_valid }
   end
 

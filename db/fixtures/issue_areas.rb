@@ -11,5 +11,6 @@ def issue_areas
    { title: "Public Safety",               datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=10", sort_order: 1  },
    { title: "Technology",                  datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=11", sort_order: 11 },
    { title: "Transportation",              datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=12", sort_order: 3  },
-   { title: "Geographic Boundaries",       datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=13", sort_order: nil }]
+   { title: "Geographic Boundaries",       datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=13", sort_order: nil },
+   { title: "Equity",                      datacommon_url: "http://metrobostondatacommon.org/explore/gallery/?topics=9999", sort_order: nil }]
 end

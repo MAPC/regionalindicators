@@ -12,15 +12,19 @@ class Indicator < ActiveRecord::Base
   belongs_to :objective
   belongs_to :subject
 
-  has_one :explanation, as: :explainable
+  has_one  :explanation, as: :explainable
   has_many :snapshots
   has_and_belongs_to_many :issue_areas
 
   accepts_nested_attributes_for :explanation
 
-  validates :title, presence: true, length: { maximum: 160, minimum: 8 }
+  validates :title,  presence: true, length: { maximum: 160, minimum: 8 }
   validates :number, presence: true
-  validates :units, presence: true, length: { maximum: 140 }
+  validates :units,  presence: true, length: { maximum: 140 }
+
+  def goal
+    objective.goal unless objective.nil?
+  end
 
   DEFAULT_YEAR = 2000
 
@@ -80,7 +84,7 @@ class Indicator < ActiveRecord::Base
   end
 
 
-  private
+  # private
 
     def current_snapshot
       return empty_snapshot if self.snapshots.empty?
@@ -90,7 +94,8 @@ class Indicator < ActiveRecord::Base
     def snapshot_in(year=DEFAULT_YEAR)
       return empty_snapshot if self.snapshots.empty?
       date = DateTime.new(year.to_i)
-      self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
+      snapshot = self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
+      snapshot ||= self.snapshots.order('date DESC').last
     end
 
     def empty_snapshot
