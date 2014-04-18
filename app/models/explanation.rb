@@ -19,7 +19,7 @@ class Explanation < ActiveRecord::Base
     self.sources.length > 0
   end
 
-  def has_vizualization?
+  def has_visualization?
     self.visualization
   end
 

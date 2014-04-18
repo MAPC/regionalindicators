@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140416204919) do
+ActiveRecord::Schema.define(:version => 20140417221951) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -37,12 +37,15 @@ ActiveRecord::Schema.define(:version => 20140416204919) do
 
   create_table "indicators", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "units"
     t.integer  "number"
     t.integer  "objective_id"
     t.integer  "subject_id"
+    t.decimal  "threshhold"
+    t.boolean  "higher_value_is_better", :default => true
+    t.boolean  "lower_rank_is_better",   :default => true
   end
 
   create_table "indicators_issue_areas", :force => true do |t|
@@ -59,11 +62,11 @@ ActiveRecord::Schema.define(:version => 20140416204919) do
   end
 
   create_table "objectives", :force => true do |t|
-    t.integer  "number"
     t.string   "title"
     t.integer  "goal_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "number"
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -72,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20140416204919) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end

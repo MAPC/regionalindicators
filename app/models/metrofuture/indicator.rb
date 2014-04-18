@@ -7,7 +7,10 @@ class Indicator < ActiveRecord::Base
                   :explanation_attributes,
                   :issue_area_ids,
                   :id,
-                  :objective_id
+                  :objective_id,
+                  :threshhold,
+                  :higher_value_is_better,
+                  :lower_rank_is_better
 
   belongs_to :objective
   belongs_to :subject
@@ -22,9 +25,61 @@ class Indicator < ActiveRecord::Base
   validates :number, presence: true
   validates :units,  presence: true, length: { maximum: 140 }
 
+
   def goal
     objective.goal unless objective.nil?
   end
+
+
+  def passing?
+    return nil if threshhold.nil?
+    status = ( value > threshhold )
+    higher_value_is_better ? status : !status 
+  end
+
+  def failing?
+    return nil if threshhold.nil?
+    !passing?
+  end
+
+
+  def improving?
+    return nil if value_delta.nil?
+    trend = ( value_delta > 0 )
+    higher_value_is_better ? trend : !trend
+  end
+
+  def stagnant?
+    return nil if value_delta.nil?
+    value_delta == 0
+  end
+
+  def trend
+    return nil        if  value_delta.nil?
+    return :stagnant  if  stagnant?
+    return :improving if  improving?
+    return :declining if !improving?
+  end
+
+
+  def rank_improving?
+    return nil if rank_delta.nil?
+    trend = ( rank_delta < 0 ) # rank should be decreasing i.e. moving toward 1
+    lower_rank_is_better ? trend : !trend
+  end
+
+  def rank_stagnant?
+    return nil if rank_delta.nil?
+    rank_delta == 0
+  end
+
+  def rank_trend
+    return nil        if  rank_delta.nil?
+    return :stagnant  if  rank_stagnant?
+    return :improving if  rank_improving?
+    return :declining if !rank_improving?
+  end
+
 
   DEFAULT_YEAR = 2000
 
@@ -54,17 +109,19 @@ class Indicator < ActiveRecord::Base
   end
 
   def value_delta(year=DEFAULT_YEAR)
-    current_value - value_in(year)
+    current_value - value_in(year) unless snapshots.empty?
   end
 
   def rank_delta(year=DEFAULT_YEAR)
     past_rank = rank_in(year)
-    (current_rank - past_rank) * -1 unless past_rank.nil?
+    current_rank - past_rank unless snapshots.empty?
   end
 
   alias_method :value, :current_value
   alias_method :rank,  :current_rank
   alias_method :rank?, :current_rank?
+
+  alias_method :stagnant_rank?, :rank_stagnant?
 
   include SlugExtension
 
