@@ -25,6 +25,7 @@ class Indicator < ActiveRecord::Base
   validates :number, presence: true
   validates :units,  presence: true, length: { maximum: 140 }
 
+  default_scope { order('id ASC') }
 
   def goal
     objective.goal unless objective.nil?
@@ -40,6 +41,26 @@ class Indicator < ActiveRecord::Base
   def failing?
     return nil if threshhold.nil?
     !passing?
+  end
+
+  def passing
+    :passing if passing?
+  end
+
+  def failing
+    :failing if failing?
+  end
+
+  def incr_decr
+    return nil if value_delta.nil?
+    return :stagnant if value_delta == 0
+    value_delta > 0 ? :improving : :declining
+  end
+
+  def rank_incr_decr
+    return nil if rank_delta.nil?
+    return :stagnant if rank_delta == 0
+    rank_delta > 0  ? :improving : :declining
   end
 
 
@@ -78,6 +99,12 @@ class Indicator < ActiveRecord::Base
     return :stagnant  if  rank_stagnant?
     return :improving if  rank_improving?
     return :declining if !rank_improving?
+  end
+
+
+  def reverse_comparisons
+    self.update_attribute(:higher_value_is_better, !higher_value_is_better)
+    self.update_attribute(:lower_rank_is_better,   !lower_rank_is_better)
   end
 
 

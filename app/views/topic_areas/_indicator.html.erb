@@ -1,19 +1,19 @@
 <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
 
-<button type="button" class="alert <%= alert_class_for(indicator.value) %> <%= indicator.slug %> value">
-  <%= thumb_for(indicator.value) %> Value:
-  <%= indicator.value %> <%= indicator.units %>
+<button type="button" class="alert <%= alert_class(indicator, :passing) %> <%= indicator.slug %> value">
+  Value:<br/>
+  <%= thumb_class(indicator, :passing) %> <%= indicator.value %> <%= indicator.units %>
 </button>
 
-<button type="button" class="alert <%= alert_class_for(indicator.value_delta) %> <%= indicator.slug %> delta">
-  <%= thumb_for(indicator.value_delta) %> Change since 2000:
-  <%= indicator.value_delta %>
+<button type="button" class="alert <%= alert_class(indicator, :trend) %> <%= indicator.slug %> delta">
+  Change since 2000:<br/>
+  <%= chevron_class(indicator, :incr_decr) %> <%= indicator.value_delta %> <%= indicator.units %>
 </button>
 
 <% if indicator.rank? %>
-  <button type="button" class="alert <%= alert_class_for(indicator.rank_delta) %> <%= indicator.slug %> rank">
-    <%= thumb_for(indicator.rank_delta) %> Rank:
-      <%= indicator.rank %>
+  <button type="button" class="alert <%= alert_class(indicator, :rank_trend) %> <%= indicator.slug %> rank">
+    Rank:<br/>
+    <%= chevron_class(indicator, :rank_incr_decr) %> <%= indicator.rank %>
   </button>
 <% end %>
 
