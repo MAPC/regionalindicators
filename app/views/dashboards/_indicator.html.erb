@@ -1,0 +1,22 @@
+<div class="row">
+
+  <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
+
+  <div class="col-xs-12 col-sm-4 btn btn-<%= alert_class(indicator, :passing) %> <%= indicator.slug %> value">
+    Value:<br/>
+    <%= thumb_class(indicator, :passing) %> <%= indicator.value %> <%= indicator.units %>
+  </div>
+
+  <div class="col-xs-12 col-sm-4 btn btn-<%= alert_class(indicator, :trend) %> <%= indicator.slug %> delta">
+    Change since 2000:<br/>
+    <%= chevron_class(indicator, :incr_decr) %> <%= indicator.value_delta %> <%= indicator.units %>
+  </div>
+
+  <% if indicator.rank? %>
+    <div class="col-xs-12 col-sm-4 btn btn-<%= alert_class(indicator, :rank_trend) %> <%= indicator.slug %> rank">
+      Rank:<br/>
+      <%= chevron_class(indicator, :rank_incr_decr) %> <%= indicator.rank %>
+    </div>
+  <% end %>
+
+</div>

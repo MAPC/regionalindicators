@@ -1,0 +1,10 @@
+<h1 class="page-header">
+  <%= @topic_area.title %>
+
+<div class="col-xs-12">
+  <%= render partial: 'dashboards/subject',
+             collection: @topic_area.subjects,
+             locals: { topic_area_slug: @topic_area.slug } %>
+</div>
+
+</h1>

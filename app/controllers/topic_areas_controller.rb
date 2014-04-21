@@ -7,4 +7,9 @@ class TopicAreasController < ApplicationController
   def show
     @topic_area = TopicArea.find params[:id]
   end
+
+  def dashboard
+    @topic_area = TopicArea.find params[:id]
+  end
+  
 end

@@ -31,7 +31,7 @@ module TopicAreasHelper
 
   def alert_class(indicator, property)
     value = indicator.send(property.to_sym) || :stagnant
-    "alert-#{ @@alerts[value] }".html_safe
+    "#{ @@alerts[value] }".html_safe
   end
 
   def chevron_class(indicator, property)

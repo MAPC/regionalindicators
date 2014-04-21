@@ -2,8 +2,12 @@ module ApplicationHelper
 
   LIMIT = 63
 
-  def topic_areas_options
+  def topic_area_pages
     render partial: 'shared/list_item', collection: TopicArea.visible
+  end
+
+  def topic_area_dashboards
+    render partial: 'shared/dashboard_item', collection: TopicArea.visible
   end
 
   def issue_area_icons
@@ -15,6 +19,8 @@ module ApplicationHelper
   end
 
 
+  # Limits scrollspy menu items > LIMIT chars long
+  # and appends an ellipsis if it's too long
   def scrollspy_item(text)
     text.length > LIMIT ? text[0..LIMIT].split(" ")[0..-2].join(' ') << '...' : text
   end

@@ -63,6 +63,17 @@ class Indicator < ActiveRecord::Base
     rank_delta > 0  ? :improving : :declining
   end
 
+  def rank_position
+    case rank
+    when 1..10
+      lower_rank_is_better ? :passing : :failing
+    when 11..15
+      :stagnant
+    when 16..25
+      lower_rank_is_better ? :failing : :passing
+    end
+  end
+
 
   def improving?
     return nil if value_delta.nil?
