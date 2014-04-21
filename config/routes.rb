@@ -13,7 +13,11 @@ Regionalindicators::Application.routes.draw do
 
   resources :indicators
   resources :issue_areas
-  resources :topic_areas
+  resources :topic_areas do
+    member do
+      get 'dashboard'
+    end
+  end
   resources :goals
   resources :static_pages, path: ''
 
