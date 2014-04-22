@@ -27,6 +27,8 @@ describe Indicator do
 
   it { should respond_to :indicator_group }
   it { should respond_to :group }
+  it { should respond_to :group_slug }
+  it { should respond_to :group_title }
 
   it { should respond_to :first_in_group? }
   it { should respond_to :last_in_group? }

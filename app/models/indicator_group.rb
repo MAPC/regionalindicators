@@ -9,4 +9,7 @@ class IndicatorGroup < ActiveRecord::Base
   def last
     self.indicators.max_by{ |i| i.id }
   end
+
+  include SlugExtension
+  
 end
