@@ -32,6 +32,7 @@ class Indicator < ActiveRecord::Base
     objective.goal unless objective.nil?
   end
 
+
   def has_group?
     !self.indicator_group.nil?
   end
@@ -51,9 +52,6 @@ class Indicator < ActiveRecord::Base
   def group_slug
     group.slug
   end
-
-
-
 
 
   def passing?
