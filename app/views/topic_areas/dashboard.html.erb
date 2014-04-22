@@ -1,5 +1,6 @@
-<h1 class="page-header">
-  <%= @topic_area.title %>
+<h1 class="page-header <%= @topic_area.slug %>" id="<%= @topic_area.slug %>">
+  <%= @topic_area.title %> Dashboard
+</h1>
 
 <div class="col-xs-12">
   <%= render partial: 'dashboards/subject',
