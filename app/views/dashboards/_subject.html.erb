@@ -2,10 +2,7 @@
   <%= subject.title %>
 </h2>
 
-<div class="col-xs-12">
-
-  <%= render partial:   'dashboards/indicator',
-             collection: subject.indicators,
-             locals:   { subject_slug:    subject.slug,
-                         topic_area_slug: topic_area_slug } %>
-</div>
+<%= render partial:   'dashboards/indicator',
+           collection: subject.indicators,
+           locals:   { subject_slug:    subject.slug,
+                       topic_area_slug: topic_area_slug } %>

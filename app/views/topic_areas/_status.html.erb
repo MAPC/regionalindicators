@@ -1,0 +1,17 @@
+<button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :passing) %> <%= indicator.slug %> value">
+  Value:<br/>
+  <%= thumb_class(indicator, :passing) %> <%= indicator.value %> <%= indicator.units %>
+</button>
+
+<button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :trend) %> <%= indicator.slug %> delta">
+  Change since 2000:<br/>
+  <%= chevron_class(indicator, :incr_decr) %> <%= indicator.value_delta %> <%= indicator.units %>
+</button>
+
+<% if indicator.rank? %>
+  <button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :rank_position) %> <%= indicator.slug %> rank">
+    Rank:<br/>
+    <%= thumb_class(indicator, :rank_position) %>
+    <%= indicator.rank %> / 25 top Metro Areas
+  </button>
+<% end %>
