@@ -35,6 +35,7 @@ $links:          #787878;
 $linkshover:     #646464;
 
 $soft-highlight: #F5F5F5;
+$mid-highlight: #E5E5E5;
 
 /* fonts */
 @import url(http://fonts.googleapis.com/css?family=Lato);
@@ -309,6 +310,13 @@ button {font-weight: 200;
     ul {
       display: none;
       padding-left: 10px;
+      li.group {
+        font-weight: 400;
+        ul {
+          display: none;
+          padding-left: 10px;
+        }
+      }
     }
 
     &.active {
@@ -318,6 +326,12 @@ button {font-weight: 200;
         li.active {
           font-weight: 400;
           background-color: $soft-highlight;
+          ul {
+            display: block;
+            li.active {
+              background-color: $mid-highlight;
+            }
+          }
         }
       }
     }
