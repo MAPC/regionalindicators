@@ -1,7 +1,33 @@
-<h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"><%= indicator.title %></h3>
+<% if indicator.grouped? %>
+  
+  <% if indicator.first_in_group? %>
+    <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.group_slug %>">
+      <%= indicator.title %>
+    </h3>
+  <% end %>
 
-<%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>
+  <h4 id="<%= indicator.slug %>">
+    <%= indicator.title %>
+  </h4>
 
-<% if indicator.explanation %>
-  <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
+  <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>    
+
+  <% if indicator.last_in_group? %>
+    <% if indicator.explanation %>
+      <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
+    <% end %>
+  <% end %>
+
+<% else %>
+
+  <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>">
+    <%= indicator.title %>
+  </h3>
+
+  <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>
+
+  <% if indicator.explanation %>
+    <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
+  <% end %>
+
 <% end %>

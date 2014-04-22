@@ -44,6 +44,14 @@ class Indicator < ActiveRecord::Base
     self == group.last
   end
 
+  def group_title
+    group.title
+  end
+
+  def group_slug
+    group.slug
+  end
+
 
 
 

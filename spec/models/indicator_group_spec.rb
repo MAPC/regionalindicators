@@ -16,6 +16,8 @@ describe IndicatorGroup do
   it { should respond_to :first }
   it { should respond_to :last  }
 
+  it { should respond_to :slug }
+
   describe "with indicators" do
     
     let(:last)  { stub_model(Indicator, id: 10) }
