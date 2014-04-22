@@ -14,6 +14,7 @@ class Indicator < ActiveRecord::Base
 
   belongs_to :objective
   belongs_to :subject
+  belongs_to :indicator_group
 
   has_one  :explanation, as: :explainable
   has_many :snapshots
@@ -30,6 +31,21 @@ class Indicator < ActiveRecord::Base
   def goal
     objective.goal unless objective.nil?
   end
+
+  def has_group?
+    !self.indicator_group.nil?
+  end
+
+  def first_in_group?
+    self == group.first
+  end
+
+  def last_in_group?
+    self == group.last
+  end
+
+
+
 
 
   def passing?
@@ -158,6 +174,9 @@ class Indicator < ActiveRecord::Base
   alias_method :value, :current_value
   alias_method :rank,  :current_rank
   alias_method :rank?, :current_rank?
+
+  alias_method :group,    :indicator_group
+  alias_method :grouped?, :has_group?
 
   alias_method :stagnant_rank?, :rank_stagnant?
 
