@@ -25,6 +25,12 @@ describe Indicator do
   it { should respond_to :subject }
   it { should respond_to :slug }
 
+  it { should respond_to :indicator_group }
+  it { should respond_to :group }
+
+  it { should respond_to :first_in_group? }
+  it { should respond_to :last_in_group? }
+
   # it { should respond_to :projects }
 
   it { should respond_to :current_value }
@@ -306,8 +312,125 @@ describe Indicator do
       end
 
     end
+  end # snapshots
+
+
+  describe "group methods" do
+
+    # create a group
+    # group several, incl @indicator
+
+    describe "when neither first nor last"do 
+
+      let(:group)    { IndicatorGroup.create(title: "High school attainment") }
+
+      let(:indicator_2)   { Indicator.create(id: 2,   title: "College attainment",   number: 9998, units: "kg") }
+      let(:indicator_1k)  { Indicator.create(id: 998, title: "Preschool attainment", number: 9999, units: "kg") }
+
+      before do
+        group.indicators << indicator_2
+        group.indicators << indicator_1k
+        group.indicators << @indicator
+      end
+
+      it "group should have indicators" do
+        group.indicators.length.should == 3
+      end
+
+      describe "#grouped?" do
+        it "should be grouped" do
+          @indicator.grouped?.should == true
+        end
+      end
+
+      describe "#first_in_group?" do
+        it "should not be first" do
+          @indicator.first_in_group?.should == false
+        end
+      end
+
+      describe "#last_in_group?" do
+        it "should not be last" do
+          @indicator.last_in_group?.should == false
+        end
+      end
+    end
+
+    describe "when first" do
+
+      let(:group)    { IndicatorGroup.create(title: "High school attainment") }
+
+      let(:indicator_997) { Indicator.create(id: 997, title: "College attainment",   number: 9998, units: "kg") }
+      let(:indicator_998) { Indicator.create(id: 998, title: "Preschool attainment", number: 9999, units: "kg") }
+
+      before do
+        group.indicators << indicator_997
+        group.indicators << indicator_998
+        group.indicators << @indicator
+      end
+
+      describe "when it is first" do
+        it "should be first" do
+          @indicator.first_in_group?.should == true
+        end
+      end
+    end
+
+    describe "when last" do
+
+      let(:group)    { IndicatorGroup.create(title: "High school attainment") }
+
+      let(:indicator_1) { Indicator.create(id: 1, title: "College attainment",   number: 9998, units: "kg") }
+      let(:indicator_2) { Indicator.create(id: 2, title: "Preschool attainment", number: 9999, units: "kg") }
+
+      before do
+        group.indicators << indicator_1
+        group.indicators << indicator_2
+        group.indicators << @indicator
+      end
+
+      describe "when it is last" do
+        it "should be last" do
+          @indicator.last_in_group?.should == true
+        end
+      end
+    end
 
   end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

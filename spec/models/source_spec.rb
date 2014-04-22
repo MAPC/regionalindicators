@@ -66,10 +66,10 @@ describe Source do
     it { should_not be_valid }
   end
 
-  describe "when date is blank" do
-    before { @source.date = " " }
-    it { should_not be_valid }
-  end
+  # describe "when date is blank" do
+  #   before { @source.date = " " }
+  #   it { should_not be_valid }
+  # end
 
   describe "when date is in an incorrect format" do
     before { @source.date = "two weeks ago" }

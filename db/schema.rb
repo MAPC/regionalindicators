@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140417221951) do
+ActiveRecord::Schema.define(:version => 20140422163343) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -35,6 +35,12 @@ ActiveRecord::Schema.define(:version => 20140417221951) do
     t.string   "description"
   end
 
+  create_table "indicator_groups", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "indicators", :force => true do |t|
     t.string   "title"
     t.datetime "created_at",                               :null => false
@@ -46,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20140417221951) do
     t.decimal  "threshhold"
     t.boolean  "higher_value_is_better", :default => true
     t.boolean  "lower_rank_is_better",   :default => true
+    t.integer  "indicator_group_id"
   end
 
   create_table "indicators_issue_areas", :force => true do |t|
