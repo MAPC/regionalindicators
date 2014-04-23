@@ -1,28 +1,50 @@
+(function() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var chart
   , config = { 
-      path: '/viz/data/unemployment_ages_25_64_by_edattain.csv',
-      data: ['% Adults Unemployed'
-          , '% White Unemployed'
-          , '% Hispanic Unemployed'
-          , '% Black Unemployed'
-          ,  '% Asian Unemployed'
-          , '% Other Race Unemployed']  
-    , series: 'pumatype'
-    , errorflag: ', margin of error'
+      path: '/viz/data/edattain_by_race_puma.csv',
+      data: ['% Adults with less than a high school diploma'
+       , '% White with less than a high school diploma'
+       , '% Hispanic with less than a high school diploma'
+       , '% Black with less than a high school diploma'
+       , '% Asian with less than a high school diploma'
+       , '% Other Race with less than a high school diploma']  
+    , series: 'Puma Type'
     , where: {
         column: 'Year',
         value: '2007-11'
       }
+    , groupBy: {
+
+      }
+    , countBy: {
+
+      }
     }
 
 // Graphic
-var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 600 - margin.left - margin.right,
+var margin = {top: 40, right: 60, bottom: 30, left: 40},
+   width = parseInt(d3.select(window.explainable).style('width'), 10),
+    width = width - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
 var x0 = d3.scale.ordinal()
-    .rangeRoundBands([0, width], 0.1);
+    .rangeRoundBands([0, width], .1);
 
 var x1 = d3.scale.ordinal();
 
@@ -38,10 +60,11 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
+    .tickSize(-width, 0, 0)
     .orient("left")
     .tickFormat(d3.format(".2s"));
 
-var svg = d3.select("#subject-2").append("svg")
+var svg = d3.select(window.explainable).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -56,6 +79,8 @@ var ds = new Miso.Dataset({
 ds.fetch({
   success : function() {
 
+  // we need to structure our data, from the dataset, into something d3 understands.
+
   var output = []; // empty box
 
   var cut = ds.where({ columns: config.data
@@ -69,19 +94,23 @@ ds.fetch({
     var values = [];
 
     this.each(function(row, index) {
-      values.push({name: (ds.rowByPosition(index))['Puma Type'], value: row[colName], error: (ds.rowByPosition(index))[colName + config.errorflag] })
+      values.push({name: (ds.rowByPosition(index))['Puma Type'], value: row[colName] })
     });
 
   output.push({ series: colName, values: values})
   });
 
+  config.data.pop()
 
-  console.log("new output: ", output)
+  console.log("new output", output)
+  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } }))
 
-  x0.domain(output.map(function(d) { return d.series }));
-  x1.domain(config.data).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, cut.max(config.data)]);
+  config.data.pop()
 
+  x0.domain(config.data);
+
+  x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
+  y.domain([0, 40]);
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -94,7 +123,7 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
+      .attr("y", -35)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Percent");
@@ -103,7 +132,7 @@ ds.fetch({
       .data(output)
     .enter().append("g")
       .attr("class", "g")
-      .attr("transform", function(d) { console.log(d); return "translate(" + x0(d.series) + ",0)"; });
+      .attr("transform", function(d) { return "translate(" + x0(d.series) + ",0)"; });
 
   state.selectAll("rect")
       .data(function(d) { return d.values })
@@ -112,7 +141,8 @@ ds.fetch({
       .attr("x", function(d) { return x1(d.name); })
       .attr("y", height)
       .attr("height", 0)
-      .attr("title", function(d) { return d.name + ': ' + d.value + '% ' + 'Margin of Error: ' + d.error + '%'})
+      .attr("title", function(d) { return d.name + ': ' })
+    .attr("data-content", function(d) { return d.value + '%' })
       .style("fill", function(d) { return color(d.name); })
       .transition()
       .attr("height", function(d) { return height - y(d.value); })
@@ -129,36 +159,33 @@ ds.fetch({
       .attr("y2", function(d) { return y((d.value - d.error)) })
 
   $(document).ready(function () {
-      $("svg rect").tooltip({
+      $("svg rect").popover({
           'container': 'body',
-          'placement': 'top'
-      });
-
-      $("svg line").tooltip({
-          'container': 'body',
-          'placement': 'top'
+          'placement': 'right',
+          'trigger': 'hover',
+          'html': true
       });
   });
 
   /* legend */
 
   var legend = svg.selectAll(".legend")
-      .data((ds.countBy('pumatype').toJSON()).map(function(d) { return d.pumatype }))
+      .data(output[0].values.map(function(e){ return e.name }))
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width - 5)
+      .attr("x", width + 10)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width + 15)
+      .attr("x", width + 5)
       .attr("y", 9)
       .attr("dy", ".35em")
-      .style("text-anchor", "beginning")
+      .style("text-anchor", "end")
       .text(function(d) { return d; });
 
   function wrap(text, width) {
@@ -190,3 +217,6 @@ ds.fetch({
     console.log("Failure loading data")
   }
 });
+
+
+})();
