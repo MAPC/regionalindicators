@@ -9,7 +9,7 @@
 
 model_names = %w( TopicArea Goal Objective Indicator IssueArea StaticPage User )
 
-model_names.each {|model_name| require "fixtures/#{model_name.tableize}"}
+model_names.each {|model_name| require "#{model_name.tableize}"}
 
 model_names.each do |model_name|
   puts "seeding #{model_name}"
