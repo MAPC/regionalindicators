@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-model_names = %w( TopicArea Goal Objective Indicator IssueArea StaticPage )
+model_names = %w( TopicArea Goal Objective Indicator IssueArea StaticPage User )
 
 model_names.each {|model_name| require "fixtures/#{model_name.tableize}"}
 
@@ -16,5 +16,5 @@ model_names.each do |model_name|
   model = Module.const_get model_name
   model.destroy_all
   model.reset_pk_sequence
-  model.create( eval "#{model_name.tableize}" )
+  model.create( eval "Fixtures::#{model_name.tableize}" )
 end

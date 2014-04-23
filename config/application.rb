@@ -18,7 +18,7 @@ module Regionalindicators
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/db)
+    config.autoload_paths += %W(#{config.root}/db/fixtures)
     Dir["#{Rails.root}/app/models/*"].each {|path| config.autoload_paths << path }
     
     # Only load the plugins named here, in the order given (default is alphabetical).
