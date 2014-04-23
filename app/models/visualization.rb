@@ -1,5 +1,9 @@
 class Visualization < ActiveRecord::Base
-  attr_accessible :title, :d3, :data, :delete_file
+  attr_accessible :title, :d3, :data, :delete_file,
+                  :d3_file_name,
+                  :data_file_name,
+                  :explainable_type,
+                  :explainable_id
   attr_accessor :delete_file
   
   belongs_to :explanation
