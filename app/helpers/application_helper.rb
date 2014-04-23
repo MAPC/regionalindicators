@@ -24,6 +24,11 @@ module ApplicationHelper
   def scrollspy_item(text)
     text.length > LIMIT ? text[0..LIMIT].split(" ")[0..-2].join(' ') << '...' : text
   end
+
+
+  def javascript(*files)
+    content_for(:head) { javascript_include_tag(*files) }
+  end
   
 
 end

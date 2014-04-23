@@ -1,6 +1,9 @@
 <div class="visualization" id="<%= explainable_type %>-<%= explainable_id %>">
-  <p style="background-color: #E68A7A; color: #FFFFFF">
-    Could not load D3 from <%= viz.d3.url %>
-  </p>
+  <h4>
+    <%= viz.title %>
+  </h4>
 </div>
+<%= javascript_tag do %>
+  window.explainable = "#<%= explainable_type %>-<%= explainable_id %>"
+<% end %>
 <%= javascript_include_tag( viz.d3.url ) %>
