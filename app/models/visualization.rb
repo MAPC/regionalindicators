@@ -4,14 +4,14 @@ class Visualization < ActiveRecord::Base
   
   belongs_to :explanation
 
-  has_attached_file :d3,   path: "public/viz/:basename.:extension"
-  has_attached_file :data, path: "public/viz/data/:basename.:extension"
+  has_attached_file :d3,   url: "/viz/:basename.:extension"
+  has_attached_file :data, url: "/viz/data/:basename.:extension"
   
   before_validation { self.file.clear if self.delete_file == '1' }
   
   validates :title, presence: true, length: { maximum: 200, minimum: 4 }
 
-  validates_attachment :d3,   content_type: { content_type: [/\A.*\/.*javascript\z/, 'text/html'] }
+  validates_attachment :d3#,   content_type: { content_type: [/\A.*\/.*javascript\z/, 'text/html'] }
   validates_attachment :data, content_type: { content_type: ['text/csv'] }
 
   def slug
