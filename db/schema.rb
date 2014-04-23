@@ -128,12 +128,12 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
   create_table "topic_areas", :force => true do |t|
     t.string   "abbr"
     t.string   "title"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "subtitle"
     t.integer  "explanation_id"
-    t.boolean  "visible"
-    t.boolean  "featured"
+    t.boolean  "visible",        :default => false
+    t.boolean  "featured",       :default => false
   end
 
   create_table "users", :force => true do |t|
