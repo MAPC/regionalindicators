@@ -1,4 +1,6 @@
 <div class="visualization" id="<%= explainable_type %>-<%= explainable_id %>">
-  <!-- < javascript_include_tag "/#{viz.d3.path[7..-1]}" %> -->
-  <h3>Pending visualization for <%= explainable_type.titleize %> <%= explainable_id %></h3>
+  <p style="background-color: #E68A7A; color: #FFFFFF">
+    Could not load D3 from <%= viz.d3.url %>
+  </p>
 </div>
+<%= javascript_include_tag( viz.d3.url ) %>

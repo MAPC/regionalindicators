@@ -39,7 +39,7 @@ Regionalindicators::Application.configure do
   Paperclip.options[:command_path] = "/usr/local/bin/convert"
   
   config.paperclip_defaults = {
-    storage: :filesystem,
+    storage:     :filesystem,
     default_url: "/404.html"
   }
 end
