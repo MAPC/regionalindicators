@@ -7,6 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+# TODO: Use the #create_or_update method of seeding from
+#       http://railspikes.com/2008/2/1/loading-seed-data
+
 model_names = %w( TopicArea Goal Objective Indicator IssueArea StaticPage User )
 
 model_names.each {|model_name| require "#{model_name.tableize}"}
