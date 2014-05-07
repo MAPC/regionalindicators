@@ -1,13 +1,7 @@
 <%= explanation.narrative_html %>
 
-
-<% if explanation.visualization %>
-  <%= render partial: 'visualizations/visualization', 
-             locals: { viz:              explanation.visualization,
-                       explainable_id:   explanation.explainable.id,
-                       explainable_type: explanation.explainable.class.name.downcase } %>
-<% end %>
-
+<%= render partial: 'visualizations/visualization', 
+           collection: explanation.visualizations  %>
 
 <% if explanation.has_sources? %>
 

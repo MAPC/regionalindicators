@@ -8,8 +8,8 @@ class Visualization < ActiveRecord::Base
   
   belongs_to :explanation
 
-  has_attached_file :d3,   url: "/viz/:basename.:extension"
-  has_attached_file :data, url: "/viz/data/:basename.:extension"
+  has_attached_file :d3,   url: "/viz/:basename.:extension",      preserve_files: true
+  has_attached_file :data, url: "/viz/data/:basename.:extension", preserve_files: true
   
   before_validation { self.file.clear if self.delete_file == '1' }
   
@@ -21,6 +21,18 @@ class Visualization < ActiveRecord::Base
   def slug
     exp = self.explanation.explainable
     "#{exp.class.name.downcase}-#{exp.id}"
+  end
+
+  def explainable_id
+    explanation.explainable.id
+  end
+
+  def explainable_type
+    explanation.explainable.class.name.downcase
+  end
+
+  def explainable_dom_id
+    "#{explainable_type}-#{explainable_id}-#{id}"
   end
 
   rails_admin do

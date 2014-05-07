@@ -102,13 +102,6 @@ namespace :db do
       #   explainable_id:    
       # },
       {
-        d3_file_name:     'EducatedWorkforce10_debt_to_degree_average_mbc_lc.js',
-        data_file_name:   'debttodegree_average.csv',
-        title:            'Debt to Degree Ratio by Sector',
-        explainable_type: 'Indicator',
-        explainable_id:    218
-      },
-      {
         d3_file_name:     'EducatedWorkforce1_with_degree_by_type_mbc.js',
         data_file_name:   'edattain_by_race_puma.csv',
         title:            '% of Working Age Adults with at least a 2 to 4 year degree by Puma Community Type',
@@ -165,15 +158,22 @@ namespace :db do
         explainable_id:    [215, 216, 217]
       },
       {
+        d3_file_name:     'EducatedWorkforce10_debt_to_degree_average_mbc_lc.js',
+        data_file_name:   'debttodegree_average.csv',
+        title:            'Debt to Degree Ratio by Sector',
+        explainable_type: 'Indicator',
+        explainable_id:    [218, 219]
+      },
+      {
         d3_file_name:     'EducatedWorkforce9_debt_to_degree_ratio_lc.js',
         data_file_name:   'debttodegree.csv',
         title:            'Debt to Degree Ratio by Year',
         explainable_type: 'Indicator',
-        explainable_id:    218
+        explainable_id:    [218, 219]
       }
     ]
 
-   # Visualization.destroy_all ; Visualization.reset_pk_sequence
+    Visualization.destroy_all ; Visualization.reset_pk_sequence
 
     visualizations.each do |obj|
       ids = Array(obj[:explainable_id])
@@ -182,7 +182,8 @@ namespace :db do
         indicator   = Indicator.find(id)
         explanation = indicator.explanation
 
-        viz = explanation.visualization || explanation.build_visualization
+        viz = explanation.visualizations.build
+
         viz.assign_attributes({d3_file_name:   obj[:d3_file_name],
                                data_file_name: obj[:data_file_name],
                                title:          obj[:title]})

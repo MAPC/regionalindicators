@@ -9,9 +9,9 @@ class Explanation < ActiveRecord::Base
   belongs_to :explainable, polymorphic: true
 
   has_and_belongs_to_many :sources
-  has_one :visualization
+  has_many :visualizations
 
-  accepts_nested_attributes_for :visualization, reject_if: lambda { |v| v[:title].blank? && v[:file_file_name].blank? }
+  accepts_nested_attributes_for :visualizations, reject_if: lambda { |v| v[:title].blank? && v[:file_file_name].blank? }
 
   validates :narrative, length: { maximum: 6000 }
 
@@ -19,8 +19,8 @@ class Explanation < ActiveRecord::Base
     self.sources.length > 0
   end
 
-  def has_visualization?
-    self.visualization
+  def has_visualizations?
+    self.visualizations
   end
 
   def narrative_html

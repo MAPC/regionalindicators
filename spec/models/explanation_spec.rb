@@ -14,10 +14,10 @@ describe Explanation do
   it { should respond_to :narrative }
   it { should respond_to :narrative_html }
   it { should respond_to :sources }
-  it { should respond_to :visualization }
+  it { should respond_to :visualizations }
 
   it { should respond_to :has_sources? }
-  it { should respond_to :has_visualization? }
+  it { should respond_to :has_visualizations? }
 
   it "renders narrative Markdown to HTML" do
     @explanation.narrative_html.should eq("<h1>Accessible Construction</h1>\n\n<ul>\n<li>bullet</li>\n<li>bullet</li>\n</ul>\n")
@@ -38,7 +38,7 @@ describe Explanation do
   end
 
   describe "when the narrative is too long" do
-    before { @explanation.narrative = "a" * 3101 }
+    before { @explanation.narrative = "a" * 6001 }
     it { should_not be_valid }
   end
 
