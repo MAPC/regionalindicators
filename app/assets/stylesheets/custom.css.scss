@@ -334,11 +334,12 @@ button {font-weight: 200;
       ul {
         display: block;
         li.active {
-          font-weight: 400;
+          font-weight: 800;
           background-color: $soft-highlight;
           ul {
             display: block;
             li.active {
+              font-weight: 400;
               background-color: $mid-highlight;
             }
           }
@@ -349,10 +350,19 @@ button {font-weight: 200;
 }
 
 
-.bs-sidenav.active {
-  font-weight: 700;
-  color: #646464;
-}
+// .bs-sidenav > li {
+//   border-left: 2px #F0F solid;
+//   color: #646464;
+// }
+
+// .bs-sidenav ul li {
+//   border-right: 2px #F0F solid;
+//   margin: 2px 0;
+// }
+
+// .bs-sidenav ul > li.active > a {
+//   font-weight: 800;
+// }
 
 /* Temp fix for keeping the sidebar roughly in the column. */
 .bs-sidenav {
@@ -398,6 +408,15 @@ button {font-weight: 200;
 /* .issue-area-icons {
   width: 100%
 } */
+
+.issue-area-circle {
+  display: inline-block;
+  width:  80px;
+  height: 80px;
+  border-radius: 50%;
+  position: relative;
+  top: 31px;
+}
 
 .issue-area-icon {
   display: block;

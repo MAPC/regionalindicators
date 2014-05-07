@@ -1,21 +1,33 @@
-<%= render partial: 'issue_area', object: @issue_area %>
 
-<h1 class='page-header'><%= @issue_area.title %></h1>
+<!-- <= render partial: 'issue_area', object: @issue_area %> -->
 
-<div class="row">
-  <div class="col-xs-12">
-    <% if @issue_area.has_indicators? %>
-      <%= render partial: 'indicators/indicator', collection: @issue_area.indicators %>
-    <% else %>
-      <p>
-        There are not presently any <%= @issue_area.title.downcase %>-related indicators.
-      </p>
-    <% end %>
+<h1 class='page-header'>
+  <%= link_to issue_area_path(@issue_area) do %>
+    <div class="<%= @issue_area.css_class %> issue-area-circle">
+    </div>
+  <% end %>
+  <%= @issue_area.title %>
+</h1>
 
+<div class="col-md-9">
+  <% if @issue_area.has_indicators? %>
+    <%= render partial: 'issue_areas/indicator', collection: @issue_area.indicators %>
+  <% else %>
     <p>
-      View <%= @issue_area.title.downcase %> maps and download related datasets at the
-      <%= link_to 'MetroBoston DataCommon', @issue_area.datacommon_url, target: '_blank' %>.
+      There are presently no indicators related to <%= @issue_area.title %>.
     </p>
+  <% end %>
 
+  <p>
+    View <%= @issue_area.title.downcase %> maps and download related datasets at the
+    <%= link_to 'MetroBoston DataCommon', @issue_area.datacommon_url, target: '_blank' %>.
+  </p>
+</div>
+
+<div class="col-md-3 myscrollspy">
+  <div class="bs-sidebar hidden-print affix">
+    <ul class="nav bs-sidenav">
+      <%= render partial: 'scrollspy/indicator', collection: @issue_area.indicators %>
+    </ul>
   </div>
 </div>
