@@ -25,6 +25,8 @@ gem 'cancan'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 
+gem 'roo'
+
 
 group :development do
   gem 'capistrano',      '~> 2.0'

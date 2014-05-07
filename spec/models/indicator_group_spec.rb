@@ -43,4 +43,16 @@ describe IndicatorGroup do
     end
   end
 
+  describe "#title" do
+    context "without a title" do
+      before { @group.title = " " }
+      it { should_not be_valid }
+    end
+
+    context "with a nil title" do
+      before { @group.title = nil }
+      it { should_not be_valid }
+    end
+  end
+
 end

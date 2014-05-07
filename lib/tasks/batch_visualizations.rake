@@ -176,18 +176,21 @@ namespace :db do
    # Visualization.destroy_all ; Visualization.reset_pk_sequence
 
     visualizations.each do |obj|
-      id          = Array(obj[:explainable_id]).last
-      indicator   = Indicator.find(id)
-      explanation = indicator.explanation # || indicator.create_explanation(narrative: "fill me in")
+      ids = Array(obj[:explainable_id])
+      
+      ids.each do |id|
+        indicator   = Indicator.find(id)
+        explanation = indicator.explanation
 
-      viz = explanation.visualization || explanation.build_visualization(d3_file_name:   obj[:d3_file_name],
-                                             data_file_name: obj[:data_file_name],
-                                             title:          obj[:title])
-      puts viz.inspect
-      puts viz.errors.full_messages if !viz.valid?
-      viz.save
-      puts viz.inspect
-
+        viz = explanation.visualization || explanation.build_visualization
+        viz.assign_attributes({d3_file_name:   obj[:d3_file_name],
+                               data_file_name: obj[:data_file_name],
+                               title:          obj[:title]})
+        puts viz.inspect
+        puts viz.errors.full_messages if !viz.valid?
+        viz.save
+        puts viz.inspect
+      end
 
     end
     
