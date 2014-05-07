@@ -28,7 +28,7 @@
         <%= navbar_items %>
       </ul>
       
-      <%= form_tag '/search', method: :post, data: { role: 'search' }, class: "navbar-form navbar-right" do %>
+      <%= form_tag '/search', method: :post, data: { role: 'search' }, class: "navbar-form navbar-right hidden-md hidden-sm" do %>
         <div class="form-group">
           <%= text_field_tag :search, params[:search],
                                       class: "typeahead form-control",

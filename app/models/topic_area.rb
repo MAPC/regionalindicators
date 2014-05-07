@@ -9,9 +9,9 @@ class TopicArea < ActiveRecord::Base
 
   has_many :goals
   has_many :subjects
-  has_one :explanation, as: :explainable
+  has_one  :explanation, as: :explainable
 
-  validates :title, presence: true, length: { maximum: 100, minimum: 8 }
+  validates :title,    presence:    true, length: { maximum: 100, minimum: 8 }
   validates :subtitle, allow_blank: true, length: { maximum: 140, minimum: 8 }
   validate :featured_limit
 

@@ -1,7 +1,7 @@
 <%= link_to issue_area_path(issue_area) do %>
   <div class="<%= issue_area.css_class %> issue-area-icon">
     <div class="issue-area-circle">
+    <p class="issue-area-text"><%= issue_area.title %></p>
     </div>
-    <%= issue_area.title %>
   </div>
 <% end %>

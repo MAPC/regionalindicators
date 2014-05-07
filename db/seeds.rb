@@ -6,18 +6,35 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Helps print on a single line
 
-# TODO: Use the #create_or_update method of seeding from
-#       http://railspikes.com/2008/2/1/loading-seed-data
+def print_and_flush(str)
+  print str
+  $stdout.flush
+end
 
-model_names = %w( TopicArea Goal Objective Indicator IssueArea StaticPage User )
+
+model_names = %w( Goal
+                  Indicator
+                  IssueArea
+                  Objective
+                  StaticPage
+                  TopicArea
+                  User       )
 
 model_names.each {|model_name| require "#{model_name.tableize}"}
 
 model_names.each do |model_name|
-  puts "seeding #{model_name}"
-  model = Module.const_get model_name
-  model.destroy_all
-  model.reset_pk_sequence
-  model.create( eval "Fixtures::#{model_name.tableize}" )
+  print_and_flush "seeding #{model_name}"
+
+  model   = Module.const_get model_name
+  records = Fixtures.send "#{model.table_name}"
+
+  records.each do |record|
+    model.create_or_update(record, without_protection: true)
+  end
+
+  puts " -- DONE!"
 end
+
+

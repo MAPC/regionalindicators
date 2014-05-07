@@ -34,7 +34,7 @@ $subheadings:       rgba(39,39,39,1);
 $links:          #787878;
 $linkshover:     #646464;
 
-$soft-highlight: #F5F5F5;
+$soft-highlight: #FFF;
 $mid-highlight: #E5E5E5;
 
 /* fonts */
@@ -45,10 +45,12 @@ $mid-highlight: #E5E5E5;
 
 body {
   padding-top: 200px;
+  overflow-x: hidden;
 }
 
 html {font-family: 'Lato', sans-serif;
-
+	position: relative;
+	min-height: 100%;
 }
 
 p {
@@ -75,6 +77,14 @@ a:hover {
 body {
   font-family: 'Lato', sans-serif;
   padding-top: 60px;
+  margin-bottom: 200px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
 }
 
 h1,
@@ -385,22 +395,27 @@ button {font-weight: 200;
 
 /* icons */
 
-.issue-area-icons {
+/* .issue-area-icons {
   width: 100%
-}
+} */
 
 .issue-area-icon {
   display: block;
   width: 80px;
   height: 80px;
-  margin: 10px 5px;
+  margin: 20px 5px;
   float: left;
-  font-size: 12px;
-  font-weight: 200;
-  color: $text-color;
   border-radius: 50%;
-  text-align: center;
   padding-top: 20px;
+}
+
+.issue-area-text {
+	padding-top: 70px;
+	font-size: 12px;
+	font-weight: 200;
+	line-height: 16px;
+	color: $text-color;
+	text-align: center;
 }
 
 
@@ -494,11 +509,7 @@ button {font-weight: 200;
   background-color: $geographic-boundaries;
 }
 
-.footer {
-  position: relative;
-  width: 100%;
-  bottom: 0;
-}
+
 
 
 
