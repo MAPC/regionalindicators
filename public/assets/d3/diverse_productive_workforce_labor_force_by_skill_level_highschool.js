@@ -13,8 +13,8 @@
 
 var chart
   , config = { 
-      path: '/viz/data/labor_force_participation_by_education_msa.csv',
-      data: ['% In labor force with less than a high school diploma']  
+      path: window.dataUrl,
+      data: ['% In labor force with only a high school diploma']  
     , series: 'MSA Name'
     , errorflag: ', margin of error'
     , where: {
@@ -30,10 +30,10 @@ var chart
     }
 
 // Graphic
-var margin = {top: 20, right: 215, bottom: 30, left: 50},
+var margin = {top: 20, right: 120, bottom: 30, left: 50},
     width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%Y").parse;
 
@@ -75,45 +75,26 @@ ds.fetch({
   // we need to structure our data, from the dataset, into something d3 understands.
   var output = []; // empty box
   var cut = ds.where({ columns: config.data });
-var calloutCache = [];
+
  (ds.countBy('MSA Name')).each(function(unique, index) {
     var values = []
-    var dynamicCut = ds.where({ columns: ['MSA Name', '% In labor force with less than a high school diploma', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name']}})
+    var dynamicCut = ds.where({ columns: ['MSA Name', '% In labor force with only a high school diploma', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name']}})
 
     dynamicCut.each(function(row, rowIndex) {
-      values.push({ year: parseDate(row['Year'].toString()), value: row['% In labor force with less than a high school diploma']})
+      values.push({ year: parseDate(row['Year'].toString()), value: row['% In labor force with only a high school diploma']})
     });
 
-    
-
-    if (unique['MSA Name'] == "Boston-Cambridge-Quincy, MA-NH Metro Area" || 
-            unique['MSA Name'] == "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area" || 
-            unique['MSA Name'] == "San Francisco-Oakland-Fremont, CA Metro Area" ||
-            unique['MSA Name'] == "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area" ||
-            unique['MSA Name'] == "Seattle-Tacoma-Bellevue, WA Metro Area" ) {
-      calloutCache.push({series: unique['MSA Name'], values: values})
-    } else {
-      output.push({series: unique['MSA Name'], values: values})
-    }
-
-    
-
+    output.push({series: unique['MSA Name'], values: values})
   });
 
-
-  console.log(calloutCache)
-
-  calloutCache.forEach(function(element) {
-    output.push(element);
-  });
   console.log("new output", output)
 
-color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area", 
-        "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area", 
-        "San Francisco-Oakland-Fremont, CA Metro Area",
-        "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area",
-        "Seattle-Tacoma-Bellevue, WA Metro Area"]);
-
+  color.domain(["Boston MSA", 
+        "New York MSA", 
+        "San Francisco MSA",
+        "Washington MSA",
+        "Seattle MSA"]);
+  
   x.domain(d3.extent([2005,2006,2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
 
   y.domain([
@@ -154,7 +135,7 @@ color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area",
         } else {
           return "lightgray"
         }
-      })      
+      })
       .on("mouseover", function(d, i) {
         this.parentNode.parentNode.appendChild(this.parentNode);
         if (d.series !== "Boston MSA" && 
@@ -223,7 +204,7 @@ color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area",
   city.append("text")
       .datum(function(d) { return {name: d.series, value: d.values[d.values.length - 1]}; })
       .attr("transform", function(d) { 
-        if (d.name == "New York MSA") {
+        if (d.name == "Seattle MSA") {
           return "translate(" + x(d.value.year) + "," + (y(d.value.value) - 6) + ")"; 
         } else {
           return "translate(" + x(d.value.year) + "," + y(d.value.value) + ")"; 
@@ -231,22 +212,19 @@ color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area",
       })
       .attr("x", 3)
       .attr("dy", ".35em")
-      .attr("id", function(d,i) { return "label" + i })
-      .text(function(d) { return d.name; })
-      .call(wrap, 210)
       .style("display", function (d) {
         if (d.name == "Boston MSA" || 
             d.name == "New York MSA" || 
             d.name == "San Francisco MSA" ||
             d.name == "Washington MSA" ||
-            d.name == "Seattle MSA" )
-        {
+            d.name == "Seattle MSA" ) {
           return "block"
         } else {
           return "none"
         }
-      });
-
+      })
+      .attr("id", function(d,i) { return "label" + i })
+      .text(function(d) { return d.name; });
 
   $(document).ready(function () {
       $("circle").tooltip({

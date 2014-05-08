@@ -10,11 +10,21 @@
 
 
 
+
+
+
+
+// d3.selection.prototype.moveToFront = function() {
+//   return this.each(function(){
+//   this.parentNode.appendChild(this);
+//   });
+// };
+
 var chart
   , config = { 
-      path: '/viz/data/labor_force_participation_by_education_msa.csv',
-      data: ['% In labor force with some college or associate degree']  
-    , series: 'MSA ID'
+      path: window.dataUrl,
+      data: ['Debt to Degree']  
+    , series: 'Sector'
     , errorflag: ', margin of error'
     , where: {
         column: '',
@@ -29,8 +39,9 @@ var chart
     }
 
 // Graphic
-var margin = {top: 20, right: 80, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
+var margin = {top: 20, right: 80, bottom: 30, left: 80},
+   width = parseInt(d3.select(window.explainable).style('width'), 10),
+    width = width - margin.left - margin.right,
     height = 450 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%Y").parse;
@@ -47,16 +58,19 @@ var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
+var commify = d3.format(",.0f");
+
 var yAxis = d3.svg.axis()
     .scale(y)
     .tickSize(-width, 0, 0)
-    .orient("left");
+    .orient("left")
+    .tickFormat(function(d) { return "$" + commify(d); });
 
 var line = d3.svg.line()
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.value); });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(window.explainable).append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -72,30 +86,22 @@ ds.fetch({
 
   // we need to structure our data, from the dataset, into something d3 understands.
   var output = []; // empty box
-  var cut = ds.where({ columns: config.data });
 
- (ds.countBy('MSA Name')).each(function(unique, index) {
+ (ds.countBy('Sector')).each(function(unique, index) {
     var values = []
-    var dynamicCut = ds.where({ columns: ['MSA Name', '% In labor force with some college or associate degree', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name']}})
+    var dynamicCut = ds.where({ columns: ['Sector', 'Debt to Degree', 'Year'], rows: function(row) { return row['Sector'] == unique['Sector']}})
 
     dynamicCut.each(function(row, rowIndex) {
-      values.push({ year: parseDate(row['Year'].toString()), value: row['% In labor force with some college or associate degree']})
+      values.push({ year: parseDate(row['Year'].toString()), value: row['Debt to Degree']})
     });
 
-    output.push({series: unique['MSA Name'], values: values})
+    output.push({series: unique['Sector'], values: values})
   });
 
   console.log("new output", output)
 
-
-
-  color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area", 
-        "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area", 
-        "San Francisco-Oakland-Fremont, CA Metro Area",
-        "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area",
-        "Seattle-Tacoma-Bellevue, WA Metro Area"]);
-
-  x.domain(d3.extent([2005,2006,2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
+  color.domain(output.map(function(key) { return key.series }));
+  x.domain(d3.extent([2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
 
   y.domain([
     d3.min(output, function(c) { return d3.min(c.values, function(v) { return v.value; }); }),
@@ -112,10 +118,10 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -30)
+      .attr("y", -70)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("% Labor Force Participation");
+      .text("Debt-to-Degree Ratio");
 
   var city = svg.selectAll(".city")
       .data(output)
@@ -125,31 +131,20 @@ ds.fetch({
   city.append("path")
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
-      .style("stroke", function(d) { 
-        if (d.series == "Boston-Cambridge-Quincy, MA-NH Metro Area" || 
-            d.series == "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area" || 
-            d.series == "San Francisco-Oakland-Fremont, CA Metro Area" ||
-            d.series == "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area" ||
-            d.series == "Seattle-Tacoma-Bellevue, WA Metro Area" ) { 
-          return color(d.series); 
-        } else {
-          return "lightgray"
-        }
-      })      .on("mouseover", function(d, i) {
+      .style("stroke", function(d) { return color(d.series); })
+      .on("mouseover", function(d, i) {
         d3.select(this)
           .style("stroke-width", "7");
-        d3.select("text#label" + i)
-          .style("display", "block");   
+
+          this.parentNode.parentNode.appendChild(this.parentNode);
+        d3.select(this)
+  
       })
       .on("mouseout", function(d, i) {
         d3.select(this)
           .transition()
           .duration(350)
           .style("stroke-width", "3");
-        d3.select("text#label" + i)
-          .transition()
-          .delay(350)
-          .style("display", "none");   
       });
 
   city.selectAll("circle")
@@ -157,7 +152,8 @@ ds.fetch({
       .enter().append("svg:circle")
       .attr("cx", function(d) { return x(d.year) })
       .attr("cy", function(d) { return y(d.value) })
-      .attr("title", function(d) { return (d.year).getFullYear() + ': ' + d.value })
+      .attr("title", function(d) { return (d.year).getFullYear() + ':' })
+      .attr("data-content", function(d) { return "$" + commify(d.value) })
       .attr("r", 3)
       .attr("fill", "black")
       .style("opacity", 0.25)
@@ -177,14 +173,15 @@ ds.fetch({
       .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.value) + ")"; })
       .attr("x", 3)
       .attr("dy", ".35em")
-      .style("display", "none")
       .attr("id", function(d,i) { return "label" + i })
       .text(function(d) { return d.name; });
 
   $(document).ready(function () {
-      $("circle").tooltip({
+      $("circle").popover({
           'container': 'body',
-          'placement': 'top'
+          'placement': 'right',
+          'trigger': 'hover',
+          'html': true
       });
   });
 

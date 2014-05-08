@@ -13,9 +13,9 @@
 
 var chart
   , config = { 
-      path: '/viz/data/labor_force_participation_msa.csv',
-      data: ['% Labor Force of 25-64 year olds']  
-    , series: 'MSA ID'
+      path: window.dataUrl,
+      data: ['% In labor force with less than a high school diploma']  
+    , series: 'MSA Name'
     , errorflag: ', margin of error'
     , where: {
         column: '',
@@ -72,25 +72,48 @@ var ds = new Miso.Dataset({
 ds.fetch({
   success : function() {
 
+  // we need to structure our data, from the dataset, into something d3 understands.
   var output = []; // empty box
   var cut = ds.where({ columns: config.data });
-
- (ds.countBy('MSA ID')).each(function(unique, index) {
+var calloutCache = [];
+ (ds.countBy('MSA Name')).each(function(unique, index) {
     var values = []
-    var dynamicCut = ds.where({ columns: ['MSA ID', '% Labor Force of 25-64 year olds', 'Year', 'MSA Name'], rows: function(row) { return row['MSA ID'] == unique['MSA ID']}})
+    var dynamicCut = ds.where({ columns: ['MSA Name', '% In labor force with less than a high school diploma', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name']}})
 
-    var name;
     dynamicCut.each(function(row, rowIndex) {
-      name = row['MSA Name']
-      values.push({ year: parseDate(row['Year'].toString()), value: row['% Labor Force of 25-64 year olds']})
+      values.push({ year: parseDate(row['Year'].toString()), value: row['% In labor force with less than a high school diploma']})
     });
-    console.log(name);
-    output.push({series: name, values: values })
+
+    
+
+    if (unique['MSA Name'] == "Boston-Cambridge-Quincy, MA-NH Metro Area" || 
+            unique['MSA Name'] == "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area" || 
+            unique['MSA Name'] == "San Francisco-Oakland-Fremont, CA Metro Area" ||
+            unique['MSA Name'] == "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area" ||
+            unique['MSA Name'] == "Seattle-Tacoma-Bellevue, WA Metro Area" ) {
+      calloutCache.push({series: unique['MSA Name'], values: values})
+    } else {
+      output.push({series: unique['MSA Name'], values: values})
+    }
+
+    
+
   });
 
+
+  console.log(calloutCache)
+
+  calloutCache.forEach(function(element) {
+    output.push(element);
+  });
   console.log("new output", output)
 
-  color.domain(output.map(function(key) { return key.series }));
+color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area", 
+        "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area", 
+        "San Francisco-Oakland-Fremont, CA Metro Area",
+        "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area",
+        "Seattle-Tacoma-Bellevue, WA Metro Area"]);
+
   x.domain(d3.extent([2005,2006,2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
 
   y.domain([
@@ -108,10 +131,10 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -40)
+      .attr("y", -30)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Labor Force Participation");
+      .text("% Labor Force Participation");
 
   var city = svg.selectAll(".city")
       .data(output)
@@ -122,41 +145,59 @@ ds.fetch({
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
       .style("stroke", function(d) { 
-        if (d.series == "Boston MSA" || d.series == "United States") 
-          { return color(d.series); } else {
-            return "lightgray"
-          }
-      })
+        if (d.series == "Boston MSA" || 
+            d.series == "New York MSA" || 
+            d.series == "San Francisco MSA" ||
+            d.series == "Washington MSA" ||
+            d.series == "Seattle MSA" ) { 
+          return color(d.series); 
+        } else {
+          return "lightgray"
+        }
+      })      
       .on("mouseover", function(d, i) {
+        this.parentNode.parentNode.appendChild(this.parentNode);
+        if (d.series !== "Boston MSA" && 
+            d.series !== "New York MSA" && 
+            d.series !== "San Francisco MSA" &&
+            d.series !== "Washington MSA" &&
+            d.series !== "Seattle MSA" ) {
+          d3.select(this)
+            .style("stroke", "darkgray")
+        }
+
         d3.select(this)
           .style("stroke-width", "7");
-          this.parentNode.parentNode.appendChild(this.parentNode);
-
         d3.select("text#label" + i)
           .style("display", "block");   
-
-      if (d.series !== "Boston MSA") {
-        d3.select(this)
-          .style("stroke", "darkgrey")
-      }
       })
       .on("mouseout", function(d, i) {
-        d3.select(this)
-          .transition()
-          .duration(350)
-          .style("stroke-width", "3")
 
-        if (d.series !== "Boston MSA") {
+        if (d.series !== "Boston MSA" && 
+            d.series !== "New York MSA" && 
+            d.series !== "San Francisco MSA" &&
+            d.series !== "Washington MSA" &&
+            d.series !== "Seattle MSA" ) {
           d3.select(this)
             .style("stroke", "lightgray")
         }
 
-        if (d.series !== "Boston MSA" && d.series !== "United States") {
+        if (d.series !== "Boston MSA" && 
+            d.series !== "New York MSA" && 
+            d.series !== "San Francisco MSA" &&
+            d.series !== "Washington MSA" &&
+            d.series !== "Seattle MSA" ) {
           d3.select("text#label" + i)
             .transition()
             .delay(350)
             .style("display", "none");  
         }
+
+        d3.select(this)
+          .transition()
+          .duration(350)
+          .style("stroke-width", "3");
+
       });
 
   city.selectAll("circle")
@@ -181,19 +222,31 @@ ds.fetch({
 
   city.append("text")
       .datum(function(d) { return {name: d.series, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + (x(d.value.year) + 6) + "," + y(d.value.value) + ")"; })
+      .attr("transform", function(d) { 
+        if (d.name == "New York MSA") {
+          return "translate(" + x(d.value.year) + "," + (y(d.value.value) - 6) + ")"; 
+        } else {
+          return "translate(" + x(d.value.year) + "," + y(d.value.value) + ")"; 
+        }
+      })
       .attr("x", 3)
       .attr("dy", ".35em")
       .attr("id", function(d,i) { return "label" + i })
       .text(function(d) { return d.name; })
       .call(wrap, 210)
       .style("display", function (d) {
-        if (d.name == "Boston MSA" || d.name == "United States") {
+        if (d.name == "Boston MSA" || 
+            d.name == "New York MSA" || 
+            d.name == "San Francisco MSA" ||
+            d.name == "Washington MSA" ||
+            d.name == "Seattle MSA" )
+        {
           return "block"
         } else {
           return "none"
         }
-      });;
+      });
+
 
   $(document).ready(function () {
       $("circle").tooltip({

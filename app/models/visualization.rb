@@ -8,8 +8,8 @@ class Visualization < ActiveRecord::Base
   
   belongs_to :explanation
 
-  has_attached_file :d3,   url: "/viz/:basename.:extension",      preserve_files: true
-  has_attached_file :data, url: "/viz/data/:basename.:extension", preserve_files: true
+  has_attached_file :d3,   url: "d3/:basename.:extension",   preserve_files: true
+  has_attached_file :data, url: "data/:basename.:extension", preserve_files: true
   
   before_validation { self.file.clear if self.delete_file == '1' }
   

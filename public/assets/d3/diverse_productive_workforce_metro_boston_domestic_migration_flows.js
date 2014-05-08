@@ -13,30 +13,39 @@
 
 
 
-var chart, 
-    config = { 
-      path: '/viz/data/edattain_by_msa.csv',
-      data: ['Associate Degree or Higher'], 
-      series: 'MSA Name', 
-      errorflag: '', 
-      where: {
-        column: '',
-        value: ''
+var chart
+  , config = { 
+      path: window.dataUrl,
+      data: ['Moved from different state', 'Moved to different state']
+    , series: 'MSA ID'
+    , errorflag: ', margin of error'
+    , where: {
+        column: 'MSA ID',
+        value: '14460'
+      }
+    , groupBy: {
+
+      }
+    , countBy: {
+
       }
     }
 
 // Graphic
-var margin = {top: 20, right: 215, bottom: 30, left: 50},
+var margin = {top: 20, right: 160, bottom: 30, left: 100},
     width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 450 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%Y").parse;
-
+var commify = d3.format(",.0f");
 var x = d3.time.scale()
     .range([0, width]);
 
 var y = d3.scale.linear()
+    .range([height, 0]);
+
+var y2 = d3.scale.linear()
     .range([height, 0]);
 
 var color = d3.scale.category10();
@@ -45,7 +54,7 @@ var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-var yAxis = d3.svg.axis()
+var yAxisLeft = d3.svg.axis()
     .scale(y)
     .tickSize(-width, 0, 0)
     .orient("left");
@@ -68,31 +77,29 @@ var ds = new Miso.Dataset({
 ds.fetch({
   success : function() {
 
-  // we need to structure our data, from the dataset, into something d3 understands.
   var output = []; // empty box
 
-  var cut = ds.where({ rows: function(row) { return row['Rank By Population'] <= 10 }});
+  var cut = ds.where({ columns: config.data });
 
- (cut.countBy('MSA Name')).each(function(unique, index) {
-    var values = []
-    var dynamicCut = ds.where({ columns: ['MSA Name', 'Associate Degree or Higher', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name'] }})
+  cut.eachColumn(function(colName, colObject,index) { 
+    var values = [];
 
-    dynamicCut.each(function(row, rowIndex) {
-      values.push({ year: parseDate(row['Year'].toString()), value: row['Associate Degree or Higher']})
-    });
-      output.push({series: unique['MSA Name'], values: values});
-    
-  });
+    this.each(function(row, rowIndex) {
+      if (row[colName] !== null)
+        {
+          values.push({ year: parseDate(ds.rowByPosition(rowIndex)['Year'].toString()), value: row[colName] })
+        }
+    })
+
+    output.push({ series: colName, values: values })
+  })
 
   console.log("new output", output)
 
-  color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area", "United States"]);
+  color.domain(output.map(function(key) { return key.series }));
   x.domain(d3.extent([2005,2006,2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
 
-  y.domain([
-    d3.min(output, function(c) { return d3.min(c.values, function(v) { return v.value; }); }),
-    d3.max(output, function(c) { return d3.max(c.values, function(v) { return v.value; }); })
-  ]);
+  y.domain([60000,130000]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -101,61 +108,35 @@ ds.fetch({
 
   svg.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
+      .call(yAxisLeft)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -30)
+      .attr("y", -65)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Percent");
+      .text("Count");
+
 
   var city = svg.selectAll(".city")
       .data(output)
     .enter().append("g")
-      .attr("class", "city")
+      .attr("class", "city");
 
   city.append("path")
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
-      .style("stroke", function(d) { 
-        if (d.series == "Boston, MA MSA" || d.series == "United States") 
-          { return color(d.series); } else {
-            return "lightgray"
-          }
-      })
+      .style("stroke", function(d) { return color(d.series); })
       .on("mouseover", function(d, i) {
-
         this.parentNode.parentNode.appendChild(this.parentNode);
-        
         d3.select(this)
-          .style("stroke-width", "7");
-        d3.select("text#label" + i)
-          .style("display", "block"); 
-
-        if (d.series !== "Boston, MA MSA" && d.series !== "United States") {
-          d3.select(this)
-            .style("stroke", "darkgrey")
-        }
+          .style("stroke-width", "7"); 
       })
       .on("mouseout", function(d, i) {
         d3.select(this)
           .transition()
           .duration(350)
           .style("stroke-width", "3");
-
-        if (d.series !== "Boston, MA MSA" && d.series !== "United States") {
-          d3.select(this)
-            .style("stroke", "lightgray")
-        }
-
-        if (d.series !== "Boston, MA MSA" && d.series !== "United States") {
-          d3.select("text#label" + i)
-            .transition()
-            .delay(350)
-            .style("display", "none");  
-        }
       });
-
 
   city.selectAll("circle")
       .data(function(d) { return d.values;})
@@ -163,7 +144,7 @@ ds.fetch({
       .attr("cx", function(d) { return x(d.year) })
       .attr("cy", function(d) { return y(d.value) })
       .attr("title", function(d) { return (d.year).getFullYear() })
-      .attr("data-content", function(d) { return "Estimate: " + d.value + "%" })
+      .attr("data-content", function(d) { return "Estimate: " + commify(d.value) })
       .attr("r", 3)
       .attr("fill", "black")
       .style("opacity", 0.25)
@@ -174,26 +155,17 @@ ds.fetch({
       .on("mouseout", function(d) {
         d3.select(this)
           .transition()
-          .duration(150)
+          .duration(350)
           .attr("r", "3")
       });
 
   city.append("text")
-      .datum(function(d) { return { name: d.series, value: d.values[d.values.length - 1] }; })
-      .attr("transform", function(d) { return "translate(" + (x(d.value.year) + 10) + "," + y(d.value.value) + ")"; })
+      .datum(function(d) { return {name: d.series, value: d.values[d.values.length - 1]}; })
+      .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.value) + ")"; })
       .attr("x", 3)
-      .attr("dy", ".15em")
+      .attr("dy", ".35em")
       .attr("id", function(d,i) { return "label" + i })
-      .text(function(d) { return d.name; })
-      .call(wrap, 210)
-      .style("display", function (d) {
-        if (d.name == "Boston, MA MSA" || d.name == "United States") {
-          return "block"
-        } else {
-          return "none"
-        }
-      });
-
+      .text(function(d) { return d.name; });
 
   $(document).ready(function () {
       $("circle").popover({
@@ -203,8 +175,6 @@ ds.fetch({
           'html': true
       });
   });
-
-
 
  function wrap(text, width) {
     text.each(function() {

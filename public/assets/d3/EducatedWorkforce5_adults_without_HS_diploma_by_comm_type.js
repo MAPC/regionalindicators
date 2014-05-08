@@ -15,7 +15,7 @@
 
 var chart
   , config = { 
-      path: '/viz/data/edattain_by_race_puma.csv',
+      path: window.dataUrl,
       data: ['% Adults with an associate or bachelor degree']  
     , series: 'Puma Type'
     , errorflag: ', margin of error'
@@ -32,8 +32,8 @@ var chart
     }
 
 // Graphic
-var margin = {top: 40, right: 80, bottom: 60, left: 40},
-    width = parseInt(d3.select(window.explainable).style('width'), 10),
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
+   width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -45,7 +45,8 @@ var x1 = d3.scale.ordinal();
 var y = d3.scale.linear()
     .range([height, 0]);
 
-var color = d3.scale.category10();
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 var xAxis = d3.svg.axis()
     .scale(x0)
@@ -53,8 +54,8 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .tickSize(-width, 0, 0)
     .orient("left")
+    .tickSize(-width, 0, 0)
     .tickFormat(d3.format(".2s"));
 
 var svg = d3.select(window.explainable).append("svg")
@@ -79,20 +80,21 @@ ds.fetch({
   (this.countBy('Puma Type')).each(function(unique, index) {
     console.log(unique['Puma Type'])
     var values = [];
-    var dynamicCut = ds.where({ columns: ['Puma Type', 'Year', '% Adults with an associate or bachelor degree', '% Adults with an associate or bachelor degree, margin of error']
+    var dynamicCut = ds.where({ columns: ['Puma Type', 'Year', '% Adults with less than a high school diploma', '% Adults with less than a high school diploma, margin of error']
         , rows: function(row) { return row['Puma Type'] ==  unique['Puma Type']}  })
 
     dynamicCut.each(function (row, rowIndex) {
-      values.push({ name: row['Year'], value: row['% Adults with an associate or bachelor degree'], error: row['% Adults with an associate or bachelor degree, margin of error'] })
+      values.push({ name: row['Year'], value: row['% Adults with less than a high school diploma'], error: row['% Adults with less than a high school diploma, margin of error'] })
     })
     output.push({ series: unique['Puma Type'], values: values})
   });
+
 
   console.log("new output: ", output)
 
   x0.domain(output.map(function(d) { return d.series }));
   x1.domain(config.data).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, 60]);
+  y.domain([0,20]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -124,8 +126,8 @@ ds.fetch({
       .attr("x", function(d) { return x1(d.name); })
       .attr("y", height)
       .attr("height", 0)
-      .attr("title", function(d) { return d.name })
-      .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })
+      .attr("title", function(d) { return d.name + ': ' })
+    .attr("data-content", function(d) { return "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })
       .style("fill", function(d) { return color(d.name); })
       .transition()
       .attr("height", function(d) { return height - y(d.value); })
@@ -138,7 +140,7 @@ ds.fetch({
       .style("text-anchor", "middle")
       .attr("x", function(d) { return x1(d.name) + x1.rangeBand()/2 })
       .attr("y", function(d) { return y(d.value/2); })
-      .text(function(d) { return d.value })
+      .text(function(d) { return d.value + "%" });
 
   state.selectAll("line")
       .data(function(d) { return d.values })
@@ -147,7 +149,7 @@ ds.fetch({
       .attr("x1", function(d) { return x1(d.name) + (x1.rangeBand()/2); })
       .attr("y1", function(d) { return y((d.value + d.error)) })
       .attr("x2", function(d) { return x1(d.name) + (x1.rangeBand()/2); })
-      .attr("y2", function(d) { return y((d.value - d.error)) })
+      .attr("y2", function(d) { return y((d.value - d.error)) });
 
   $(document).ready(function () {
       $("svg rect").popover({
@@ -159,6 +161,7 @@ ds.fetch({
   });
 
    /* legend */
+   console.log(((output[0]).values).map(function (d) { return d.name }))
   var legend = svg.selectAll(".legend")
       .data(((output[0]).values).map(function (d) { return d.name }))
     .enter().append("g")
@@ -172,11 +175,13 @@ ds.fetch({
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width + 15)
+      .attr("x", width -10)
       .attr("y", 9)
       .attr("dy", ".35em")
-      .style("text-anchor", "beginning")
+      .style("text-anchor", "end")
       .text(function(d) { return d; });
+
+
 
   function wrap(text, width) {
     text.each(function() {

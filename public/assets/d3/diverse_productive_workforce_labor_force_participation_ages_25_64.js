@@ -14,15 +14,18 @@
 
 var chart
   , config = { 
-      path: '/viz/data/edattain_gap_msa.csv',
-      data: ['% Latino Gap with a Bachelor Degree or Higher'
-       , '% Black Gap with a Bachelor Degree or Higher'
-       , '% Asian Gap with a Bachelor Degree or Higher'
-       , '% Other  Race and Multi-racial Gap with a Bachelor Degree or Higher']  
-    , series: 'MSA Name'
+      path: window.dataUrl,
+      data: ['% Adults in labor force',
+      '% White in labor force',
+      '% Hispanic in labor force',
+      '% Black in labor force',
+      '% Asian in labor force',
+      '% Other Race in labor force']
+    , series: 'Puma Type'
+    , errorflag: ', margin of error'
     , where: {
-        column: 'MSA Name',
-        value: ''
+        column: 'Year',
+        value: '2007-11'
       }
     , groupBy: {
 
@@ -33,10 +36,10 @@ var chart
     }
 
 // Graphic
-var margin = {top: 40, right: 120, bottom: 60, left: 40},
-   width = parseInt(d3.select(window.explainable).style('width'), 10),
+var margin = {top: 20, right: 20, bottom: 150, left: 50},
+    width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
 
 var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -54,9 +57,9 @@ var xAxis = d3.svg.axis()
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
+    .tickSize(-width, 0, 0)
     .scale(y)
     .orient("left")
-    .tickSize(-width, 0, 0)
     .tickFormat(d3.format(".2s"));
 
 var svg = d3.select(window.explainable).append("svg")
@@ -68,44 +71,38 @@ var svg = d3.select(window.explainable).append("svg")
 var ds = new Miso.Dataset({
   url : config.path,
   delimiter : ',',
-  columns: [{ name: 'MSA Name', type: 'string' }]
+  columns: [{ name: 'Year', type: 'string' }]
 });
 
 ds.fetch({
   success : function() {
 
-  // we need to structure our data, from the dataset, into something d3 understands.
-
   var output = []; // empty box
 
   var cut = ds.where({ columns: config.data
                      , rows: function(row) { 
-                          return row[config.where.column] !='Boston-Cambridge-Quincy, MA-NH Metro Area' }//== config.where.value } 
+                          return row[config.where.column] == config.where.value } 
                     })
 
-  //config.data.pop()
+  config.data.pop()
 
   cut.eachColumn( function(colName, colObject, index) {
     var values = [];
 
     this.each(function(row, index) {
-      values.push({name: (ds.rowByPosition(index))['MSA Name'], value: row[colName] })
+      values.push({name: (ds.rowByPosition(index))['Puma Type'], value: row[colName], error: (ds.rowByPosition(index))[colName + config.errorflag] })
     });
 
   output.push({ series: colName, values: values})
   });
 
-  config.data.pop()
 
-  console.log("new output", output)
-  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } }))
+  console.log("new output: ", output)
 
-  config.data.pop()
+  x0.domain(output.map(function(d) { return d.series }));
+  x1.domain(config.data).rangeRoundBands([0, x0.rangeBand()]);
+  y.domain([0, 100]);
 
-  x0.domain(config.data);
-  x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([-20, 50]);
-  
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -118,7 +115,7 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -35)
+      .attr("y", -40)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("Percent");
@@ -127,28 +124,31 @@ ds.fetch({
       .data(output)
     .enter().append("g")
       .attr("class", "g")
-      .attr("transform", function(d) { return "translate(" + x0(d.series) + ",0)"; });
+      .attr("transform", function(d) { console.log(d); return "translate(" + x0(d.series) + ",0)"; });
 
   state.selectAll("rect")
       .data(function(d) { return d.values })
     .enter().append("rect")
       .attr("width", x1.rangeBand())
       .attr("x", function(d) { return x1(d.name); })
+      .attr("y", height)
+      .attr("height", 0)
       .attr("title", function(d) { return d.name })
-      .attr("data-content", function(d) { return "Estimate: " + d.value + '%' })
+      .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })
       .style("fill", function(d) { return color(d.name); })
       .transition()
-      .attr("y", function(d) { return y(Math.max(0, d.value)); })
-      .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
+      .attr("height", function(d) { return height - y(d.value); })
+      .attr("y", function(d) { return y(d.value); })
       .duration(700);
 
-  state.selectAll("text")
-      .data(function(d) { return d.values})
-    .enter().append("text")
-      .style("text-anchor", "middle")
-      .attr("x", function(d) { return x1(d.name) + x1.rangeBand()/2 })
-      .attr("y", function(d) { return y(d.value/2); })
-      .text(function(d) { return d.value });
+  state.selectAll("line")
+      .data(function(d) { return d.values })
+    .enter().append("line")
+      .attr("class", "error")
+      .attr("x1", function(d) { return x1(d.name) + (x1.rangeBand()/2); })
+      .attr("y1", function(d) { return y((d.value + d.error)) })
+      .attr("x2", function(d) { return x1(d.name) + (x1.rangeBand()/2); })
+      .attr("y2", function(d) { return y((d.value - d.error)) })
 
   $(document).ready(function () {
       $("svg rect").popover({
@@ -162,23 +162,25 @@ ds.fetch({
   /* legend */
 
   var legend = svg.selectAll(".legend")
-      .data(output[0].values.map(function(e){ return e.name })  )
+      .data(((output[0]).values).map(function (d) { return d.name }))
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width - 50)
+      // .attr("x", width - 5)
+      .attr("y", height + 40)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width - 55)
-      .attr("y", 9)
+      .attr("x", 20)
+      .attr("y", height + 49)
       .attr("dy", ".35em")
-      .style("text-anchor", "end")
+      .style("text-anchor", "beginning")
       .text(function(d) { return d; });
+
 
   function wrap(text, width) {
     text.each(function() {

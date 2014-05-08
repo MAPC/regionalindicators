@@ -13,22 +13,17 @@
 
 
 
-
-// d3.selection.prototype.moveToFront = function() {
-//   return this.each(function(){
-//   this.parentNode.appendChild(this);
-//   });
-// };
-
 var chart
   , config = { 
-      path: '/viz/data/debttodegree.csv',
-      data: ['Debt to Degree']  
-    , series: 'Sector'
+      path: window.dataUrl,
+      data: ['% Unemployed',
+'% Underutilized',
+'Underutilized to Unemployed Gap']
+    , series: 'MSA ID'
     , errorflag: ', margin of error'
     , where: {
-        column: '',
-        value: ''
+        column: 'State Name',
+        value: 'Massachusetts'
       }
     , groupBy: {
 
@@ -39,8 +34,8 @@ var chart
     }
 
 // Graphic
-var margin = {top: 20, right: 80, bottom: 30, left: 80},
-   width = parseInt(d3.select(window.explainable).style('width'), 10),
+var margin = {top: 20, right: 215, bottom: 30, left: 50},
+    width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 450 - margin.top - margin.bottom;
 
@@ -52,23 +47,31 @@ var x = d3.time.scale()
 var y = d3.scale.linear()
     .range([height, 0]);
 
+var y2 = d3.scale.linear()
+    .range([height, 0]);
+
 var color = d3.scale.category10();
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-var commify = d3.format(",.0f");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
+var yAxisLeft = d3.svg.axis()
     .tickSize(-width, 0, 0)
-    .orient("left")
-    .tickFormat(function(d) { return "$" + commify(d); });
+    .scale(y)
+    .orient("left");
+
+var yAxisRight = d3.svg.axis()
+    .scale(y2)
+    .orient("right");
 
 var line = d3.svg.line()
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.value); });
+
+var rightLine = d3.svg.line()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y2(d.value); });
 
 var svg = d3.select(window.explainable).append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -84,29 +87,37 @@ var ds = new Miso.Dataset({
 ds.fetch({
   success : function() {
 
-  // we need to structure our data, from the dataset, into something d3 understands.
   var output = []; // empty box
 
- (ds.countBy('Sector')).each(function(unique, index) {
-    var values = []
-    var dynamicCut = ds.where({ columns: ['Sector', 'Debt to Degree', 'Year'], rows: function(row) { return row['Sector'] == unique['Sector']}})
+  var cut = ds.where({ columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } });
 
-    dynamicCut.each(function(row, rowIndex) {
-      values.push({ year: parseDate(row['Year'].toString()), value: row['Debt to Degree']})
+  cut.eachColumn(function(colName, colObject, index) { 
+    var values = [];
+
+    cut.each(function(row, rowIndex) {
+      values.push({ year: parseDate(ds.rowByPosition(row._id)['Year'].toString()), value: row[colName]  })
     });
 
-    output.push({series: unique['Sector'], values: values})
+    output.push({ series: colName, values: values });
   });
 
   console.log("new output", output)
 
   color.domain(output.map(function(key) { return key.series }));
-  x.domain(d3.extent([2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
+  x.domain(d3.extent([2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013].map(function(d) { return parseDate(d.toString()) })));
 
-  y.domain([
-    d3.min(output, function(c) { return d3.min(c.values, function(v) { return v.value; }); }),
-    d3.max(output, function(c) { return d3.max(c.values, function(v) { return v.value; }); })
-  ]);
+  y.domain([0,16]);
+
+  y2.domain([1,7]);
+
+  var recession = svg.selectAll(".recession")
+      .data([2008,2009].map(function(d) { return parseDate(d.toString()) }))
+    .enter().append("rect")
+      .attr("class", "recession")
+    .attr("width", function(d) { return (width/[2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013].length) + 5 })
+      .attr("x", function(d) {return x(d)})
+      .attr("y", 0)
+      .attr("height", height);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -115,13 +126,8 @@ ds.fetch({
 
   svg.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", -70)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Debt-to-Degree Ratio");
+      .call(yAxisLeft)
+
 
   var city = svg.selectAll(".city")
       .data(output)
@@ -130,15 +136,18 @@ ds.fetch({
 
   city.append("path")
       .attr("class", "line")
-      .attr("d", function(d) { return line(d.values); })
+      .attr("d", function(d) { 
+        if (d.series == "U6 to U3 Gap") {
+          return rightLine(d.values); 
+        } else {
+          return line(d.values);
+        }
+      })
       .style("stroke", function(d) { return color(d.series); })
+      .attr("title", function(d) { return 'Series: ' + d.series })      
       .on("mouseover", function(d, i) {
         d3.select(this)
           .style("stroke-width", "7");
-
-          this.parentNode.parentNode.appendChild(this.parentNode);
-        d3.select(this)
-  
       })
       .on("mouseout", function(d, i) {
         d3.select(this)
@@ -148,12 +157,18 @@ ds.fetch({
       });
 
   city.selectAll("circle")
-      .data(function(d) { return d.values;})
+      .data(function(d) { return d.values; })
       .enter().append("svg:circle")
       .attr("cx", function(d) { return x(d.year) })
-      .attr("cy", function(d) { return y(d.value) })
-      .attr("title", function(d) { return (d.year).getFullYear() + ':' })
-      .attr("data-content", function(d) { return "$" + commify(d.value) })
+      .attr("cy", function(d) { 
+        if (d.value <= 1 && d.value >= 6) {
+          return y2(d.value); 
+        } else {
+          return y(d.value);
+        }
+      })
+      .attr("title", function(d) { return (d.year).getFullYear() })
+      .attr("data-content", function(d) { return "Estimate: " + d.value + "%" })
       .attr("r", 3)
       .attr("fill", "black")
       .style("opacity", 0.25)
@@ -170,8 +185,15 @@ ds.fetch({
 
   city.append("text")
       .datum(function(d) { return {name: d.series, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.value) + ")"; })
-      .attr("x", 3)
+      .attr("transform", function(d) { 
+        if (d.series == "Underutilized to Unemployed Gap") { 
+          return "translate(" + x(d.value.year) + "," + y2(d.value.value) + ")";
+        } else {
+          return "translate(" + x(d.value.year) + "," + y(d.value.value + 0.5) + ")";
+        }
+         
+      })
+      .attr("x", 30)
       .attr("dy", ".35em")
       .attr("id", function(d,i) { return "label" + i })
       .text(function(d) { return d.name; });
@@ -184,6 +206,24 @@ ds.fetch({
           'html': true
       });
   });
+
+  svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -30)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("% Labor Force and Employed");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(" + width + ",0)")
+      .call(yAxisRight)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 30)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Ratio");
 
  function wrap(text, width) {
     text.each(function() {

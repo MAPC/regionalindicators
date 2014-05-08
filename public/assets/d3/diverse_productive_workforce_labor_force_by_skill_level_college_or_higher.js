@@ -10,13 +10,11 @@
 
 
 
-
-
 var chart
   , config = { 
-      path: '/viz/data/bls_laborforce_employment_msa_d3.csv',
-      data: ['Metro Boston', 'Massachusetts', 'United States']
-    , series: 'MSA ID'
+      path: window.dataUrl,
+      data: ['In labor force with college or associate degree']  
+    , series: 'MSA Name'
     , errorflag: ', margin of error'
     , where: {
         column: '',
@@ -31,15 +29,14 @@ var chart
     }
 
 // Graphic
-var margin = {top: 20, right: 100, bottom: 30, left: 50},
-    width = parseInt(d3.select(window.explainable).style('width'), 10),
-    width = width - margin.left - margin.right,
+var margin = {top: 20, right: 120, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
     height = 450 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%Y").parse;
 
 var x = d3.time.scale()
-    .rangeRound([0, width]);
+    .range([0, width]);
 
 var y = d3.scale.linear()
     .range([height, 0]);
@@ -51,15 +48,15 @@ var xAxis = d3.svg.axis()
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
-    .tickSize(-width, 0, 0)
     .scale(y)
+    .tickSize(-width, 0, 0)
     .orient("left");
 
 var line = d3.svg.line()
     .x(function(d) { return x(d.year); })
     .y(function(d) { return y(d.value); });
 
-var svg = d3.select(window.explainable).append("svg")
+var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -75,49 +72,33 @@ ds.fetch({
 
   // we need to structure our data, from the dataset, into something d3 understands.
   var output = []; // empty box
-  // var cut = ds.where({ columns: config.data });
-
- // (ds.countBy('MSA ID')).each(function(unique, index) {
- //    var values = []
- //    var dynamicCut = ds.where({ columns: ['MSA ID', '% In labor force with less than a high school diploma', 'Year'], rows: function(row) { return row['MSA ID'] == unique['MSA ID']}})
-
- //    dynamicCut.each(function(row, rowIndex) {
- //      values.push({ year: parseDate(row['Year'].toString()), value: row['% In labor force with less than a high school diploma']})
- //    });
-
- //    output.push({series: unique['MSA ID'], values: values, nice: ds.rowByPosition(index)['MSA Name']})
- //  });
-
   var cut = ds.where({ columns: config.data });
 
-  cut.eachColumn(function(colName, colObject, index) { 
-    var values = [];
+ (ds.countBy('MSA Name')).each(function(unique, index) {
+    var values = []
+    var dynamicCut = ds.where({ columns: ['MSA Name', '% In labor force with bachelor degree or higher', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name']}})
 
-    ds.each(function(row, rowIndex) {
-      values.push({ year: parseDate(row['Year'].toString()), value: row[colName]  })
+    dynamicCut.each(function(row, rowIndex) {
+      values.push({ year: parseDate(row['Year'].toString()), value: row['% In labor force with bachelor degree or higher']})
     });
 
-    output.push({ series: colName, values: values });
+    output.push({series: unique['MSA Name'], values: values})
   });
 
   console.log("new output", output)
 
-  color.domain(output.map(function(key) { return key.series }));
-  x.domain(d3.extent([1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013].map(function(d) { return parseDate(d.toString()) })));
+  color.domain(["Boston-Cambridge-Quincy, MA-NH Metro Area", 
+        "New York-Northern New Jersey-Long Island, NY-NJ-PA Metro Area", 
+        "San Francisco-Oakland-Fremont, CA Metro Area",
+        "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area",
+        "Seattle-Tacoma-Bellevue, WA Metro Area"]);
+
+  x.domain(d3.extent([2005,2006,2007,2008,2009,2010,2011,2012].map(function(d) { return parseDate(d.toString()) })));
 
   y.domain([
     d3.min(output, function(c) { return d3.min(c.values, function(v) { return v.value; }); }),
     d3.max(output, function(c) { return d3.max(c.values, function(v) { return v.value; }); })
   ]);
-
-  var recession = svg.selectAll(".recession")
-      .data([1990,2001,2008,2009].map(function(d) { return parseDate(d.toString()) }))
-    .enter().append("rect")
-      .attr("class", "recession")
-      .attr("width", 40)
-      .attr("x", function(d) {return x(d)})
-      .attr("y", 0)
-      .attr("height", height);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -129,10 +110,10 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -25)
+      .attr("y", -30)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Unemployment Rate");
+      .text("% Labor Force Participation");
 
   var city = svg.selectAll(".city")
       .data(output)
@@ -142,17 +123,60 @@ ds.fetch({
   city.append("path")
       .attr("class", "line")
       .attr("d", function(d) { return line(d.values); })
-      .style("stroke", function(d) { return color(d.series); })
+      .style("stroke", function(d) { 
+        if (d.series == "Boston MSA" || 
+            d.series == "New York MSA" || 
+            d.series == "San Francisco MSA" ||
+            d.series == "Washington MSA" ||
+            d.series == "Seattle MSA" ) { 
+          return color(d.series); 
+        } else {
+          return "lightgray"
+        }
+      })    
       .on("mouseover", function(d, i) {
-         this.parentNode.parentNode.appendChild(this.parentNode);
+        this.parentNode.parentNode.appendChild(this.parentNode);
+        if (d.series !== "Boston MSA" && 
+            d.series !== "New York MSA" && 
+            d.series !== "San Francisco MSA" &&
+            d.series !== "Washington MSA" &&
+            d.series !== "Seattle MSA" ) {
+          d3.select(this)
+            .style("stroke", "darkgray")
+        }
+
         d3.select(this)
-          .style("stroke-width", "7"); 
+          .style("stroke-width", "7");
+        d3.select("text#label" + i)
+          .style("display", "block");   
       })
       .on("mouseout", function(d, i) {
+
+        if (d.series !== "Boston MSA" && 
+            d.series !== "New York MSA" && 
+            d.series !== "San Francisco MSA" &&
+            d.series !== "Washington MSA" &&
+            d.series !== "Seattle MSA" ) {
+          d3.select(this)
+            .style("stroke", "lightgray")
+        }
+
+        if (d.series !== "Boston MSA" && 
+            d.series !== "New York MSA" && 
+            d.series !== "San Francisco MSA" &&
+            d.series !== "Washington MSA" &&
+            d.series !== "Seattle MSA" ) {
+          d3.select("text#label" + i)
+            .transition()
+            .delay(350)
+            .style("display", "none");  
+        }
+
         d3.select(this)
           .transition()
           .duration(350)
-          .style("stroke-width", "3"); 
+          .style("stroke-width", "3");
+
       });
 
   city.selectAll("circle")
@@ -160,8 +184,7 @@ ds.fetch({
       .enter().append("svg:circle")
       .attr("cx", function(d) { return x(d.year) })
       .attr("cy", function(d) { return y(d.value) })
-      .attr("title", function(d) { return (d.year).getFullYear() })
-      .attr("data-content", function(d) { return "Estimate: " + d.value + "%" })
+      .attr("title", function(d) { return (d.year).getFullYear() + ': ' + d.value })
       .attr("r", 3)
       .attr("fill", "black")
       .style("opacity", 0.25)
@@ -181,15 +204,24 @@ ds.fetch({
       .attr("transform", function(d) { return "translate(" + x(d.value.year) + "," + y(d.value.value) + ")"; })
       .attr("x", 3)
       .attr("dy", ".35em")
+      .style("display", function (d) {
+        if (d.name == "Boston MSA" || 
+            d.name == "New York MSA" || 
+            d.name == "San Francisco MSA" ||
+            d.name == "Washington MSA" ||
+            d.name == "Seattle MSA" ) {
+          return "block"
+        } else {
+          return "none"
+        }
+      })
       .attr("id", function(d,i) { return "label" + i })
       .text(function(d) { return d.name; });
 
   $(document).ready(function () {
-      $("circle").popover({
+      $("circle").tooltip({
           'container': 'body',
-          'placement': 'right',
-          'trigger': 'hover',
-          'html': true
+          'placement': 'top'
       });
   });
 

@@ -5,5 +5,6 @@
 </div>
 <%= javascript_tag do %>
   window.explainable = "#<%= visualization.explainable_dom_id %>"
+  window.dataUrl = "<%= visualization.data.path %>"
 <% end %>
 <%= javascript_include_tag( visualization.d3.url ) %>

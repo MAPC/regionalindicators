@@ -12,28 +12,20 @@
 
 
 
-
-
-
 var chart
   , config = { 
-      path: '/viz/data/edattain_by_race_puma.csv',
-      data: ['% Adults with an associate or bachelor degree', 
-      '% White with an associate or bachelor degree', 
-      '% Hispanic with an associate or bachelor degree', 
-      '% Black with an associate or bachelor degree',
-      '% Asian with an associate or bachelor degree', 
-      '% Other Race with an associate or bachelor degree'], 
-    series: 'Puma Type',
-    errorflag: ', margin of error', 
-    where: {
-        column: 'Year',
+      path: window.dataUrl,
+      data: ['% Black Unemployment Gap','% Latino Unemployment Gap','% Asian Unemployment Gap','% Other/Multi-race Unemployment Gap'] 
+    , series: 'pumatype'
+    , errorflag: ', margin of error'
+    , where: {
+        column: 'MSA ID',
         value: '2007-11'
       }
     }
 
 // Graphic
-var margin = {top: 40, right: 120, bottom: 30, left: 40},
+var margin = {top: 40, right: 120, bottom: 60, left: 40},
    width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
@@ -55,8 +47,8 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .tickSize(-width, 0, 0)
     .orient("left")
+    .tickSize(-width, 0, 0)
     .tickFormat(d3.format(".2s"));
 
 var svg = d3.select(window.explainable).append("svg")
@@ -75,32 +67,31 @@ ds.fetch({
   success : function() {
 
   // we need to structure our data, from the dataset, into something d3 understands.
-
   var output = []; // empty box
 
   var cut = ds.where({ columns: config.data
                      , rows: function(row) { 
-                          return row[config.where.column] == config.where.value } 
+                          return row[config.where.column] == '2514460' || row[config.where.column] == '0' } 
                     })
+
+  config.data.pop()
 
   cut.eachColumn( function(colName, colObject, index) {
     var values = [];
 
-    this.each(function(row, index) {
-      values.push({name: (ds.rowByPosition(index))['Puma Type'], value: row[colName], error: (ds.rowByPosition(index))[colName + config.errorflag] })
+    this.each(function(row, rowIndex) {
+      values.push({name: (ds.rowById(row._id))['MSA Name'], value: row[colName] });
     });
 
   output.push({ series: colName, values: values})
   });
 
-  config.data.pop();
-
-  console.log("new output", output);
+  console.log("new output", output)
 
   x0.domain(config.data);
-
   x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, 100]);
+  y.domain([-1, 10]);
+
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -116,7 +107,7 @@ ds.fetch({
       .attr("y", -35)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Percent");
+      .text("Percent (%)");
 
   var state = svg.selectAll(".state")
       .data(output)
@@ -129,24 +120,21 @@ ds.fetch({
     .enter().append("rect")
       .attr("width", x1.rangeBand())
       .attr("x", function(d) { return x1(d.name); })
-      .attr("y", height)
-      .attr("height", 0)
       .attr("title", function(d) { return d.name })
-      .attr("data-content", function(d) { return "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })
+      .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })      .style("fill", function(d) { return color(d.name); })
       .style("fill", function(d) { return color(d.name); })
       .transition()
-      .attr("height", function(d) { return height - y(d.value); })
-      .attr("y", function(d) { return y(d.value); })
-      .duration(700);
+      .attr("y", function(d) { return y(Math.max(0, d.value)); })
+      .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
+      .duration(700)
 
-  state.selectAll("line")
-      .data(function(d) { return d.values })
-    .enter().append("line")
-      .attr("class", "error")
-      .attr("x1", function(d) { return x1(d.name) + (x1.rangeBand()/2); })
-      .attr("y1", function(d) { return y((d.value + d.error)) })
-      .attr("x2", function(d) { return x1(d.name) + (x1.rangeBand()/2); })
-      .attr("y2", function(d) { return y((d.value - d.error)) })
+  state.selectAll("text")
+      .data(function(d) { return d.values})
+    .enter().append("text")
+      .style("text-anchor", "middle")
+      .attr("x", function(d) { return x1(d.name) + x1.rangeBand()/2 })
+      .attr("y", function(d) { return 3 + y(d.value/2); })
+      .text(function(d) { return d.value + "%" })
 
   $(document).ready(function () {
       $("svg rect").popover({
@@ -160,48 +148,47 @@ ds.fetch({
   /* legend */
 
   var legend = svg.selectAll(".legend")
-      .data(output[0].values.map(function(e){ return e.name }))
+      .data((output[0].values).map(function(d) { return d.name }))
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width - 45)
-      .attr("y", -13)
+      .attr("x", width - 20)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width - 50)
-      .attr("y", -4)
+      .attr("x", width -25)
+      .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-  function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-          words = text.text().split(/\s+/).reverse(),
-          word,
-          line = [],
-          lineNumber = 0,
-          lineHeight = 1.1, // ems
-          y = text.attr("y"),
-          dy = parseFloat(text.attr("dy")),
-          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
+   function wrap(text, width) {
+      text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+          line.push(word);
           tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
         }
-      }
-    });
-  }
+      });
+    }
 
   },
   error : function() {

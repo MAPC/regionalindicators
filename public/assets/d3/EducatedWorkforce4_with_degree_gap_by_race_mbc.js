@@ -14,13 +14,21 @@
 
 var chart
   , config = { 
-      path: '/viz/data/unemp_gap_msa.csv',
-      data: ['% Black Unemployment Gap','% Latino Unemployment Gap','% Asian Unemployment Gap','% Other/Multi-race Unemployment Gap'] 
-    , series: 'pumatype'
-    , errorflag: ', margin of error'
+      path: window.dataUrl,
+      data: ['% Latino Gap with a Bachelor Degree or Higher'
+       , '% Black Gap with a Bachelor Degree or Higher'
+       , '% Asian Gap with a Bachelor Degree or Higher'
+       , '% Other  Race and Multi-racial Gap with a Bachelor Degree or Higher']  
+    , series: 'MSA Name'
     , where: {
-        column: 'MSA ID',
-        value: '2007-11'
+        column: 'MSA Name',
+        value: ''
+      }
+    , groupBy: {
+
+      }
+    , countBy: {
+
       }
     }
 
@@ -60,38 +68,44 @@ var svg = d3.select(window.explainable).append("svg")
 var ds = new Miso.Dataset({
   url : config.path,
   delimiter : ',',
-  columns: [{ name: 'Year', type: 'string' }]
+  columns: [{ name: 'MSA Name', type: 'string' }]
 });
 
 ds.fetch({
   success : function() {
 
   // we need to structure our data, from the dataset, into something d3 understands.
+
   var output = []; // empty box
 
   var cut = ds.where({ columns: config.data
                      , rows: function(row) { 
-                          return row[config.where.column] == '2514460' || row[config.where.column] == '0' } 
+                          return row[config.where.column] !='Boston-Cambridge-Quincy, MA-NH Metro Area' }//== config.where.value } 
                     })
 
-  config.data.pop()
+  //config.data.pop()
 
   cut.eachColumn( function(colName, colObject, index) {
     var values = [];
 
-    this.each(function(row, rowIndex) {
-      values.push({name: (ds.rowById(row._id))['MSA Name'], value: row[colName] });
+    this.each(function(row, index) {
+      values.push({name: (ds.rowByPosition(index))['MSA Name'], value: row[colName] })
     });
 
   output.push({ series: colName, values: values})
   });
 
+  config.data.pop()
+
   console.log("new output", output)
+  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } }))
+
+  config.data.pop()
 
   x0.domain(config.data);
   x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([-1, 10]);
-
+  y.domain([-20, 50]);
+  
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -107,7 +121,7 @@ ds.fetch({
       .attr("y", -35)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Percent (%)");
+      .text("Percent");
 
   var state = svg.selectAll(".state")
       .data(output)
@@ -121,20 +135,20 @@ ds.fetch({
       .attr("width", x1.rangeBand())
       .attr("x", function(d) { return x1(d.name); })
       .attr("title", function(d) { return d.name })
-      .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })      .style("fill", function(d) { return color(d.name); })
+      .attr("data-content", function(d) { return "Estimate: " + d.value + '%' })
       .style("fill", function(d) { return color(d.name); })
       .transition()
       .attr("y", function(d) { return y(Math.max(0, d.value)); })
       .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
-      .duration(700)
+      .duration(700);
 
   state.selectAll("text")
       .data(function(d) { return d.values})
     .enter().append("text")
       .style("text-anchor", "middle")
       .attr("x", function(d) { return x1(d.name) + x1.rangeBand()/2 })
-      .attr("y", function(d) { return 3 + y(d.value/2); })
-      .text(function(d) { return d.value + "%" })
+      .attr("y", function(d) { return y(d.value/2); })
+      .text(function(d) { return d.value });
 
   $(document).ready(function () {
       $("svg rect").popover({
@@ -148,47 +162,47 @@ ds.fetch({
   /* legend */
 
   var legend = svg.selectAll(".legend")
-      .data((output[0].values).map(function(d) { return d.name }))
+      .data(output[0].values.map(function(e){ return e.name })  )
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width - 20)
+      .attr("x", width - 50)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width -25)
+      .attr("x", width - 55)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-   function wrap(text, width) {
-      text.each(function() {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            word,
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            y = text.attr("y"),
-            dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-        while (word = words.pop()) {
-          line.push(word);
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
           tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-          }
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
         }
-      });
-    }
+      }
+    });
+  }
 
   },
   error : function() {

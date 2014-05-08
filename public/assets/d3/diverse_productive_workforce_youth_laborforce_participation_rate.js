@@ -13,18 +13,17 @@
 
 
 
-
-
 var chart
   , config = { 
-      path: '/viz/data/edattain_by_race_puma.csv',
-      data: ['% Adults with less than a high school diploma'
-       , '% White with less than a high school diploma'
-       , '% Hispanic with less than a high school diploma'
-       , '% Black with less than a high school diploma'
-       , '% Asian with less than a high school diploma'
-       , '% Other Race with less than a high school diploma']  
+      path: window.dataUrl,
+      data: ['% Youth in labor force',
+        '% White Youth in labor force',
+        '% Hispanic Youth in labor force',
+        '% Black Youth in labor force',
+        '% Asian Youth in labor force',
+        '% Other Race Youth in labor force'] 
     , series: 'Puma Type'
+    , errorflag: ', margin of error'
     , where: {
         column: 'Year',
         value: '2007-11'
@@ -38,10 +37,11 @@ var chart
     }
 
 // Graphic
-var margin = {top: 40, right: 60, bottom: 30, left: 40},
-   width = parseInt(d3.select(window.explainable).style('width'), 10),
+var margin = {top: 40, right: 80, bottom: 60, left: 50},
+    width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
+
 
 var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
@@ -80,7 +80,6 @@ ds.fetch({
   success : function() {
 
   // we need to structure our data, from the dataset, into something d3 understands.
-
   var output = []; // empty box
 
   var cut = ds.where({ columns: config.data
@@ -94,23 +93,19 @@ ds.fetch({
     var values = [];
 
     this.each(function(row, index) {
-      values.push({name: (ds.rowByPosition(index))['Puma Type'], value: row[colName] })
+      values.push({name: (ds.rowByPosition(index))['Puma Type'], value: row[colName], error: (ds.rowByPosition(index))[colName + config.errorflag] })
     });
 
   output.push({ series: colName, values: values})
   });
 
-  config.data.pop()
-
   console.log("new output", output)
-  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } }))
 
-  config.data.pop()
 
   x0.domain(config.data);
-
   x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, 40]);
+  y.domain([0, 100]);
+
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -123,10 +118,10 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -35)
+      .attr("y", -40)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Percent");
+      .text("% Youth in Labor Force");
 
   var state = svg.selectAll(".state")
       .data(output)
@@ -141,13 +136,14 @@ ds.fetch({
       .attr("x", function(d) { return x1(d.name); })
       .attr("y", height)
       .attr("height", 0)
-      .attr("title", function(d) { return d.name + ': ' })
-    .attr("data-content", function(d) { return d.value + '%' })
+      .attr("title", function(d) { return d.name })
+      .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' + "<br/> Margin of Error: " + d.error + '%' })
+      .style("fill", function(d) { return color(d.name); })
       .style("fill", function(d) { return color(d.name); })
       .transition()
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) { return y(d.value); })
-      .duration(700);
+      .duration(700)
 
   state.selectAll("line")
       .data(function(d) { return d.values })
@@ -170,47 +166,48 @@ ds.fetch({
   /* legend */
 
   var legend = svg.selectAll(".legend")
-      .data(output[0].values.map(function(e){ return e.name }))
+      .data((ds.countBy('Puma Type').toJSON()).map(function(d) { return d['Puma Type'] }))
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width + 10)
+      .attr("x", width - 20)
+      .attr("y", -30)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width + 5)
-      .attr("y", 9)
+      .attr("x", width -25)
+      .attr("y", -21)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-  function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-          words = text.text().split(/\s+/).reverse(),
-          word,
-          line = [],
-          lineNumber = 0,
-          lineHeight = 1.1, // ems
-          y = text.attr("y"),
-          dy = parseFloat(text.attr("dy")),
-          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
+   function wrap(text, width) {
+      text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+          line.push(word);
           tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
         }
-      }
-    });
-  }
+      });
+    }
 
   },
   error : function() {

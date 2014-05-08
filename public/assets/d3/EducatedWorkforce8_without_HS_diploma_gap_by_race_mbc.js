@@ -12,15 +12,20 @@
 
 
 
+
+
+
 var chart
   , config = { 
-      path: '/viz/data/lf_gap_msa.csv',
-      data: ['% Black Labor Force Gap','% Latino Labor Force Gap','% Asian Labor Force Gap','% Other/Multi-race Labor Force Gap'] 
-    , series: 'pumatype'
-    , errorflag: ', margin of error'
+      path: window.dataUrl,
+      data: ['% Latino Gap with less than a high school diploma'
+       , '% Black Gap with less than a high school diploma'
+       , '% Asian Gap with less than a high school diploma'
+       , '% Other  Race and Multi-racial Gap with less than a high school diploma']  
+    , series: 'MSA Name'
     , where: {
-        column: 'MSA ID',
-        value: '2007-11'
+        column: 'MSA Name',
+        value: ''
       }
     , groupBy: {
 
@@ -31,8 +36,8 @@ var chart
     }
 
 // Graphic
-var margin = {top: 40, right: 20, bottom: 35, left: 50},
-    width = parseInt(d3.select(window.explainable).style('width'), 10),
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
+   width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -53,8 +58,8 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left")
     .tickSize(-width, 0, 0)
+    .orient("left")
     .tickFormat(d3.format(".2s"));
 
 var svg = d3.select(window.explainable).append("svg")
@@ -66,39 +71,44 @@ var svg = d3.select(window.explainable).append("svg")
 var ds = new Miso.Dataset({
   url : config.path,
   delimiter : ',',
-  columns: [{ name: 'Year', type: 'string' }]
+  columns: [{ name: 'MSA Name', type: 'string' }]
 });
 
 ds.fetch({
   success : function() {
 
   // we need to structure our data, from the dataset, into something d3 understands.
+
   var output = []; // empty box
 
   var cut = ds.where({ columns: config.data
                      , rows: function(row) { 
-                          return row[config.where.column] == '2514460' || row[config.where.column] == '0' } 
+                          return row[config.where.column] !='Boston-Cambridge-Quincy, MA-NH Metro Area' }//== config.where.value } 
                     })
 
-  config.data.pop()
+  //config.data.pop()
 
   cut.eachColumn( function(colName, colObject, index) {
     var values = [];
 
-    this.each(function(row, rowIndex) {
-      values.push({name: (ds.rowById(row._id))['MSA Name'], value: row[colName] });
+    this.each(function(row, index) {
+      values.push({name: (ds.rowByPosition(index))['MSA Name'], value: row[colName] })
     });
 
   output.push({ series: colName, values: values})
   });
 
-  console.log("new output", output)
+  config.data.pop()
 
+  console.log("new output", output)
+  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] !='Boston-Cambridge-Quincy, MA-NH Metro Area' } }))// == config.where.value } }))
+
+  config.data.pop()
 
   x0.domain(config.data);
-  x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, cut.max(config.data) + 3]);
 
+  x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
+  y.domain([0, 30]);
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -120,7 +130,7 @@ ds.fetch({
       .data(output)
     .enter().append("g")
       .attr("class", "g")
-      .attr("transform", function(d) { return "translate(" + x0(d.series) + ",0)"; });
+      .attr("transform", function(d) { console.log(d); return "translate(" + x0(d.series) + ",0)"; });
 
   state.selectAll("rect")
       .data(function(d) { return d.values })
@@ -129,13 +139,13 @@ ds.fetch({
       .attr("x", function(d) { return x1(d.name); })
       .attr("y", height)
       .attr("height", 0)
-      .attr("title", function(d) { return d.name })
-      .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' })
+      .attr("title", function(d) { return d.name + ': ' })
+    .attr("data-content", function(d) { return d.value + '%' })
       .style("fill", function(d) { return color(d.name); })
       .transition()
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) { return y(d.value); })
-      .duration(700)
+      .duration(700);
 
   state.selectAll("text")
       .data(function(d) { return d.values})
@@ -143,7 +153,7 @@ ds.fetch({
       .style("text-anchor", "middle")
       .attr("x", function(d) { return x1(d.name) + x1.rangeBand()/2 })
       .attr("y", function(d) { return y(d.value/2); })
-      .text(function(d) { return d.value + "%" })
+      .text(function(d) { return d.value });
 
   $(document).ready(function () {
       $("svg rect").popover({
@@ -153,50 +163,51 @@ ds.fetch({
           'html': true
       });
   });
+
   /* legend */
 
   var legend = svg.selectAll(".legend")
-      .data((output[0].values).map(function(d) { return d.name }))
+      .data(output[0].values.map(function(e){ return e.name }))
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   legend.append("rect")
-      .attr("x", width - 20)
+      .attr("x", width - 5)
       .attr("width", 18)
       .attr("height", 18)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", width -25)
+      .attr("x", width - 10)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-   function wrap(text, width) {
-      text.each(function() {
-        var text = d3.select(this),
-            words = text.text().split(/\s+/).reverse(),
-            word,
-            line = [],
-            lineNumber = 0,
-            lineHeight = 1.1, // ems
-            y = text.attr("y"),
-            dy = parseFloat(text.attr("dy")),
-            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-        while (word = words.pop()) {
-          line.push(word);
+  function wrap(text, width) {
+    text.each(function() {
+      var text = d3.select(this),
+          words = text.text().split(/\s+/).reverse(),
+          word,
+          line = [],
+          lineNumber = 0,
+          lineHeight = 1.1, // ems
+          y = text.attr("y"),
+          dy = parseFloat(text.attr("dy")),
+          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+      while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+          line.pop();
           tspan.text(line.join(" "));
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-          }
+          line = [word];
+          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
         }
-      });
-    }
+      }
+    });
+  }
 
   },
   error : function() {

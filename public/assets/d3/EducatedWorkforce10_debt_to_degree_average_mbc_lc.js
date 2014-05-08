@@ -14,18 +14,17 @@
 
 
 
-
 var chart
   , config = { 
-      path: '/viz/data/edattain_gap_msa.csv',
-      data: ['% Latino Gap with less than a high school diploma'
-       , '% Black Gap with less than a high school diploma'
-       , '% Asian Gap with less than a high school diploma'
-       , '% Other  Race and Multi-racial Gap with less than a high school diploma']  
-    , series: 'MSA Name'
+      path: window.dataUrl,
+      data: ['Average Private For Profit Debt'
+            , 'Average Private Non-profit Debt'
+            , 'Average Public Debt']  
+    , series: 'pumatype'
+    , errorflag: ', margin of error'
     , where: {
-        column: 'MSA Name',
-        value: ''
+        column: 'Year',
+        value: '2010-12'
       }
     , groupBy: {
 
@@ -36,8 +35,8 @@ var chart
     }
 
 // Graphic
-var margin = {top: 40, right: 20, bottom: 30, left: 40},
-   width = parseInt(d3.select(window.explainable).style('width'), 10),
+var margin = {top: 40, right: 80, bottom: 30, left: 80},
+    width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -56,11 +55,13 @@ var xAxis = d3.svg.axis()
     .scale(x0)
     .orient("bottom");
 
+var commify = d3.format(",.0f");
+
 var yAxis = d3.svg.axis()
     .scale(y)
     .tickSize(-width, 0, 0)
     .orient("left")
-    .tickFormat(d3.format(".2s"));
+    .tickFormat(function(d) { return "$" + commify(d); });
 
 var svg = d3.select(window.explainable).append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -71,7 +72,7 @@ var svg = d3.select(window.explainable).append("svg")
 var ds = new Miso.Dataset({
   url : config.path,
   delimiter : ',',
-  columns: [{ name: 'MSA Name', type: 'string' }]
+  columns: [{ name: 'year', type: 'string' }]
 });
 
 ds.fetch({
@@ -83,32 +84,34 @@ ds.fetch({
 
   var cut = ds.where({ columns: config.data
                      , rows: function(row) { 
-                          return row[config.where.column] !='Boston-Cambridge-Quincy, MA-NH Metro Area' }//== config.where.value } 
+                          return row[config.where.column] == config.where.value } 
                     })
 
-  //config.data.pop()
+  config.data.pop()
 
-  cut.eachColumn( function(colName, colObject, index) {
+  cut.each(function(row, rowIndex) {
     var values = [];
+    this.eachColumn(function (colName, colObject, index) {
 
-    this.each(function(row, index) {
-      values.push({name: (ds.rowByPosition(index))['MSA Name'], value: row[colName] })
-    });
+      values.push({name: colName, value: ds.rowByPosition(rowIndex)[colName]})
+    })
 
-  output.push({ series: colName, values: values})
-  });
+    output.push({series: ds.rowByPosition(rowIndex)['Time Span'], values: values})
+  })
+
 
   config.data.pop()
 
   console.log("new output", output)
-  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] !='Boston-Cambridge-Quincy, MA-NH Metro Area' } }))// == config.where.value } }))
 
-  config.data.pop()
+  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } }))
 
-  x0.domain(config.data);
+  x0.domain(output.map(function(d){ return d.series }));
 
   x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-  y.domain([0, 30]);
+
+  y.domain([0, 40000]);
+
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -121,10 +124,10 @@ ds.fetch({
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -35)
+      .attr("y", -70)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Percent");
+      .text("Debt-to-Degree Ratio");
 
   var state = svg.selectAll(".state")
       .data(output)
@@ -140,20 +143,29 @@ ds.fetch({
       .attr("y", height)
       .attr("height", 0)
       .attr("title", function(d) { return d.name + ': ' })
-    .attr("data-content", function(d) { return d.value + '%' })
+    .attr("data-content", function(d) { return "$" + commify(d.value) })
       .style("fill", function(d) { return color(d.name); })
       .transition()
       .attr("height", function(d) { return height - y(d.value); })
       .attr("y", function(d) { return y(d.value); })
       .duration(700);
 
-  state.selectAll("text")
-      .data(function(d) { return d.values})
-    .enter().append("text")
-      .style("text-anchor", "middle")
-      .attr("x", function(d) { return x1(d.name) + x1.rangeBand()/2 })
-      .attr("y", function(d) { return y(d.value/2); })
-      .text(function(d) { return d.value });
+  var averagesData = [];
+
+  (ds.columns(['Regional Average Debt', 'National Average Debt']))
+  .eachColumn(function (colName, colObject, index) {
+    averagesData.push({ name: colName, value: ds.rowByPosition(index)[colName] })
+  });
+
+  var averages = svg.selectAll(".regional-average")
+      .data(averagesData)
+    .enter().append("line")
+      .attr("class", "average")
+      .attr("id", function(d,i) { return "average" + i } )
+      .attr("x1", 0)
+      .attr("y1", function(d) { return y(d.value) })
+      .attr("x2", width)
+      .attr("y2", function(d) { return y(d.value) });
 
   $(document).ready(function () {
       $("svg rect").popover({
@@ -164,28 +176,40 @@ ds.fetch({
       });
   });
 
-  /* legend */
-
+   /* legend */
   var legend = svg.selectAll(".legend")
-      .data(output[0].values.map(function(e){ return e.name }))
+      .data(((output[0]).values).map(function (d) { return d.name }))
     .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-  legend.append("rect")
-      .attr("x", width - 5)
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color);
+    legend.append("rect")
+        .attr("x", width - 5)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", color);
 
-  legend.append("text")
-      .attr("x", width - 10)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .style("text-anchor", "end")
-      .text(function(d) { return d; });
+    legend.append("text")
+        .attr("x", width - 10)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d; });
 
-  function wrap(text, width) {
+  var averagesLegend = svg.selectAll(".averagesLegend")
+      .data(averagesData)
+    .enter().append("g")
+      .attr("class", "averagesLegend")
+      .attr("transform", function(d, i) { return "translate(0," + (186 + (i * 24)) + ")"; });
+
+    averagesLegend.append("text")
+        .attr("x", width)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d.name; });
+
+ function wrap(text, width) {
     text.each(function() {
       var text = d3.select(this),
           words = text.text().split(/\s+/).reverse(),
