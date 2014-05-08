@@ -79,11 +79,11 @@ ActiveRecord::Schema.define(:version => 20140508161852) do
   end
 
   create_table "objectives", :force => true do |t|
-    t.integer  "number"
     t.string   "title"
     t.integer  "goal_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "number"
   end
 
   add_index "objectives", ["goal_id"], :name => "index_objectives_on_goal_id"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20140508161852) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
@@ -144,12 +144,12 @@ ActiveRecord::Schema.define(:version => 20140508161852) do
   create_table "topic_areas", :force => true do |t|
     t.string   "abbr"
     t.string   "title"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "subtitle"
     t.integer  "explanation_id"
-    t.boolean  "visible",        :default => false
-    t.boolean  "featured",       :default => false
+    t.boolean  "visible"
+    t.boolean  "featured"
   end
 
   create_table "users", :force => true do |t|
