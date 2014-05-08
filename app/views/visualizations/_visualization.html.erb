@@ -5,6 +5,6 @@
 </div>
 <%= javascript_tag do %>
   window.explainable = "#<%= visualization.explainable_dom_id %>"
-  window.dataUrl = "http://s3.amazonaws.com/metrofuture_development<%= visualization.data.url %>"
+  window.dataUrl = "<%= visualization.data.url %>"
 <% end %>
 <%= javascript_include_tag( visualization.d3.url ) %>
