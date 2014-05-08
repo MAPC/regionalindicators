@@ -14,10 +14,10 @@ class Goal < ActiveRecord::Base
     self.objectives.map { |o| o.indicators }.flatten
   end
 
-  searchable do
-    text :title
-    text :description
-  end
+  # searchable do
+  #   text :title
+  #   text :description
+  # end
 
   rails_admin do
     list do

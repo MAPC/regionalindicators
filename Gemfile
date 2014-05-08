@@ -22,6 +22,7 @@ gem 'devise'
 gem 'rails_admin'
 gem 'cancan'
 
+gem 'textacular'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 
