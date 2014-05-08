@@ -44,8 +44,10 @@ $mid-highlight: #E5E5E5;
 /* basic typography */
 
 body {
-  padding-top: 200px;
+  padding-top: 50px;
   overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 200px;
 }
 
 html {font-family: 'Lato', sans-serif;
@@ -72,12 +74,6 @@ a:hover {
   color: $linkshover;
   transition: all 0.3s ease-in-out 0s;    
   -webkit-transition: all 0.3s ease-in-out 0s;
-}
-
-body {
-  font-family: 'Lato', sans-serif;
-  padding-top: 60px;
-  margin-bottom: 200px;
 }
 
 #footer {
