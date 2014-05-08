@@ -115,7 +115,7 @@ TODO:
         count += 1
         next if count == @spreadsheet.first_row
 
-        indicator = Indicator.find(s['indicator_id'])
+        indicator = Indicator.find(s['indicator_id'].to_i)
         indicator.update_attribute(:units, s['unit'])
 
         date  = DateTime.parse("Jan #{s['year'].to_i.to_s}")

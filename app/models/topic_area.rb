@@ -17,6 +17,8 @@ class TopicArea < ActiveRecord::Base
 
   before_save :check_visible
 
+  default_scope { order(:id) }
+
   scope :featured,     where(featured: true)
   scope :visible,      where(visible:  true)
 
