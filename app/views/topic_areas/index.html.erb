@@ -4,8 +4,22 @@
       <% if @topic_areas[:featured].length > 0 %>
         <%= render partial: 'featured', collection: @topic_areas[:featured] %>
       <% else %>
-        <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].first } %>
+        <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].shift } %>
       <% end %>
+
+      <div class="col-md-4">
+        <h1>State of Equity</h1>
+        
+        <h3>Tracking progress towards an equitable region</h3>
+        
+        <p>
+          <%= link_to 'Go to site',
+                       'http://regionalindicators.org',
+                       class: "btn btn-primary btn-lg",
+                       role: "button" %>
+        </p>
+      </div>
+
     </div>
   </div>
 <% end %>
