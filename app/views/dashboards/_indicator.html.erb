@@ -2,7 +2,7 @@
   <div class="col-sm-4 col-xs-12 borderme">
     <!-- <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>"> -->
     <p>
-      <%= indicator.title %>
+      <%= link_to indicator.title, indicator_path(indicator) %>
     </p>
     <!-- </h3> -->
   </div>
