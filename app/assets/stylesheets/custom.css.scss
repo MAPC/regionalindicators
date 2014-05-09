@@ -342,7 +342,6 @@ button {font-weight: 200;
         display: block;
         li.active {
           font-weight: 800;
-          background-color: $soft-highlight;
           ul {
             display: block;
             li.active {
@@ -354,6 +353,14 @@ button {font-weight: 200;
       }
     }
   }
+}
+
+.myscrollspy {
+  position: fixed;
+  top:   150px;
+  right:  30px;
+  bottom: 20px;
+  overflow-y: scroll;
 }
 
 
@@ -375,6 +382,8 @@ button {font-weight: 200;
 .bs-sidenav {
   max-width: 250px;
 }
+
+
 
 .visualization {
   margin-top: 40px;
