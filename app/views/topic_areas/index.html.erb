@@ -7,7 +7,7 @@
         <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].shift } %>
       <% end %>
 
-      <div class="col-md-4">
+      <div class="col-md-3 col-md-offset-1">
         <h1>State of Equity</h1>
         
         <h3>Tracking progress towards an equitable region</h3>
@@ -24,8 +24,24 @@
   </div>
 <% end %>
 
+
 <div class="container">
   <div class="row">
     <%= render partial: 'topic_area', collection: @topic_areas[:not_featured] %>
   </div>
+
+  <div class="row" id="framing">
+    <div class="col-md-8 col-md-offset-2 col-xs-12">
+      <p>
+        MetroFuture, the region's plan for growth through the year 2030, directs us to achieve this vision by eliminating unfair, preventable, and systematic differences between groups that not only harm individuals and families, but threaten the vibrancy of our region.
+      </p>
+      <p>
+        The policy report will be released later in 2011 and will identify key policy and programmatic recommendations to "bend the trends" towards greater regional equity. MAPC will reach out to a wide variety of stakeholders in translating our data findings to policy; stay in touch to learn more. Click here to view the MetroFuture equity-related recommendations for policy and program change. 
+      </p>
+      <p>
+        MetroFuture, the region's plan for growth through the year 2030, directs us to achieve this vision by eliminating unfair, preventable, and systematic differences between groups that not only harm individuals and families, but threaten the vibrancy of our region.
+      </p>
+    </div>
+  </div>
 </div>
+

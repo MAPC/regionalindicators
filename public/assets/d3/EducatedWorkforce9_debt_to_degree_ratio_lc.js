@@ -39,7 +39,7 @@ var chart
     }
 
 // Graphic
-var margin = {top: 20, right: 80, bottom: 30, left: 80},
+var margin = {top: 20, right: 120, bottom: 30, left: 80},
    width = parseInt(d3.select(window.explainable).style('width'), 10),
     width = width - margin.left - margin.right,
     height = 450 - margin.top - margin.bottom;
