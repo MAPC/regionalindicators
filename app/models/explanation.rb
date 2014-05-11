@@ -15,6 +15,8 @@ class Explanation < ActiveRecord::Base
 
   validates :narrative, length: { maximum: 6000 }
 
+  default_scope { includes(:visualizations).includes(:sources) }
+
   def has_sources?
     self.sources.length > 0
   end

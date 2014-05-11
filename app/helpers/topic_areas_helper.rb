@@ -12,8 +12,9 @@ module TopicAreasHelper
 
   @@thumbs =    { improving: 'thumbs-up',
                   declining: 'thumbs-down',
-                  passing:   'thumbs-up',
-                  failing:   'thumbs-down',
+                  pass:      'thumbs-up',
+                  fail:      'thumbs-down',
+                  non_recorded: '',
                   stagnant:  ''      }
 
   @@chevrons =  { improving: 'chevron-up',
@@ -24,8 +25,9 @@ module TopicAreasHelper
 
   @@alerts =    { improving: 'success',
                   declining: 'danger',
-                  passing:   'success',
-                  failing:   'danger',
+                  pass:      'success',
+                  fail:      'danger',
+                  non_recorded: 'info',
                   stagnant:  'info'       }
 
 

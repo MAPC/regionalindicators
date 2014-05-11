@@ -18,6 +18,8 @@ class Visualization < ActiveRecord::Base
   validates_attachment :d3#,   content_type: { content_type: [/\A.*\/.*javascript\z/, 'text/html'] }
   validates_attachment :data, content_type: { content_type: ['text/csv'] }
 
+  default_scope { order(:id) }
+
   def slug
     exp = self.explanation.explainable
     "#{exp.class.name.downcase}-#{exp.id}"
