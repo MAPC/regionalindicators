@@ -356,11 +356,15 @@ button {font-weight: 200;
 }
 
 .myscrollspy {
+  display:  none;
   position: fixed;
-  top:   150px;
-  right:  30px;
-  bottom: 20px;
+  top:      150px;
+  right:     30px;
+  bottom:    20px;
   overflow-y: scroll;
+}
+@media (min-width: 992px) {
+  .myscrollspy { display: block; }
 }
 
 
