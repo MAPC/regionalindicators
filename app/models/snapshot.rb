@@ -16,6 +16,8 @@ class Snapshot < ActiveRecord::Base
     self.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year)
   end
 
+  after_save :update_indicator
+
   rails_admin do
     list do
       field :id
@@ -32,5 +34,12 @@ class Snapshot < ActiveRecord::Base
       field :indicator
     end
   end
+
+  private
+
+    def update_indicator
+      self.indicator.update_value_delta
+      self.indicator.update_rank_delta
+    end
 
 end

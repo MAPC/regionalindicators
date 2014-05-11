@@ -126,12 +126,12 @@ class Indicator < ActiveRecord::Base
     self.snapshots.in_year(year).first
   end
 
-  def value_delta(year=DEFAULT_YEAR)
-    ( current_value - value_in(year) ) || 0
+  def update_value_delta(year=DEFAULT_YEAR)
+    self.update_attribute(:value_delta, ( current_value - value_in(year) ) || 0)
   end
 
-  def rank_delta(year=DEFAULT_YEAR)
-    ( current_rank - rank_in(year) ) || 0
+  def update_rank_delta(year=DEFAULT_YEAR)
+    self.update_attribute(:rank_delta, ( current_rank - rank_in(year) )    || 0)
   end
 
   alias_method :value, :current_value
