@@ -172,7 +172,9 @@ CREATE TABLE indicators (
     threshhold numeric,
     higher_value_is_better boolean DEFAULT true,
     lower_rank_is_better boolean DEFAULT true,
-    indicator_group_id integer
+    indicator_group_id integer,
+    value_delta integer,
+    rank_delta integer
 );
 
 
@@ -1043,3 +1045,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140422163343');
 INSERT INTO schema_migrations (version) VALUES ('20140508161852');
 
 INSERT INTO schema_migrations (version) VALUES ('20140508192416');
+
+INSERT INTO schema_migrations (version) VALUES ('20140511221108');

@@ -9,6 +9,9 @@ class TopicArea < ActiveRecord::Base
 
   has_many :goals
   has_many :subjects
+  has_many :indicators,     through: :subjects
+  has_many :explanations,   through: :indicators
+  has_many :visualizations, through: :explanations
   has_one  :explanation, as: :explainable
 
   validates :title,    presence:    true, length: { maximum: 100, minimum: 8 }
@@ -18,6 +21,9 @@ class TopicArea < ActiveRecord::Base
   before_save :check_visible
 
   default_scope { order(:id) }
+
+  scope :dashboard,    includes(:subjects).includes(:indicators)
+  scope :report,       dashboard.includes(:explanations).includes(:visualizations)
 
   scope :featured,     where(featured: true)
   scope :visible,      where(visible:  true)
