@@ -28,3 +28,8 @@ solr/pids/*
 .env
 .test
 doc/*
+
+# The Procfile changes between deploy environments.
+# We don't want to merge changes to it across environments.
+
+Procfile
