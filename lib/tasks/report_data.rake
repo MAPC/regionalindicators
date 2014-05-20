@@ -142,6 +142,7 @@ TODO:
         next if count == @spreadsheet.first_row
 
         indicator_ids = (s['indicator_id'].to_s.split(', '))
+        
         date   = DateTime.parse(s['date']) if s['date']
         source = Source.create( date:    date,
                                 title:   s['title'],
@@ -150,7 +151,7 @@ TODO:
                                 comment: s['comment'])
         Indicator.find(indicator_ids).each do |i|
           i.explanation.sources << source
-          puts "added #{source.id} to #{i.title} (#{i.id})"
+          puts "added #{source.id} to #{i.title} (#{i.id}) from #{count}"
         end
       end
 

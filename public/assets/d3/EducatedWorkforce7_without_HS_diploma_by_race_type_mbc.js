@@ -31,7 +31,8 @@ var chart = d3.select(window.explainable)
        , 'Hispanic'
        , 'Black'
        , 'Asian'
-       , 'Other Race']);
+       , 'Other Race'])
+  .colors(['#F37B70', '#1C164E', '#1F77B4', '#00AFB2', '#6DBD45']);
 
 // Graphic
 var ds = new Miso.Dataset({

@@ -4,7 +4,7 @@ var barchart = require('./lib/barChart');
 var groupedbarchart = require('./lib/groupedBarChart');
 var linechart = require('./lib/lineChart');
 var stackedbarchart = require('./lib/stackedBarChart');
-
+// var legendmixin = require('./lib/legendMixin');
 // module.exports = {
 //   barchart: barchart,
 //   basechart: basechart,
@@ -22,7 +22,7 @@ exports.basechart = basechart
 exports.groupedbarchart = groupedbarchart
 exports.linechart = linechart
 exports.stackedbarchart = stackedbarchart
-
+// exports.legendmixin = legendmixin
 
 },{"./lib/barChart":2,"./lib/baseChart":3,"./lib/groupedBarChart":4,"./lib/lineChart":5,"./lib/stackedBarChart":6}],2:[function(require,module,exports){
 d3.chart("BaseChart").extend("BarChart", {
@@ -43,24 +43,21 @@ d3.chart("BaseChart").extend("BarChart", {
       chart.yScale.range([newHeight, 0]);
     }); 
 
-    chart.areas = {};
-
-    chart.layers = {};
-
     chart.areas.yAxisLayer = chart.base.select('g').append('g')
       .classed('ylabels', true)
 
     chart.layers.bars = chart.base.select('g').append('g')
       .classed('bars', true)
 
-    // create a layer of circles that will go into
-    // a new group element on the base of the chart
+    var selection = chart.base.node().parentNode
+    chart.areas.legend = d3.select(chart.base.node().parentNode).append("div");
+
     chart.layer('bars', chart.layers.bars, {
 
-      // select the elements we wish to bind to and
-      // bind the data to them.
       dataBind: function(data) {
 
+        var chart = this.chart();
+        
         var yAxis = d3.svg.axis()
             .scale(chart.yScale)
             .tickSize(-(chart.width()), 0, 0)
@@ -84,6 +81,10 @@ d3.chart("BaseChart").extend("BarChart", {
           .scale(chart.xScale)
           .orient("bottom");
 
+        if (chart._tickValues.length > 0) {
+          xAxis.tickValues(chart._tickValues);
+        }
+
         chart.base.select('g').append('g')
               .classed('x axis',true)
               .attr("transform", "translate(0," + chart.height() + ")")
@@ -91,6 +92,44 @@ d3.chart("BaseChart").extend("BarChart", {
               .selectAll("text")
               .style("font", "10px sans-serif")
               .call(chart.wrap, 50)
+
+        chart.areas.legend
+          .append("ul")
+          .selectAll("li")
+          .data(chart.xScale.domain())
+          .enter()
+            .append("li")
+            .style("color", function(d,i) { return chart.colorScale(d) })
+            .style("font-size", "2.2em")
+            .style("line-height", ".4em")
+              .append("span")
+              .style("color", "black")
+              .style("font-size", ".40em")
+              .text(function(d) { return d });
+
+        // chart.areas.legend
+        //   .selectAll("circle")
+        // .data(chart.xScale.domain())
+        //   .enter()
+        //   .append("circle")
+        //   .attr("cx", chart.width() + chart._margin.right/8 )
+        //   .attr("cy", function(d,i) {
+        //     return  i * 15 })
+        //   .attr("r", 5)
+        //   .attr("fill", chart.color)
+
+        // chart.areas.legend
+        //   .selectAll("text")
+        // .data(chart.xScale.domain())
+        //   .enter()
+        //   .append("text")
+        //   .attr("x", chart.width() + chart._margin.right/8 + 15)
+        //   .attr("y", function(d,i) {
+        //     return i * 15 
+        //   })
+        //   .attr("dy", ".35em")
+        //   .style("text-anchor", "beginning")
+        //   .text(function(d) { return d; });
 
       return this.selectAll('.bar')
         .data(data);
@@ -113,6 +152,7 @@ d3.chart("BaseChart").extend("BarChart", {
           this.attr('x', function(d) { return chart.xScale(d.name); })
             .attr("title", function(d) { return d.name })
             .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' })
+            .attr("data-legend", function(d) { return d.name })
             .attr('y', function(d) { return chart.yScale(0); })
             .attr('width', chart.xScale.rangeBand())
             .attr('height', 0)
@@ -124,7 +164,7 @@ d3.chart("BaseChart").extend("BarChart", {
               d3.select(this)
                 .style("opacity", 0.8)
             })
-            .style('fill', function(d) {return chart.color(d.name);});
+            .style('fill', function(d) {return chart.colorScale(d.name);});
         },
 
         'enter:transition': function() {
@@ -132,7 +172,7 @@ d3.chart("BaseChart").extend("BarChart", {
 
           this.duration(chart.duration)
             .attr('y', function(d) { return chart.yScale(d3.max([0, d.value])); })
-            .attr('height', function(d) { return Math.abs(chart.yScale(d.value) - chart.yScale(0)); });
+            .attr('height', function(d) { return Math.abs(chart.yScale(d.value) - chart.yScale(0)); });            
 
           $(document).ready(function () {
               $("svg rect").popover({
@@ -157,8 +197,6 @@ d3.chart("BaseChart").extend("BarChart", {
     var max = d3.max(data, function(d) { return d.value });
     var min = d3.min(data, function(d) { return d.value });
 
-    console.log(max, min);
-
     if (min > 0) {
       min = 0;
     }
@@ -174,9 +212,14 @@ d3.chart("BaseChart").extend("BarChart", {
 d3.chart("BaseChart", {
 
   initialize: function () {
+    var chart = this;
+
+    chart.areas = {};
+    chart.layers = {};
+
     this._tickValues = [];
     this._yAxisLabel = "Y-Axis";
-    this._margin = {top: 20, right: 130, bottom: 90, left: 45};
+    this._margin = {top: 20, right: 20, bottom: 80, left: 40};
     this._width  = this.base.attr('width') ? this.base.attr('width') - this._margin.left - this._margin.right : this.base.node().parentNode.clientWidth - this._margin.left - this._margin.right;
     this._height = this.base.attr('height') ? this.base.attr('height') - this._margin.top - this._margin.bottom : this.base.node().parentNode.clientHeight - this._margin.top - this._margin.bottom ;
 
@@ -266,6 +309,22 @@ d3.chart("BaseChart", {
     return this;
   },
 
+  colors: function(colorScale) {
+    if (!arguments.length) {
+      return this.colorScale;
+    }
+    if (colorScale instanceof Array) {
+      colorScale = d3.scale.ordinal()
+        .range(colorScale)
+        // .domain([0, colorScale.length-1]);
+
+    }
+    this.colorScale = colorScale;
+    if (this.data) this.draw(this.data);
+
+    return this;
+  },
+
   wrap: function(text, width) {
     text.each(function() {
       var text = d3.select(this),
@@ -331,23 +390,16 @@ d3.chart('BaseChart').extend('GroupedBarChart', {
     chart.on("change:height", function(newHeight) {
       chart.yScale.range([newHeight, 0]);
     });
- 
-
-    chart.areas = {};
-
-    // cache for selections that are layer bases.
-    chart.layers = {};
 
     chart.areas.yAxisLayer = chart.base.select('g').append('g')
       .classed('ylabels', true)
 
-    chart.areas.averages = chart.base.select('g').append('g')
-      .classed('averages', true);
-
-    // -- actual layers
     chart.layers.bars = chart.base.select('g').append('g')
       .classed('bars', true)
- 
+
+    var selection = chart.base.node().parentNode
+    chart.areas.legend = d3.select(chart.base.node().parentNode).append("div");
+
     chart.layer('bars', chart.layers.bars, {
       dataBind: function(data) {
         var chart = this.chart();
@@ -366,7 +418,7 @@ d3.chart('BaseChart').extend('GroupedBarChart', {
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text(chart.yAxisLabel());
- 
+
         var xAxis = d3.svg.axis()
           .scale(chart.xScale)
           .orient("bottom")
@@ -408,11 +460,26 @@ d3.chart('BaseChart').extend('GroupedBarChart', {
             .attr("title", function(d) { return d.name })
             .attr("data-content", function(d) { return  "Estimate: " + d.value + '%' })
             .attr('class', 'bar')
+            .attr("data-legend", function(d) { return d.name })
             .attr("width", chart.x1Scale.rangeBand())
-            .style("fill", function(d) { return chart.color(d.name); })
+            .style("fill", function(d,i) { return chart.colorScale(d.name);; })
             .attr("x", function(d) { return chart.x1Scale(d.name); })
             .attr('y', function(d) { return chart.yScale(0); })
             .attr("height", 0);
+
+        chart.areas.legend
+          .append("ul")
+          .selectAll("li")
+          .data(chart.x1Scale.domain())
+          .enter()
+            .append("li")
+            .style("color", function(d,i) { return chart.colorScale(d) })
+            .style("font-size", "2.2em")
+            .style("line-height", ".4em")
+              .append("span")
+              .style("color", "black")
+              .style("font-size", ".40em")
+              .text(function(d) { return d });
 
           // this.selectAll("text")
           //     .data(function(d) { return d.values})
@@ -508,6 +575,8 @@ d3.chart('BaseChart').extend('GroupedBarChart', {
       chart.xScale.domain(data.map(function(d) { return d.series; }));
       chart.x1Scale.domain(buffer).rangeRoundBands([0, chart.xScale.rangeBand()]);
       chart.yScale.domain([min, max]);
+      // chart.colorScale
+      //   .domain(chart.x1Scale());
 
       return data;
   }
@@ -517,7 +586,6 @@ d3.chart("BaseChart").extend("LineChart", {
 
   initialize: function() {
     var chart = this;
-    // console.log(this.base.node().parentNode.style);
     chart._callouts = [];
 
     chart.xScale = d3.time.scale()
@@ -540,10 +608,6 @@ d3.chart("BaseChart").extend("LineChart", {
       chart.yScale.range([newHeight, 0]);
     }); 
 
-    chart.areas = {};
-
-    chart.layers = {};
-
     chart.areas.yAxisLayer = chart.base.select('g').append('g')
       .classed('ylabels', true)
 
@@ -555,6 +619,9 @@ d3.chart("BaseChart").extend("LineChart", {
 
     chart.layers.labels = chart.base.select('g').append('g')
       .classed('text-labels', true)
+
+    var selection = chart.base.node().parentNode
+    chart.areas.legend = d3.select(chart.base.node().parentNode).append("div");
 
     // create a layer of circles that will go into
     // a new group element on the base of the chart
@@ -591,6 +658,27 @@ d3.chart("BaseChart").extend("LineChart", {
             .selectAll("text")
               .call(chart.wrap, 50)
 
+
+        chart.areas.legend
+          .append("ul")
+          .selectAll("li")
+          .data(function() { 
+            if (chart.callouts().length > 0) {
+              return chart.callouts();
+            } else {
+              return data.map(function(d) { return d.series }) ;
+            }
+          })
+          .enter()
+            .append("li")
+            .style("color", function(d,i) { return chart.colorScale(d) })
+            .style("font-size", "2.2em")
+            .style("line-height", ".4em")
+              .append("span")
+              .style("color", "black")
+              .style("font-size", ".40em")
+              .text(function(d) { return d });
+
       return this.selectAll('.line')
         .data(data);
       },
@@ -611,16 +699,15 @@ d3.chart("BaseChart").extend("LineChart", {
             .attr("class", function(d,i) {
               if (chart.matchWithCallouts(d.series)) {
                 var str = d.series.replace(/\s/g, '');
-                console.log(str);
                 return "line callout callout-" + str;
               } else {
                 return "line line-" + 1;
               }     
 
             })
-            .style("stroke", function(d) {
+            .style("stroke", function(d,i) {
               if (chart.matchWithCallouts(d.series) || chart.callouts() == false) {
-                return chart.color(d.series)
+                return chart.colorScale(d.series); 
               } else {
                 return "Lightgray"
               }       
@@ -634,7 +721,6 @@ d3.chart("BaseChart").extend("LineChart", {
 
             })
             .on("mouseout", function(d,i) {
-
               d3.select(this)
                 .transition()
                 .duration(350)
@@ -702,6 +788,7 @@ d3.chart("BaseChart").extend("LineChart", {
                 .duration(150)
                 .attr("r", "3")
             });
+
         },
 
         'enter:transition': function () {
@@ -739,7 +826,6 @@ d3.chart("BaseChart").extend("LineChart", {
             .text(function(d) { return d.series; })
             .call(chart.wrap, 215)
             .style("display", function (d) {
-              console.log(chart._callouts.length);
               if (chart._callouts.indexOf(d.series) > -1 || chart._callouts.length == 0) {
                 return "block"
               } else {
@@ -803,13 +889,15 @@ d3.chart("BaseChart").extend("LineChart", {
     chart.yScale.domain([min,max]);
 
     if (chart._callouts) {
-      var pluck = [];
+
       chart._callouts.forEach(function(d) {
         var pluck = [];
         pluck = data.filter(function(f) { 
           return f.series == d; 
         });
-
+        data = data.filter(function(f) {
+          return f.series !== d;
+        });
         data.push(pluck[0]);
       });
       
@@ -843,12 +931,6 @@ d3.chart('BaseChart').extend('StackedBarChart', {
     chart.on("change:height", function(newHeight) {
       chart.yScale.range([newHeight, 0]);
     });
- 
-
-    chart.areas = {};
-
-    // cache for selections that are layer bases.
-    chart.layers = {};
 
     chart.areas.yAxisLayer = chart.base.select('g').append('g')
       .classed('ylabels', true)
@@ -857,6 +939,9 @@ d3.chart('BaseChart').extend('StackedBarChart', {
     chart.layers.bars = chart.base.select('g').append('g')
       .classed('bars', true)
  
+    chart.areas.legend = chart.base.select('g').append('g')
+          .classed('legend', true)
+
     chart.layer('bars', chart.layers.bars, {
       dataBind: function(data) {
         var chart = this.chart();

@@ -36,7 +36,7 @@ var chart
 var chart = d3.select(window.explainable)
   .append('svg')
   .chart('GroupedBarChart')
-  .height(400)
+  .height(400).colors(d3.scale.category10())
   .tickValues(['Latino', 'White', 'Black', 'Asian', 'Other Race and Multi-racial']);
 
 var ds = new Miso.Dataset({

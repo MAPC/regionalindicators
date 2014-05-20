@@ -5,7 +5,7 @@ var chart
   , config = { 
       path: window.dataUrl,
       data: ['Average Private For Profit Debt'
-            , 'Average Private Non-profit Debt'
+            , 'Average Private non-profit Debt'
             , 'Average Public Debt']  
     , series: 'pumatype'
     , errorflag: ', margin of error'
@@ -118,7 +118,8 @@ d3.chart("GroupedBarChart").extend("GroupedBarChartWithAverages", {
 var chart = d3.select(window.explainable)
   .append('svg')
   .chart('GroupedBarChartWithAverages')
-  .height(400);
+  .height(400)
+  .colors(['#582566', '#1C164E', '#1F77B4']);
 
 var ds = new Miso.Dataset({
   url : config.path,

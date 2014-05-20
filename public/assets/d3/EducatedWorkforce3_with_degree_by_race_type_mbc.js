@@ -22,6 +22,7 @@ var chart = d3.select(window.explainable)
   .append('svg')
   .chart('GroupedBarChart')
   .height(400)
+  .colors(['#F37B70', '#1C164E', '#1F77B4', '#00AFB2', '#6DBD45'])
   .tickValues(['Adults', 
       'Hispanic', 
       'Black',

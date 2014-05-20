@@ -17,6 +17,7 @@ var chart = d3.select(window.explainable)
   .append('svg')
   .chart('LineChart')
   .height(400)
+  .colors(['#D22D33', '#1C164E'])
   .callouts(["Boston, MA MSA", "United States"]);
 
 var ds = new Miso.Dataset({
