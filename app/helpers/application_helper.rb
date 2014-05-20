@@ -18,7 +18,9 @@ module ApplicationHelper
     render partial: 'shared/nav_item', collection: StaticPage.navbar
   end
 
-
+  def issue_area_list
+    render partial: 'issue_areas/issue_area_list', collection: IssueArea.order('title ASC')
+  end
   # Limits scrollspy menu items > LIMIT chars long
   # and appends an ellipsis if it's too long
   def scrollspy_item(text)
