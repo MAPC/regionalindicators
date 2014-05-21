@@ -209,6 +209,8 @@ h3.regional-prosperity{
   color: #fff;
   padding: 10px 15px;
   margin: 40px 0 20px;
+  font-weight: 400;
+  font-size: 350%;
   }
   
 h2.transportation-choices { 
@@ -365,7 +367,7 @@ button {font-weight: 200;
       font-weight: 800;
       ul {
         display: block;
-        color: $prosperity;
+        color: $mid-highlight;
         li.active {
           //font-weight: 800;
           background-color: $mid-highlight;;
@@ -452,20 +454,43 @@ button {font-weight: 200;
 }
 
 
-.jumbotron {
+/*.jumbotron {
   .container {
-    
-      opacity: 0.5;
     .col-md-4 {
-      background-color: #000;
-      border-radius: 100px;
-      padding: 0;
-      -moz-border-radius: 100px;
-      -webkit-border-radius: 100px;
-
+      background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+      padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+      opacity: 0.8;
+    //.col-m3-offset-1
+    // background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+    // padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+    .col-md-3.col-md-offset-1 {
+      background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+      padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+      opacity: 0.8;
+    //.col-m3-offset-1
+    // background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+    // padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+    }
     }
   }
-}
+}*/
+
 /* buttons */
 //.container {
   //margin-left: 0px;
