@@ -16,6 +16,8 @@
 //= require twitter/typeahead.min
 //= require d3.v3
 //= require miso.ds.deps.ie.0.4.1
+//= require lib/d3.chart.min.js
+//= require lib/tufted.js
 //= require_tree .
 
 $(document).ready(function () {

@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -266,11 +267,11 @@ ALTER SEQUENCE issue_areas_id_seq OWNED BY issue_areas.id;
 
 CREATE TABLE objectives (
     id integer NOT NULL,
+    number integer,
     title character varying(255),
     goal_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    number character varying(255)
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -343,7 +344,20 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE VIEW searches AS
-    (SELECT goals.id AS searchable_id, 'Goal'::text AS searchable_type, goals.title AS term FROM goals UNION SELECT goals.id AS searchable_id, 'Goal'::text AS searchable_type, goals.description AS term FROM goals) UNION SELECT indicators.id AS searchable_id, 'Indicator'::text AS searchable_type, indicators.title AS term FROM indicators;
+        (         SELECT goals.id AS searchable_id,
+                    'Goal'::text AS searchable_type,
+                    goals.title AS term
+                   FROM goals
+        UNION
+                 SELECT goals.id AS searchable_id,
+                    'Goal'::text AS searchable_type,
+                    goals.description AS term
+                   FROM goals)
+UNION
+         SELECT indicators.id AS searchable_id,
+            'Indicator'::text AS searchable_type,
+            indicators.title AS term
+           FROM indicators;
 
 
 --
@@ -494,8 +508,8 @@ CREATE TABLE topic_areas (
     updated_at timestamp without time zone NOT NULL,
     subtitle character varying(255),
     explanation_id integer,
-    visible boolean,
-    featured boolean
+    visible boolean DEFAULT false,
+    featured boolean DEFAULT false
 );
 
 

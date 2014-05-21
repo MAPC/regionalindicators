@@ -1,24 +1,11 @@
-(function() {
-
-
-
-
-
-
-
-
-
-
-
-
-
+(function () { 
 
 
 var chart
   , config = { 
       path: window.dataUrl,
       data: ['Average Private For Profit Debt'
-            , 'Average Private Non-profit Debt'
+            , 'Average Private non-profit Debt'
             , 'Average Public Debt']  
     , series: 'pumatype'
     , errorflag: ', margin of error'
@@ -34,40 +21,105 @@ var chart
       }
     }
 
-// Graphic
-var margin = {top: 40, right: 80, bottom: 30, left: 80},
-    width = parseInt(d3.select(window.explainable).style('width'), 10),
-    width = width - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+d3.chart("GroupedBarChart").extend("GroupedBarChartWithAverages", {
 
-var x0 = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
+  initialize:function () { 
 
-var x1 = d3.scale.ordinal();
+    var chart = this;
 
-var y = d3.scale.linear()
-    .range([height, 0]);
+    chart.averagesData = [
+      {
+        name: "Regional Average Debt",
+        value: 15241.87
+      },
+      {
+        name: "National Average Debt",
+        value: 14731.54
+      }
+    ];
 
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    chart.areas.averages = chart.base.select('g').append('g')
+      .classed('averages', true);
 
-var xAxis = d3.svg.axis()
-    .scale(x0)
-    .orient("bottom");
+    chart.areas.averagesLabels = chart.base.select('g').append('g')
+      .classed('averages', true);  
 
-var commify = d3.format(",.0f");
+    chart.layer('averages', chart.areas.averages, {
+      dataBind: function(data) { 
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .tickSize(-width, 0, 0)
-    .orient("left")
-    .tickFormat(function(d) { return "$" + commify(d); });
+        var chart = this.chart();
 
-var svg = d3.select(window.explainable).append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        return this.selectAll(".regional-average")
+                  .data(chart.averagesData);
+      },
+      insert: function() {
+        var chart = this.chart();
+
+        return this.append("line")
+              .attr("class","average")
+      },
+      events: {
+        "enter": function () {
+          this.attr("id", function(d,i) { return "average" + i } )
+              .attr("x1", 0)
+              .attr("y1", function(d) { return chart.yScale(d.value) })
+              .attr("x2", chart.width())
+              .attr("y2", function(d) { return chart.yScale(d.value) })
+
+          this.selectAll(".regional-average")
+            .append("text")
+              .attr("x", chart.width())
+              .attr("y", function(d) {
+                return chart.yScale(d.value)
+              })
+              .attr("dy", ".35em")
+              .style("text-anchor", "end")
+              .text(function(d) { return d.name; });
+        }
+      }
+
+    });
+
+    chart.layer('averagesLabels', chart.areas.averagesLabels, {
+      dataBind: function(data) { 
+        var chart = this.chart();
+
+        return this.selectAll(".regional-average")
+                  .data(chart.averagesData);
+      },
+      insert: function() {
+        var chart = this.chart();
+
+        return this.append("text")
+              .attr("class","average")
+      },
+      events: {
+        "enter": function () {
+          this.attr("x", chart.width())
+              .attr("y", function(d, i) {
+                return chart.yScale(d.value) - 9 + (i * 16)
+              })
+              .attr("dy", ".35em")
+              .style("text-anchor", "end")
+              .text(function(d) { return d.name; });
+        }
+      }
+
+    });
+
+  },
+  transform: function (data) {
+
+    return data;
+  }
+
+});
+
+var chart = d3.select(window.explainable)
+  .append('svg')
+  .chart('GroupedBarChartWithAverages')
+  .height(400)
+  .colors(['#582566', '#1C164E', '#1F77B4']);
 
 var ds = new Miso.Dataset({
   url : config.path,
@@ -97,147 +149,15 @@ ds.fetch({
     })
 
     output.push({series: ds.rowByPosition(rowIndex)['Time Span'], values: values})
-  })
-
-
-  config.data.pop()
-
-  console.log("new output", output)
-
-  var cut = (ds.where({columns: config.data, rows: function(row) { return row[config.where.column] == config.where.value } }))
-
-  x0.domain(output.map(function(d){ return d.series }));
-
-  x1.domain((output[0].values).map(function(d) { return d.name })).rangeRoundBands([0, x0.rangeBand()]);
-
-  y.domain([0, 40000]);
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-      .selectAll("text")
-      .call(wrap, x0.rangeBand());
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", -70)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Debt-to-Degree Ratio");
-
-  var state = svg.selectAll(".state")
-      .data(output)
-    .enter().append("g")
-      .attr("class", "g")
-      .attr("transform", function(d) { console.log(d); return "translate(" + x0(d.series) + ",0)"; });
-
-  state.selectAll("rect")
-      .data(function(d) { return d.values })
-    .enter().append("rect")
-      .attr("width", x1.rangeBand())
-      .attr("x", function(d) { return x1(d.name); })
-      .attr("y", height)
-      .attr("height", 0)
-      .attr("title", function(d) { return d.name + ': ' })
-    .attr("data-content", function(d) { return "$" + commify(d.value) })
-      .style("fill", function(d) { return color(d.name); })
-      .transition()
-      .attr("height", function(d) { return height - y(d.value); })
-      .attr("y", function(d) { return y(d.value); })
-      .duration(700);
-
-  var averagesData = [];
-
-  (ds.columns(['Regional Average Debt', 'National Average Debt']))
-  .eachColumn(function (colName, colObject, index) {
-    averagesData.push({ name: colName, value: ds.rowByPosition(index)[colName] })
   });
 
-  var averages = svg.selectAll(".regional-average")
-      .data(averagesData)
-    .enter().append("line")
-      .attr("class", "average")
-      .attr("id", function(d,i) { return "average" + i } )
-      .attr("x1", 0)
-      .attr("y1", function(d) { return y(d.value) })
-      .attr("x2", width)
-      .attr("y2", function(d) { return y(d.value) });
+  chart.draw(output);
 
-  $(document).ready(function () {
-      $("svg rect").popover({
-          'container': 'body',
-          'placement': 'right',
-          'trigger': 'hover',
-          'html': true
-      });
-  });
-
-   /* legend */
-  var legend = svg.selectAll(".legend")
-      .data(((output[0]).values).map(function (d) { return d.name }))
-    .enter().append("g")
-      .attr("class", "legend")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-    legend.append("rect")
-        .attr("x", width - 5)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
-
-    legend.append("text")
-        .attr("x", width - 10)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(function(d) { return d; });
-
-  var averagesLegend = svg.selectAll(".averagesLegend")
-      .data(averagesData)
-    .enter().append("g")
-      .attr("class", "averagesLegend")
-      .attr("transform", function(d, i) { return "translate(0," + (186 + (i * 24)) + ")"; });
-
-    averagesLegend.append("text")
-        .attr("x", width)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(function(d) { return d.name; });
-
- function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-          words = text.text().split(/\s+/).reverse(),
-          word,
-          line = [],
-          lineNumber = 0,
-          lineHeight = 1.1, // ems
-          y = text.attr("y"),
-          dy = parseFloat(text.attr("dy")),
-          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-        }
-      }
-    });
-  }
 
   },
   error : function() {
     console.log("Failure loading data")
   }
 });
-
-
 })();
+
