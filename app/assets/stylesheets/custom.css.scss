@@ -20,11 +20,12 @@ $public-safety:             #990033;
 $technology:                #000066;
 $transportation:            #FF6633;
 
-$sustainable:       rgba(252,95,88,1);
+$sustainable:       rgba(112,184,101,1);
 $vitality:          rgba(255,35,100,1);
-$prosperity:        rgba(100,30,120,1);
-$transportation:    rgba(150,50,150,1);
+$prosperity:        rgba(95,175,208,1);
+$trans-choices:    rgba(243,123,112,1);
 $healthy:           rgba(25,100,10,1);
+$equity:            rgba(119,63,119,1);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
@@ -55,7 +56,7 @@ html {font-family: 'Lato', sans-serif;
 
 p {
   font-family: 'Lato', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 200;
   line-height: 28px;
 }
@@ -113,6 +114,7 @@ h6,
 h1 {
   letter-spacing: 2px;
   color: $headings;
+  font-size: 300%;
 }
 
 .sustainable-growth {
@@ -164,6 +166,8 @@ h3.community-vitality {
   color: #fff;
   padding: 10px 15px;
   margin: 40px 0 20px;
+  font-weight: 400;
+  font-size: 350%;
   }
 
 h2.regional-prosperity{
@@ -172,6 +176,8 @@ h2.regional-prosperity{
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $prosperity;
+  font-size: 300%;
+  font-weight: 400;
   }
 
 h3.regional-prosperity{
@@ -179,11 +185,27 @@ h3.regional-prosperity{
   color: $prosperity;
   padding: 10px 5px;
   margin: 40px 0 20px;
+  font-size: 200%;
+  font-weight: 400;
+  text-transform: capitalize;
   }
-  
+
+.visualization {
+
+  h4 {
+    font-size: 150%;
+    text-align: center;
+  }
+}
+
+.group-subtitle {
+    font-size: 150%;
+    padding-left: 10px;
+    text-transform: capitalize;
+}
 
 .transportation-choices {
-  background-color: $transportation;
+  background-color: $trans-choices;
   color: #fff;
   padding: 10px 15px;
   margin: 40px 0 20px;
@@ -191,15 +213,15 @@ h3.regional-prosperity{
   
 h2.transportation-choices { 
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $trans-choices;
   padding: 10px 5px;
   margin: 40px 0 20px;
-  border-bottom: 2px solid $transportation;
+  border-bottom: 2px solid $trans-choices;
   }
   
 h3.transportation-choices {
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $trans-choices;
   padding: 10px 5px;
   margin: 40px 0 20px;
 }
@@ -221,7 +243,7 @@ h2.healthy-environment {
   
 h3.healthy-environment {
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $healthy;
   padding: 10px 5px;
   margin: 40px 0 20px;
 }
@@ -323,10 +345,13 @@ button {font-weight: 200;
 .bs-sidenav {
   color: #787878;
   li {
-    font-weight: 400;
+    font-weight: 700;
+    font-size: 125%;
+    font-style: 'Rokkitt', serif;
     ul {
       display: none;
       padding-left: 10px;
+      font-size: 70%;
       li.group {
         font-weight: 400;
         ul {
@@ -340,12 +365,15 @@ button {font-weight: 200;
       font-weight: 800;
       ul {
         display: block;
+        color: $prosperity;
         li.active {
-          font-weight: 800;
+          //font-weight: 800;
+          background-color: $mid-highlight;;
           ul {
             display: block;
+            background-color: $mid-highlight;
             li.active {
-              font-weight: 400;
+              //font-weight: 400;
               background-color: $mid-highlight;
             }
           }
@@ -358,7 +386,7 @@ button {font-weight: 200;
 .myscrollspy {
   display:  none;
   position: fixed;
-  top:      150px;
+  top:      200px;
   right:     30px;
   bottom:    20px;
   overflow-y: scroll;
@@ -387,16 +415,19 @@ button {font-weight: 200;
   max-width: 250px;
 }
 
-
-
 .visualization {
   margin-top: 40px;
 }
 
-#framing {
-  padding: 20px 0;
-}
+//#framing {
+//  padding: 20px 0;
+//}
 
+.framing {
+  p {
+    padding: 10px;
+    font-size: 18px;}
+}
 
 /* form-group search */
 .form-group {background-color: #ffffff;}
@@ -405,22 +436,52 @@ button {font-weight: 200;
 
 .jumbotron {
   margin-bottom: 20px;
-  background-image: url('beautiful.jpg');
+  //background-image: url('jumbotron_altlayout.jpg');
+  background-image: url('jumbotron_background.jpg');
   background-position: 0% 25%;
   background-size: cover;
   background-repeat: no-repeat;
-  color: #000;
+  /*jp - temporary transparent until programmed*/
+  //color: transparent;
+  color: #fff;
+
+  h3 {
+   //color: transparent;
+   color: #fff;
+  }
 }
 
+
+.jumbotron {
+  .container {
+    
+      opacity: 0.5;
+    .col-md-4 {
+      background-color: #000;
+      border-radius: 100px;
+      padding: 0;
+      -moz-border-radius: 100px;
+      -webkit-border-radius: 100px;
+
+    }
+  }
+}
 /* buttons */
+//.container {
+  //margin-left: 0px;
+  //margin-right: 0px;
+//}
 
 .btn {
-  background: #fff;
+  //position: relative;
+  //left: -100px;
+  background: transparent;
   background-image: none;
-  border:1px solid #999;
-  color: #999;
+  border:0px solid #999;
+  color: #fff;
   letter-spacing: 1px;
-  text-decoration: none ! important;
+  //text-decoration: none ! important;
+  text-decoration: underline;
   text-shadow: none;
   transition: all 0.3s ease-in-out 0s;    
   -webkit-transition: all 0.3s ease-in-out 0s;    
@@ -430,6 +491,10 @@ button {font-weight: 200;
   color: #fff;
 }
 
+/*jp - trying to get sources to underline*/
+.panel-title{
+  text-decoration: underline;
+}
 
 /* footer */
 
