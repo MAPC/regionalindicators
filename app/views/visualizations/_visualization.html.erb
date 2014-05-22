@@ -8,3 +8,5 @@
   window.dataUrl = "<%= visualization.data.url %>"
 <% end %>
 <%= javascript_include_tag( visualization.d3.url ) %>
+
+<%= link_to 'Download the data behind this visualization', visualization.data.url %>
