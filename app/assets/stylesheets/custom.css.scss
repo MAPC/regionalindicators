@@ -167,7 +167,7 @@ h3.community-vitality {
   }
 
 h2.regional-prosperity{
-  background-color: $soft-highlight;
+  background-color: transparent;
   color: $prosperity;
   padding: 10px 5px;
   margin: 40px 0 20px;
@@ -175,7 +175,7 @@ h2.regional-prosperity{
   }
 
 h3.regional-prosperity{
-  background-color: $soft-highlight;
+  background-color: transparent;
   color: $prosperity;
   padding: 10px 5px;
   margin: 40px 0 20px;
@@ -359,12 +359,17 @@ button {font-weight: 200;
   display:  none;
   position: fixed;
   top:      150px;
-  right:     30px;
+  left:     30px;
   bottom:    20px;
   overflow-y: scroll;
 }
 @media (min-width: 992px) {
   .myscrollspy { display: block; }
+}
+
+.scroll-target {
+  padding-top: 70px !important;
+  margin-top: -70px !important;
 }
 
 
