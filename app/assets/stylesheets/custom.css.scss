@@ -259,6 +259,10 @@ h3.state-of-equity {
   margin: 40px 0 20px;
 }
 
+.btn-featured {
+  z-index: 1000;
+}
+
 .featured {
   @media (max-width: 1199px) {
     background: transparent;
@@ -283,15 +287,34 @@ h3.state-of-equity {
       width:      200px;
       height:     200px;
       position:   relative;
-      left:       170px;
-      top:        20px;
+      left:       175px;
+      top:        -70px;
+      opacity:    0.8;
       
-      &.sustainable-growth {     background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; }
-      &.community-vitality {     background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; }
-      &.regional-prosperity{     background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; }
-      &.transportation-choices { background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; }
-      &.healthy-environment {    background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; }
-      &.state-of-equity {        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; }
+      &.sustainable-growth {
+        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.community-vitality {
+        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.regional-prosperity{
+        background: url('icon_sets/regional-prosperity.png') no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.transportation-choices {
+        background: url('icon_sets/sustainable-transportation.png') no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.healthy-environment {
+        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.state-of-equity {
+        background: url('icon_sets/state-of-equity.png') no-repeat; 
+        background-size: 100% 100%;
+      }
     }
 
 
@@ -300,12 +323,14 @@ h3.state-of-equity {
       top:  80px;
       left: 10px;
       font-size: 250%;
+      z-index: 999;
     }
 
     h3 {
       position: relative;
       top:  60px;
       left: 12px;
+      z-index: 998;
     }
 
     a {
