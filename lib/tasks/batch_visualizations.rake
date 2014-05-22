@@ -3,104 +3,50 @@ namespace :db do
   task viz: :environment do
 
     visualizations = [
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_annual_laborforce_trends.js',
-      #   data_file_name:   'bls_laborforce_employment_msa_d3.csv',
-      #   title:            'Annual Labor Force Trends 1990-2013',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_annual_unemployment_rate.js',
-      #   data_file_name:   'bls_laborforce_employment_msa_d3.csv',
-      #   title:            'Annual Unemployment Rate 1990-2013',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_civilian_unemployment_gap_by_race.js',
-      #   data_file_name:   'unemp_gap_msa.csv',
-      #   title:            'Civilian Unemployment Gap by Race, Ages 16-64 National Comparison',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_laborforce_participation_gap_by_race.js',
-      #   data_file_name:   'lf_gap_msa.csv',
-      #   title:            'Labor Force Participation Gap by Race, Ages 16-64 National Comparison',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_labor_force_by_population_25_to_64.js',
-      #   data_file_name:   'labor_force_participation_msa.csv',
-      #   title:            'Labor Force Participation, Population 25 to 64',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_labor_force_by_skill_level_college_or_higher.js',
-      #   data_file_name:   'labor_force_participation_by_education_msa.csv',
-      #   title:            'Labor Force by Skill Level D. College or higher',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_labor_force_by_skill_level_highschool.js',
-      #   data_file_name:   'labor_force_participation_by_education_msa.csv',
-      #   title:            '% In labor force with only a high school diploma',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_labor_force_by_skill_level_less_than_highschool.js',
-      #   data_file_name:   'labor_force_participation_by_education_msa.csv',
-      #   title:            'Labor Force by Skill Level A. Less Than High School',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_labor_force_by_skill_level_some_college.js',
-      #   data_file_name:   'labor_force_participation_by_education_msa.csv',
-      #   title:            'Labor Force by Skill Level C. Some College',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_labor_force_participation_ages_25_64.js',
-      #   data_file_name:   'laborforce_edattain_by_race_puma.csv',
-      #   title:            'Labor Force Participation, Ages 25-64 by Race and Puma Community Type',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_metro_boston_domestic_migration_flows.js',
-      #   data_file_name:   'domestic_migration_flows_metroboston.csv',
-      #   title:            'Metro Boston Domestic Migration Flows, 2005-12',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_unemployment_rate.js',
-      #   data_file_name:   'unemployment_ages_25_64_by_edattain.csv',
-      #   title:            'Regional Unemployment Rate, Ages 25-64 by Race and educational attainment',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_unemp_underutilization_rates.js',
-      #   data_file_name:   'unemp_alt_measures_states.csv',
-      #   title:            'MA State Unemployment and Underutilization Rates',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
-      # {
-      #   d3_file_name:     'diverse_productive_workforce_youth_laborforce_participation_rate.js',
-      #   data_file_name:   'youth_laborforce_by_race.csv',
-      #   title:            'Youth Labor Force Participation Rate, Ages 16-24 by Race and Puma Community Type',
-      #   explainable_type: 'Indicator',
-      #   explainable_id:    
-      # },
+      {
+        d3_file_name:     'econ_context_total_employment.js',
+        data_file_name:   'emp_by_year_comm_type.csv',
+        title:            'Total Employment 2001-2012',
+        explainable_type: 'Indicator',
+        explainable_id:    294
+      },
+      {
+        d3_file_name:     'econ_context_employment_change.js',
+        data_file_name:   'employment_change_msa.csv',
+        title:            'Employment Change In Metro Boston Firms, 2005-2012',
+        explainable_type: 'Indicator',
+        explainable_id:    294
+      },
+      {
+        d3_file_name:     'econ_context_employment_by_industry.js',
+        data_file_name:   'employment_change_by_industry_metroboston.csv',
+        title:            'Employment in Metro Boston Firms by Industry, 2001-2012',
+        explainable_type: 'Indicator',
+        explainable_id:    [295,296,297,298,299,300,301,302,303,304]
+      },
+      {
+        d3_file_name:     'econ_context_high_skill_jobs.js',
+        data_file_name:   'employment_by_skill_level_msa.csv',
+        title:            'High Skill Jobs as Percent of Total Employment, 2004-2012',
+        explainable_type: 'Indicator',
+        explainable_id:    317
+      },
+      {
+        d3_file_name:     'econ_context_mid_skill_jobs.js',
+        data_file_name:   'employment_by_skill_level_msa.csv',
+        title:            'Mid Skill Jobs as Percent of Total Employment, 2004-2012',
+        explainable_type: 'Indicator',
+        explainable_id:    318
+      },
+      {
+        d3_file_name:     'econ_context_low_skill_jobs.js',
+        data_file_name:   'employment_by_skill_level_msa.csv',
+        title:            'Low Skill Jobs as Percent of Total Employment, 2004-2012',
+        explainable_type: 'Indicator',
+        explainable_id:    319
+      },
+
+
       {
         d3_file_name:     'EducatedWorkforce1_with_degree_by_type_mbc.js',
         data_file_name:   'edattain_by_race_puma.csv',
