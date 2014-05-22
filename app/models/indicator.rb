@@ -171,7 +171,8 @@ class Indicator < ActiveRecord::Base
   end
 
   def year_of_last_snapshot(year=DEFAULT_YEAR)
-    snapshot_in(year).date.year
+    snapshot = snapshot_in(year)
+    snapshot.date.year unless snapshot.date.nil?
   end
 
   # Allows sending of #value and #rank without NoMethodErrors

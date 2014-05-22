@@ -1,7 +1,7 @@
 <h1 class="page-header <%= @topic_area.slug %>" id="<%= @topic_area.slug %>">
   <%= @topic_area.title %> Dashboard
 </h1>
-
+<p>MAPC Regional Indicators identifies 110 Prosperity indicators to track in order to measure Metro Boston's progress toward reaching MetroFuture's twelve Prosperity Goals. The region has made positive progress in 60 of these indicators since the year 2000, but has moved in the wrong direction in 50 indicators. This dashboard provides a snapshot of the region's progress in each of these 110 indicators.</p>
 <div class="col-xs-12">
   <%= render partial: 'dashboards/subject',
              collection: @topic_area.subjects,
