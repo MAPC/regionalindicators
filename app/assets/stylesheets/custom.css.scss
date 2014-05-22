@@ -130,7 +130,7 @@ h1 {
   background-color: $sustainable;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
+  margin: 40px 0 40px;
 }
   
 h2.sustainable-growth {
@@ -152,8 +152,8 @@ h3.sustainable-growth {
   background-color: $vitality;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
-  }
+  margin: 40px 0 40px;
+}
   
 h2.community-vitality {
   background-color: $soft-highlight;
@@ -161,20 +161,20 @@ h2.community-vitality {
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $vitality;
-  }
+}
 
 h3.community-vitality {
   background-color: $soft-highlight;
   color: $vitality;
   padding: 10px 5px;
   margin: 40px 0 20px;
-  }
+}
   
 .regional-prosperity {
   background-color: $prosperity;
   color:   #FFFFFF;
   padding: 10px 15px;
-  margin: 40px 0 20px;
+  margin: 40px 0 40px;
 }
 
 h2.regional-prosperity{
@@ -192,25 +192,11 @@ h3.regional-prosperity{
   margin: 40px 0 20px;
 }
 
-.visualization {
-
-  h4 {
-    font-size: 150%;
-    text-align: center;
-  }
-}
-
-.group-subtitle {
-    font-size: 150%;
-    padding-left: 10px;
-    text-transform: capitalize;
-}
-
 .transportation-choices {
   background-color: $trans-choices;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
+  margin: 40px 0 40px;
 }
   
 h2.transportation-choices { 
@@ -232,7 +218,7 @@ h3.transportation-choices {
   background-color: $healthy;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
+  margin: 40px 0 40px;
   }
   
 h2.healthy-environment {  
@@ -250,12 +236,11 @@ h3.healthy-environment {
   margin: 40px 0 20px;
 }
 
-
 .state-of-equity {
   background-color: $equity;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
+  margin: 40px 0 40px;
   }
   
 h2.state-of-equity {  
@@ -305,8 +290,8 @@ h3.state-of-equity {
       width:      200px;
       height:     200px;
       position:   relative;
-      left:       175px;
-      top:        -70px;
+      left:       188px;
+      top:        -63px;
       opacity:    0.8;
       
       &.sustainable-growth {
@@ -505,10 +490,14 @@ button {font-weight: 200;
   display:  none;
   position: fixed;
   top:      200px;
-  left:     10px;
   bottom:    20px;
   overflow-y: scroll;
+  div:first-of-type {
+    position: relative;
+    right: 60px;
+  }
 }
+
 @media (min-width: 992px) {
   .myscrollspy { display: block; }
 }
@@ -541,7 +530,19 @@ button {font-weight: 200;
 
 .visualization {
   margin-top: 40px;
+
+  h4 {
+    font-size: 150%;
+    text-align: center;
+  }
 }
+
+.group-subtitle {
+    font-size: 150%;
+    padding-left: 10px;
+    text-transform: capitalize;
+}
+
 
 #framing {
  padding: 20px 0;
