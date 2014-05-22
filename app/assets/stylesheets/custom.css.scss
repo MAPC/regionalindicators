@@ -347,24 +347,27 @@ button {font-weight: 200;
 .bs-sidenav {
   color: #787878;
   li {
-    font-weight: 700;
-    font-size: 125%;
-    font-style: 'Rokkitt', serif;
+    font-weight: 400;
+    font-size: 175%;
+    //font-family: 'Rokkitt', serif;
     ul {
       display: none;
       padding-left: 10px;
-      font-size: 70%;
+      font-size: 50%;
+      font-family: 'Lato', sans-serif;
       li.group {
         font-weight: 400;
+        font-family: 'Lato', sans-serif;
         ul {
           display: none;
           padding-left: 10px;
+          font-family: 'Lato', sans-serif;
         }
       }
     }
 
     &.active {
-      font-weight: 800;
+      //font-weight: 800;
       ul {
         display: block;
         color: $mid-highlight;
@@ -402,6 +405,10 @@ button {font-weight: 200;
 //   border-left: 2px #F0F solid;
 //   color: #646464;
 // }
+.anchor-scroll {
+  top: 250px;
+  display: block;
+}
 
 // .bs-sidenav ul li {
 //   border-right: 2px #F0F solid;
@@ -438,18 +445,18 @@ button {font-weight: 200;
 
 .jumbotron {
   margin-bottom: 20px;
-  //background-image: url('jumbotron_altlayout.jpg');
-  background-image: url('jumbotron_background.jpg');
+  background-image: url('jumbotron_altlayout.jpg');
+  //background-image: url('jumbotron_background.jpg');
   background-position: 0% 25%;
   background-size: cover;
   background-repeat: no-repeat;
   /*jp - temporary transparent until programmed*/
-  //color: transparent;
-  color: #fff;
+  color: transparent;
+  //color: #fff;
 
   h3 {
-   //color: transparent;
-   color: #fff;
+   color: transparent;
+   //color: #fff;
   }
 }
 
