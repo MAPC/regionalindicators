@@ -3,15 +3,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 var chart
   , config = { 
       path: window.dataUrl,
