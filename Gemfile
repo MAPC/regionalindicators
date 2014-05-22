@@ -23,8 +23,6 @@ gem 'rails_admin',    '0.4.9'
 gem 'cancan',         '1.6.10'
 
 gem 'textacular',     '3.2.0'
-gem 'sunspot_rails',  '2.1.0'
-gem 'sunspot_solr',   '2.1.0'
   
 gem 'roo',            '1.13.2'
 

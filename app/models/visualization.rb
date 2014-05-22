@@ -3,7 +3,7 @@ class Visualization < ActiveRecord::Base
                   :d3_file_name,
                   :data_file_name,
                   :explainable_type,
-                  :explainable_id
+                  :explainable_ids
   attr_accessor :delete_file
   
   belongs_to :explanation

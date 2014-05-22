@@ -110,7 +110,7 @@ class Indicator < ActiveRecord::Base
   end
 
   def current_rank?
-    !current_snapshot.rank.nil?
+    !current_snapshot.rank.nil? && current_snapshot.rank != 0
   end
 
   def value_in(year=DEFAULT_YEAR)
@@ -170,7 +170,11 @@ class Indicator < ActiveRecord::Base
     (self.snapshots.in_year(year).first || self.snapshots.last) || EMPTY_SNAPSHOT
   end
 
+  def year_of_last_snapshot(year=DEFAULT_YEAR)
+    snapshot_in(year).date.year
+  end
+
   # Allows sending of #value and #rank without NoMethodErrors
-  EMPTY_SNAPSHOT = OpenStruct.new(value: nil, rank: nil)
+  EMPTY_SNAPSHOT = OpenStruct.new(value: nil, rank: nil, date: nil)
 
 end
