@@ -25,6 +25,16 @@ $vitality:          rgba(255,35,100,1);
 $prosperity:        rgba(100,30,120,1);
 $transportation:    rgba(150,50,150,1);
 $healthy:           rgba(25,100,10,1);
+$equity:            rgba(25,100,10,1);
+
+$featured-opacity: 0.65;
+
+$sustainable-featured:       rgba(252,95,88,$featured-opacity);
+$vitality-featured:          rgba(255,35,100,$featured-opacity);
+$prosperity-featured:        rgba(100,30,120,$featured-opacity);
+$transportation-featured:    rgba(150,50,150,$featured-opacity);
+$healthy-featured:           rgba(25,100,10,$featured-opacity);
+$equity-featured:            rgba(40,70,110,$featured-opacity);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
@@ -120,7 +130,7 @@ h1 {
   color: #fff;
   padding: 10px 15px;
   margin: 40px 0 20px;
-  }
+}
   
 h2.sustainable-growth {
   background-color: $soft-highlight;
@@ -161,10 +171,10 @@ h3.community-vitality {
   
 .regional-prosperity {
   background-color: $prosperity;
-  color: #fff;
+  color:   #FFFFFF;
   padding: 10px 15px;
-  margin: 40px 0 20px;
-  }
+  margin:  40px 0 20px;
+}
 
 h2.regional-prosperity{
   background-color: transparent;
@@ -221,9 +231,76 @@ h2.healthy-environment {
   
 h3.healthy-environment {
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $healthy;
   padding: 10px 5px;
   margin: 40px 0 20px;
+}
+
+
+.state-of-equity {
+  background-color: $equity;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 20px;
+  }
+  
+h2.state-of-equity {  
+  background-color: $soft-highlight;
+  color: $equity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $equity;
+  }
+  
+h3.state-of-equity {
+  background-color: $soft-highlight;
+  color: $equity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+}
+
+.featured {
+  @media (max-width: 1200px) {
+    background-color: transparent;
+    h1 {
+      color: #000;
+      font-size: 220%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    height:         0;
+    padding-bottom: 30%;
+    border-radius:  50%;
+
+    h1 { 
+      position: relative;
+      top:  80px;
+      left: 10px;
+      font-size: 250%;
+    }
+
+    h3 {
+      position: relative;
+      top:  60px;
+      left: 12px;
+    }
+
+    a {
+      position: relative;
+      top: 70px;
+      left: 110px;
+    }
+
+    &.sustainable-growth {     background-color: $sustainable-featured;    }
+    &.community-vitality {     background-color: $vitality-featured;       }
+    &.regional-prosperity{     background-color: $prosperity-featured;     }
+    &.transportation-choices { background-color: $transportation-featured; }
+    &.healthy-environment {    background-color: $healthy-featured;        }
+    &.state-of-equity { 
+      background-color: $equity-featured;
+    }
+  }
 }
 
 button {font-weight: 200;
