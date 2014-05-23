@@ -506,6 +506,12 @@ button {font-weight: 200;
 .scroll-target {
   padding-top: 120px !important;
   margin-top: -90px !important;
+  
+}
+
+.sticky-title {
+  background-color: #ffffff;
+  z-index: 600;
 }
 
 // .bs-sidenav > li {

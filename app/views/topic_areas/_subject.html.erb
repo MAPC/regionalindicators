@@ -1,7 +1,10 @@
-<h2 class="<%= topic_area_slug %> <%= subject.slug %> scroll-target" id="<%= subject.slug %>">
-  <%= subject.title %>
-</h2>
-
+<div class=" scroll-target dummy-scroll" id="<%= subject.slug %>">
+</div>
+<div class="sticky-title row">
+  <h2 class="<%= topic_area_slug %> <%= subject.slug %>">
+    <%= subject.title %>
+  </h2>
+</div>
 <% if subject.explanation %>
   <%= render partial: 'explanation',
              locals: { explanation: subject.explanation } %>
