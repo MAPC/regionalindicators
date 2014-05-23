@@ -25,4 +25,8 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  def has_indicators?
+    !indicators.empty?
+  end
+
 end
