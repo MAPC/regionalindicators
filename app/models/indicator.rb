@@ -20,7 +20,7 @@ class Indicator < ActiveRecord::Base
 
   has_one  :explanation, as: :explainable
   has_many :snapshots
-  has_and_belongs_to_many :issue_areas
+  has_and_belongs_to_many :issue_areas, uniq: true
 
   accepts_nested_attributes_for :explanation
 

@@ -871,7 +871,7 @@ CREATE INDEX index_goals_on_topic_area_id ON goals USING btree (topic_area_id);
 -- Name: index_indicators_issue_areas_on_indicator_id_and_issue_area_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_indicators_issue_areas_on_indicator_id_and_issue_area_id ON indicators_issue_areas USING btree (indicator_id, issue_area_id);
+CREATE UNIQUE INDEX index_indicators_issue_areas_on_indicator_id_and_issue_area_id ON indicators_issue_areas USING btree (indicator_id, issue_area_id);
 
 
 --
@@ -949,6 +949,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 --
 
 CREATE INDEX index_visualizations_on_explanation_id ON visualizations USING btree (explanation_id);
+
+
+--
+-- Name: index_visualizations_on_title_and_explanation_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_visualizations_on_title_and_explanation_id ON visualizations USING btree (title, explanation_id);
 
 
 --
@@ -1047,3 +1054,7 @@ INSERT INTO schema_migrations (version) VALUES ('20140508161852');
 INSERT INTO schema_migrations (version) VALUES ('20140508192416');
 
 INSERT INTO schema_migrations (version) VALUES ('20140511221108');
+
+INSERT INTO schema_migrations (version) VALUES ('20140522232352');
+
+INSERT INTO schema_migrations (version) VALUES ('20140523000507');
