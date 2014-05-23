@@ -85,7 +85,7 @@ TODO:
 
         # Assign issue areas
 
-        issue_area_titles = i['issue_area_title'].split(', ')
+        issue_area_titles = i['issue_area_title'].to_s.split(', ')
 
         issue_area_titles.each do |title|
           indicator.issue_areas << IssueArea.find_by_title(title)

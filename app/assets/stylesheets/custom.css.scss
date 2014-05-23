@@ -492,6 +492,7 @@ button {font-weight: 200;
   top:      200px;
   bottom:    20px;
   overflow-y: scroll;
+  max-width: 240px;
   div:first-of-type {
     position: relative;
     right: 60px;
@@ -560,14 +561,6 @@ button {font-weight: 200;
 /* Jumbotron */
 
 .jumbotron {
-
-  // background: url('jumbotron_background.jpg') no-repeat center center;
-  // -webkit-background-size: contain;
-  // -moz-background-size: contain;
-  // -o-background-size: contain;
-  // background-size: contain;
-
-  
   background-image: url('jumbotron_background_to_2k_px.jpg');
   background-position: center center;
   background-size: cover;
