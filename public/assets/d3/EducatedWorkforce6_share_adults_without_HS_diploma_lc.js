@@ -17,6 +17,7 @@ var chart = d3.select(window.explainable)
   .chart('LineChart')
   .height(400)
   .colors(['#1C164E', '#D22D33'])
+  .yAxisLabel("Percent")
   .callouts(["Boston, MA MSA", "United States"]);
 
 

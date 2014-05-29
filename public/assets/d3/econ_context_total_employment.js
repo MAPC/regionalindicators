@@ -21,7 +21,8 @@ var chart = d3.select(window.explainable)
   .append('svg')
   .chart('LineChart')
   .height(400)
-  .colors(d3.scale.category10());
+  .colors(d3.scale.category10())
+  .yAxisLabel("");
 
 
 var ds = new Miso.Dataset({

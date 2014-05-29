@@ -219,7 +219,7 @@ d3.chart("BaseChart", {
 
     this._tickValues = [];
     this._yAxisLabel = "Y-Axis";
-    this._margin = {top: 20, right: 20, bottom: 80, left: 40};
+    this._margin = {top: 20, right: 20, bottom: 80, left: 60};
     this._width  = this.base.attr('width') ? this.base.attr('width') - this._margin.left - this._margin.right : this.base.node().parentNode.clientWidth - this._margin.left - this._margin.right;
     this._height = this.base.attr('height') ? this.base.attr('height') - this._margin.top - this._margin.bottom : this.base.node().parentNode.clientHeight - this._margin.top - this._margin.bottom ;
 
@@ -642,7 +642,7 @@ d3.chart("BaseChart").extend("LineChart", {
             .call(yAxis)
           .append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", -40)
+            .attr("y", -50)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text(chart.yAxisLabel());

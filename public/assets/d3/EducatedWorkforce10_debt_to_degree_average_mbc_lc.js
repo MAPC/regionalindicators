@@ -119,6 +119,7 @@ var chart = d3.select(window.explainable)
   .append('svg')
   .chart('GroupedBarChartWithAverages')
   .height(400)
+  .yAxisLabel("Dollars per Degree")
   .colors(['#582566', '#1C164E', '#1F77B4']);
 
 var ds = new Miso.Dataset({

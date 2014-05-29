@@ -26,6 +26,7 @@ var chart = d3.select(window.explainable)
   .chart('GroupedBarChart')
   .height(400)
   .colors(['#D22D33', '#1C164E', '#D22D33'])
+  .yAxisLabel("Percentage Points")
   .tickValues(['Latino'
        , 'Black'
        , 'Asian'
