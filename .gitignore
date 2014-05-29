@@ -30,3 +30,5 @@ Procfile
 # User fixtures should only be for staging
 
 /db/fixtures/users.rb
+
+database.yml

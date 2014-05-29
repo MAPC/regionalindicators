@@ -41,9 +41,6 @@ group :development, :test do
   gem 'capybara',           '1.1.2'
   gem 'factory_girl_rails', '4.3.0'
   gem 'launchy',            '2.4.2'
-  
-  # For convenience of the designer
-  gem 'sqlite3',            '1.3.8'
 end
 
 # Gems used only for assets and not required
