@@ -120,6 +120,7 @@ h6,
   color: $subheadings;
 }
 
+
 h1 {
   letter-spacing: 2px;
   color: $headings;
@@ -174,7 +175,11 @@ h3.community-vitality {
   background-color: $prosperity;
   color:   #FFFFFF;
   padding: 10px 15px;
-  margin: 40px 0 40px;
+  margin:  40px 0 40px;
+}
+
+.page-header {
+  font-size: 250%;
 }
 
 h2.regional-prosperity{
@@ -506,7 +511,11 @@ button {font-weight: 200;
 .scroll-target {
   padding-top: 120px !important;
   margin-top: -90px !important;
-  
+}
+
+sup {
+  padding-top: 120px !important;
+  margin-top:  120px !important;
 }
 
 .sticky-title {
