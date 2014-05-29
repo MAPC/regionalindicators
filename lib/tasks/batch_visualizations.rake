@@ -45,8 +45,6 @@ namespace :db do
         explainable_type: 'Indicator',
         explainable_id:    319
       },
-
-
       {
         d3_file_name:     'EducatedWorkforce1_with_degree_by_type_mbc.js',
         data_file_name:   'edattain_by_race_puma.csv',
@@ -138,7 +136,6 @@ namespace :db do
         viz.save
         puts viz.inspect
       end
-
     end
     
   end

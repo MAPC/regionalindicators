@@ -1,4 +1,5 @@
 class IndicatorGroup < ActiveRecord::Base
+<<<<<<< HEAD
   attr_accessible :title, :indicator_ids
   has_many :indicators
 

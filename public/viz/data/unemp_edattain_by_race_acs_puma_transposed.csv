@@ -1,0 +1,5 @@
+Grouping,Year,Source,% All Races,"% All Races, margin of error",% White,"% White, margin of error",% Hispanic,"% Hispanic, margin of error",% Black,"% Black, margin of error",% Asian,"% Asian, margin of error",% Other Race,"% Other Race, margin of error"
+Overall region,2007-11,Pums ACS 5 Year Avg,6.53,0.15,5.83,0.16,9.3,0.64,11.74,0.76,6.28,0.57,7.04,1.13
+with Less than a high school diploma,2007-11,Pums ACS 5 Year Avg,12.85,1.03,13.2,1.67,10.71,1.64,19.32,3.55,14.27,3.14,5.24,3.27
+with Only a high school diploma,2007-11,Pums ACS 5 Year Avg,9.12,0.36,8.32,0.4,11.08,1.27,14.07,1.45,8.24,1.75,9.55,2.45
+with College Degree or Greater,2007-11,Pums ACS 5 Year Avg,4.19,0.2,3.99,0.22,5.06,1.14,6.62,1.18,4.41,0.73,5.02,1.86

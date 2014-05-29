@@ -7,11 +7,6 @@ namespace :db do
 
     
 =begin
-
-
-TODO: 
-
-
     SUBJECTS
       1.  Loop through subjects, creating them and their narratives.
 
@@ -34,6 +29,7 @@ TODO:
           No explanation? This should throw an error.
 
 =end
+
 
     @prosperity = TopicArea.find 1
 
@@ -161,7 +157,6 @@ TODO:
     indicators
     snapshots
     sources
-
 
   end
 end

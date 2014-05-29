@@ -26,21 +26,22 @@ gem 'textacular',     '3.2.0'
   
 gem 'roo',            '1.13.2'
 
+
 group :development do
-  gem 'capistrano',         '~> 2.0'
-  gem 'net-ssh',            '2.7.0'
-  gem 'net-ssh-gateway',    '1.2.0'
-  gem 'capistrano-unicorn', '0.2.0', :require => false
+  gem 'capistrano',      '~> 2.0'
+  gem 'net-ssh',         '2.7.0'
+  gem 'net-ssh-gateway', '1.2.0'
+  gem 'capistrano-unicorn', :require => false
 end
 
 
 group :development, :test do
-  gem 'progress_bar',       '1.0.0'
+  gem 'progress_bar'
 
-  gem 'rspec-rails',        '2.14.1'
-  gem 'capybara',           '1.1.2'
-  gem 'factory_girl_rails', '4.3.0'
-  gem 'launchy',            '2.4.2'
+  gem 'rspec-rails'
+  gem 'capybara', '1.1.2'
+  gem 'factory_girl_rails'
+  gem 'launchy'
 end
 
 # Gems used only for assets and not required

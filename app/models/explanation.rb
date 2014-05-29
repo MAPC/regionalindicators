@@ -22,7 +22,7 @@ class Explanation < ActiveRecord::Base
   end
 
   def has_visualizations?
-    self.visualizations
+    !self.visualizations.empty?
   end
 
   def narrative_html
