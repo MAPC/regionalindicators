@@ -2,7 +2,9 @@
   <%= @topic_area.title %> Dashboard
 </h1>
 
-<!-- FRAMING -->
+<p>
+   MAPC Regional Indicators identifies <%= @topic_area.indicators.count %> indicators that measure Metro Boston's progress toward reaching MetroFuture's <%= @topic_area.title %> goals. The region has made positive progress in <%= @topic_area.improving_indicators %> of these indicators since the year 2000, but has moved in the wrong direction in <%= @topic_area.declining_indicators %> indicators. This dashboard provides a snapshot of the region's progress in each of these <%= @topic_area.indicators.count %> indicators.
+</p>
 
 <div class="col-xs-12">
   <%= render partial: 'dashboards/subject',

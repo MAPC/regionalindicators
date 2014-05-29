@@ -495,7 +495,8 @@ CREATE TABLE topic_areas (
     subtitle character varying(255),
     explanation_id integer,
     visible boolean,
-    featured boolean
+    featured boolean,
+    dashboard_framing text
 );
 
 
@@ -1058,3 +1059,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140511221108');
 INSERT INTO schema_migrations (version) VALUES ('20140522232352');
 
 INSERT INTO schema_migrations (version) VALUES ('20140523000507');
+
+INSERT INTO schema_migrations (version) VALUES ('20140529202751');
