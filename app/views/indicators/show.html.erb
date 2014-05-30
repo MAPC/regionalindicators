@@ -1,31 +1,26 @@
-(<%= @indicator.number %>)
-<h1 class="page-header"><%= @indicator.title %></h1>
+<br/>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <%= @indicator.value %> <%= @indicator.units %>
-    </div>
-    <div class="col-md-2">
-      placeholder: delta
-    </div>
-    <div class="col-md-2">
-      <%= @indicator.rank %>
-    </div>
+<h2 id="<%= @indicator.slug %>">
+  <%= @indicator.title %>
+</h2>
 
-  </div>
+<br/>
 
-  <% if @indicator.explanation %>
-    <div class="row">
-      <div class="col-md-12">
-        <%= @indicator.explanation.narrative_html %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <%= render partial: 'source', collection: @indicator.explanation.sources %>
-      </div>
-    </div>
-  <% end %>
+<%= render partial: 'topic_areas/status',
+           locals: { indicator: @indicator } %>
 
-</div>
+<br/>
+
+<% if @indicator.explanation %>
+  <%= render partial: 'topic_areas/explanation',
+             locals: { explanation: @indicator.explanation } %>
+
+<% else %>
+
+  <p>
+    This indicator has not yet been analyzed as part of the Regional Indicators project.
+  </p>
+  <p>
+    To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
+  </p>
+<% end %>

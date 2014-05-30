@@ -20,11 +20,21 @@ $public-safety:             #990033;
 $technology:                #000066;
 $transportation:            #FF6633;
 
-$sustainable:       rgba(252,95,88,1);
+$sustainable:       rgba(112,184,101,1);
 $vitality:          rgba(255,35,100,1);
-$prosperity:        rgba(100,30,120,1);
-$transportation:    rgba(150,50,150,1);
+$prosperity:        rgba(95,175,208,1);
+$trans-choices:     rgba(243,123,112,1);
 $healthy:           rgba(25,100,10,1);
+$equity:            rgba(119,63,119,1);
+
+$featured-opacity: 0.65;
+
+$sustainable-featured:       rgba(112,184,101,$featured-opacity);
+$vitality-featured:          rgba(255,35,100,$featured-opacity);
+$prosperity-featured:        rgba(95,175,208,$featured-opacity);
+$trans-choices-featured:     rgba(243,123,112,$featured-opacity);
+$healthy-featured:           rgba(25,100,10,$featured-opacity);
+$equity-featured:            rgba(119,63,119,$featured-opacity);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
@@ -34,7 +44,7 @@ $subheadings:       rgba(39,39,39,1);
 $links:          #787878;
 $linkshover:     #646464;
 
-$soft-highlight: #F5F5F5;
+$soft-highlight: #FFF;
 $mid-highlight: #E5E5E5;
 
 /* fonts */
@@ -45,17 +55,32 @@ $mid-highlight: #E5E5E5;
 
 body {
   padding-top: 200px;
+  overflow-x: hidden;
 }
 
 html {font-family: 'Lato', sans-serif;
-
+	position: relative;
+	min-height: 100%;
 }
 
 p {
   font-family: 'Lato', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 200;
   line-height: 28px;
+}
+
+.tt-suggestion {
+  border-bottom: 1px solid #DDD;
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+.tt-suggestion p {
+  font-size: 14px;
+}
+input.tt-hint {
+  display: none;
 }
 
 floatleft {
@@ -74,8 +99,10 @@ a:hover {
 
 body {
   font-family: 'Lato', sans-serif;
-  padding-top: 60px;
+  padding-top: 50px;
+  margin-bottom: 200px;
 }
+
 
 h1,
 h2,
@@ -93,17 +120,19 @@ h6,
   color: $subheadings;
 }
 
+
 h1 {
   letter-spacing: 2px;
   color: $headings;
+  font-size: 150%;
 }
 
 .sustainable-growth {
   background-color: $sustainable;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
-  }
+  margin: 40px 0 40px;
+}
   
 h2.sustainable-growth {
   background-color: $soft-highlight;
@@ -124,8 +153,8 @@ h3.sustainable-growth {
   background-color: $vitality;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
-  }
+  margin: 40px 0 40px;
+}
   
 h2.community-vitality {
   background-color: $soft-highlight;
@@ -133,56 +162,59 @@ h2.community-vitality {
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $vitality;
-  }
+}
 
 h3.community-vitality {
   background-color: $soft-highlight;
   color: $vitality;
   padding: 10px 5px;
   margin: 40px 0 20px;
-  }
+}
   
 .regional-prosperity {
   background-color: $prosperity;
-  color: #fff;
+  color:   #FFFFFF;
   padding: 10px 15px;
-  margin: 40px 0 20px;
-  }
+  margin:  40px 0 40px;
+}
+
+.page-header {
+  font-size: 250%;
+}
 
 h2.regional-prosperity{
-  background-color: $soft-highlight;
+  background-color: transparent;
   color: $prosperity;
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $prosperity;
-  }
+}
 
 h3.regional-prosperity{
-  background-color: $soft-highlight;
+  background-color: transparent;
   color: $prosperity;
   padding: 10px 5px;
   margin: 40px 0 20px;
-  }
-  
+}
 
 .transportation-choices {
-  background-color: $transportation;
+  background-color: $trans-choices;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
-  }
+  margin: 40px 0 40px;
+}
   
 h2.transportation-choices { 
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $trans-choices;
   padding: 10px 5px;
   margin: 40px 0 20px;
-  border-bottom: 2px solid $transportation;
+  border-bottom: 2px solid $trans-choices;
   }
   
 h3.transportation-choices {
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $trans-choices;
   padding: 10px 5px;
   margin: 40px 0 20px;
 }
@@ -191,7 +223,7 @@ h3.transportation-choices {
   background-color: $healthy;
   color: #fff;
   padding: 10px 15px;
-  margin: 40px 0 20px;
+  margin: 40px 0 40px;
   }
   
 h2.healthy-environment {  
@@ -204,9 +236,123 @@ h2.healthy-environment {
   
 h3.healthy-environment {
   background-color: $soft-highlight;
-  color: $transportation;
+  color: $healthy;
   padding: 10px 5px;
   margin: 40px 0 20px;
+}
+
+.state-of-equity {
+  background-color: $equity;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 40px 0 40px;
+  }
+  
+h2.state-of-equity {  
+  background-color: $soft-highlight;
+  color: $equity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  border-bottom: 2px solid $equity;
+  }
+  
+h3.state-of-equity {
+  background-color: $soft-highlight;
+  color: $equity;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+}
+
+.btn-featured {
+  z-index: 1000;
+}
+
+.featured {
+  @media (max-width: 1199px) {
+    background: transparent;
+    h1 {
+      color:     #FFF;
+      font-size: 220%;
+    }
+    div.icons {
+      position: absolute;
+      opacity: $featured-opacity;
+      top:  -37px;
+      left: 12px;
+      width: 95%;
+      min-width: 300px;
+      height: 20px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    height:         0;
+    padding-bottom: 30%;
+    border-radius:  50%;
+
+    div.icons {
+      display:    block;
+      width:      200px;
+      height:     200px;
+      position:   relative;
+      left:       188px;
+      top:        -63px;
+      opacity:    0.8;
+      
+      &.sustainable-growth {
+        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.community-vitality {
+        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.regional-prosperity{
+        background: url('icon_sets/regional-prosperity-sm.png') no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.transportation-choices {
+        background: url('icon_sets/sustainable-transportation-sm.png') no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.healthy-environment {
+        background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
+        background-size: 100% 100%;
+      }
+      &.state-of-equity {
+        background: url('icon_sets/state-of-equity-sm.png') no-repeat; 
+        background-size: 100% 100%;
+      }
+    }
+
+    h1 { 
+      position: relative;
+      top:  80px;
+      left: 10px;
+      font-size: 250%;
+      z-index: 999;
+    }
+
+    h3 {
+      position: relative;
+      top:  60px;
+      left: 12px;
+      z-index: 998;
+    }
+
+    a {
+      position: relative;
+      top: 70px;
+      left: 110px;
+    }
+
+    &.sustainable-growth {     background-color: $sustainable-featured;    }
+    &.community-vitality {     background-color: $vitality-featured;       }
+    &.regional-prosperity{     background-color: $prosperity-featured;     }
+    &.transportation-choices { background-color: $trans-choices-featured;  }
+    &.healthy-environment {    background-color: $healthy-featured;        }
+    &.state-of-equity {        background-color: $equity-featured;         }
+  }
 }
 
 button {font-weight: 200;
@@ -307,28 +453,35 @@ button {font-weight: 200;
   color: #787878;
   li {
     font-weight: 400;
+    // font-size:   110%;
     ul {
       display: none;
       padding-left: 10px;
+      font-family: 'Lato', sans-serif;
       li.group {
         font-weight: 400;
+        font-family: 'Lato', sans-serif;
         ul {
           display: none;
           padding-left: 10px;
+          font-family: 'Lato', sans-serif;
         }
       }
     }
 
     &.active {
-      font-weight: 800;
+      //font-weight: 800;
       ul {
         display: block;
+        color: $mid-highlight;
         li.active {
-          font-weight: 400;
-          background-color: $soft-highlight;
+          //font-weight: 800;
+          background-color: $mid-highlight;;
           ul {
             display: block;
+            background-color: $mid-highlight;
             li.active {
+              //font-weight: 400;
               background-color: $mid-highlight;
             }
           }
@@ -338,18 +491,84 @@ button {font-weight: 200;
   }
 }
 
-
-.bs-sidenav.active {
-  font-weight: 700;
-  color: #646464;
+.myscrollspy {
+  display:  none;
+  position: fixed;
+  top:      200px;
+  bottom:    20px;
+  overflow-y: scroll;
+  max-width: 240px;
+  div:first-of-type {
+    position: relative;
+    right: 60px;
+  }
 }
+
+@media (min-width: 992px) {
+  .myscrollspy { display: block; }
+}
+
+.scroll-target {
+  padding-top: 120px !important;
+  margin-top: -90px !important;
+}
+
+sup {
+  padding-top: 120px !important;
+  margin-top:  120px !important;
+}
+
+.sticky-title {
+  background-color: #ffffff;
+  z-index: 600;
+}
+
+// .bs-sidenav > li {
+//   border-left: 2px #F0F solid;
+//   color: #646464;
+// }
+
+// .bs-sidenav ul li {
+//   border-right: 2px #F0F solid;
+//   margin: 2px 0;
+// }
+
+// .bs-sidenav ul > li.active > a {
+//   font-weight: 800;
+// }
 
 /* Temp fix for keeping the sidebar roughly in the column. */
 .bs-sidenav {
   max-width: 250px;
+  position: relative;
+  left: 30px;
+}
+
+.visualization {
+  margin-top: 40px;
+
+  h4 {
+    font-size: 150%;
+    text-align: center;
+  }
+}
+
+.group-subtitle {
+    font-size: 150%;
+    padding-left: 10px;
+    text-transform: capitalize;
 }
 
 
+#framing {
+ padding: 20px 0;
+}
+
+.framing {
+  p {
+    padding: 10px;
+    font-size: 18px;}
+}
 
 /* form-group search */
 .form-group {background-color: #ffffff;}
@@ -357,23 +576,73 @@ button {font-weight: 200;
 /* Jumbotron */
 
 .jumbotron {
-    margin-bottom: 20px;
-    background-image: url('beautiful.jpg');
-    background-position: 0% 25%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: #000;
+  background-image: url('jumbotron_background_to_2k_px.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  margin-bottom: 20px;
+
+  h3 {
+   // color: transparent;
+   color: #fff;
+  }
 }
 
+
+/*.jumbotron {
+  .container {
+    .col-md-4 {
+      background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+      padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+      opacity: 0.8;
+    //.col-m3-offset-1
+    // background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+    // padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+    .col-md-3.col-md-offset-1 {
+      background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+      padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+      opacity: 0.8;
+    //.col-m3-offset-1
+    // background-color: $prosperity;
+      //border-radius: 100%;
+      //border-top-left-radius: 50px 100%;
+    // padding: 10px;
+      //-moz-border-radius: 100%;
+      //-webkit-border-radius: 100%;
+    }
+    }
+  }
+}*/
+
 /* buttons */
+//.container {
+  //margin-left: 0px;
+  //margin-right: 0px;
+//}
 
 .btn {
-  background: #fff;
+  //position: relative;
+  //left: -100px;
+  background: transparent;
   background-image: none;
-  border:1px solid #999;
-  color: #999;
+  border:0px solid #999;
+  color: #fff;
   letter-spacing: 1px;
-  text-decoration: none ! important;
+  //text-decoration: none ! important;
+  text-decoration: underline;
   text-shadow: none;
   transition: all 0.3s ease-in-out 0s;    
   -webkit-transition: all 0.3s ease-in-out 0s;    
@@ -383,24 +652,62 @@ button {font-weight: 200;
   color: #fff;
 }
 
+/*jp - trying to get sources to underline*/
+.panel-title{
+  text-decoration: underline;
+}
+
+/* footer */
+
+#footer {
+  position: absolute;
+  bottom: -100px;
+  width:  100%;
+  height: 320px;
+}
+
+.logo {
+  text-align: center;
+  top: 50px;
+  position: relative;
+  img {
+    
+    max-height: 120px;
+  }
+}
+
+.rank {
+  min-height: 72px;
+}
+
 /* icons */
 
-.issue-area-icons {
-  width: 100%
+.issue-area-circle {
+  display: inline-block;
+  width:  80px;
+  height: 80px;
+  border-radius: 50%;
+  position: relative;
+  top: 31px;
 }
 
 .issue-area-icon {
   display: block;
   width: 80px;
   height: 80px;
-  margin: 10px 5px;
+  margin: 20px 5px;
   float: left;
-  font-size: 12px;
-  font-weight: 200;
-  color: $text-color;
   border-radius: 50%;
-  text-align: center;
   padding-top: 20px;
+}
+
+.issue-area-text {
+	padding-top: 70px;
+	font-size: 12px;
+	font-weight: 200;
+	line-height: 16px;
+	color: $text-color;
+	text-align: center;
 }
 
 
@@ -488,17 +795,6 @@ button {font-weight: 200;
   background-position: 50%;
 }
 
-
-
 .geographic-boundaries {
   background-color: $geographic-boundaries;
 }
-
-.footer {
-  position: relative;
-  width: 100%;
-  bottom: 0;
-}
-
-
-

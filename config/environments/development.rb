@@ -41,6 +41,6 @@ Regionalindicators::Application.configure do
   config.paperclip_defaults = {
     storage:     :filesystem,
     default_url: "/404.html",
-    path:        ":rails_root/public/:url"
+    path:        ":url"
   }
 end

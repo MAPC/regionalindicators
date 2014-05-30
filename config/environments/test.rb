@@ -38,7 +38,7 @@ Regionalindicators::Application.configure do
   # S3 bucket
   config.paperclip_defaults = {
     storage:      :filesystem,
-    path:        ":rails_root/public/test/:url"
+    path:        ":rails_root/public/test/:url",
     default_url: "/404.html"
   }
 end

@@ -39,7 +39,7 @@ default_environment["RUBY_VERSION"] = "ruby-2.0.0-p247"
 
 default_run_options[:shell] = 'bash'
 
-after 'deploy:update', 'foreman:export'
+# after 'deploy:update', 'foreman:export'
 after 'deploy:update', 'foreman:restart'
 
 namespace :deploy do
@@ -179,6 +179,35 @@ namespace :solr do
 
   task :reindex do
     run "cd #{current_path} %% #{try_sudo} bundle exec rake sunspot:solr:reindex"
+  end
+end
+
+namespace :db do
+  desc "Migrate the database"
+  task :migrate do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake db:migrate"
+  end
+
+  desc "Seed the database"
+  task :seed do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake db:seed"
+  end
+
+  desc "Populate the database with prosperity spreadsheet data"
+  task :populate do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake db:populate"
+  end
+
+  desc "Populate the database with visualization data"
+  task :populate do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rake db:viz"
+  end
+end
+
+namespace :rails do
+  desc "Run the rails console"
+  task :c do
+    run "cd #{current_path} %% #{try_sudo} bundle exec rails console"
   end
 end
 

@@ -26,7 +26,7 @@ if env == 'production'
   working_directory "#{deploy_to}/current"
 
   # feel free to point this anywhere accessible on the filesystem
-  user 'deployer', 'staff'
+  # user 'ubuntu', 'www-data'
   shared_path = "#{deploy_to}/shared"
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"

@@ -1,0 +1,9 @@
+<h3 class="<%= indicator.slug %>" id="<%= indicator.slug %>">
+  <%= indicator.title %>
+</h3>
+
+<%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>
+
+<% if indicator.explanation %>
+  <%= render partial: 'topic_areas/explanation', locals: { explanation: indicator.explanation } %>
+<% end %>

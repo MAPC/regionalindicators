@@ -5,17 +5,26 @@ class TopicArea < ActiveRecord::Base
                   :visible,
                   :featured,
                   :goal_ids,
-                  :subject_ids
+                  :subject_ids,
+                  :dashboard_framing
 
   has_many :goals
   has_many :subjects
-  has_one :explanation, as: :explainable
+  has_many :indicators,     through: :subjects
+  has_many :explanations,   through: :indicators
+  has_many :visualizations, through: :explanations
+  has_one  :explanation, as: :explainable
 
-  validates :title, presence: true, length: { maximum: 100, minimum: 8 }
+  validates :title,    presence:    true, length: { maximum: 100, minimum: 8 }
   validates :subtitle, allow_blank: true, length: { maximum: 140, minimum: 8 }
   validate :featured_limit
 
   before_save :check_visible
+
+  default_scope { order(:id) }
+
+  scope :dashboard,    includes(:subjects).includes(:indicators)
+  scope :report,       dashboard.includes(:explanations).includes(:visualizations)
 
   scope :featured,     where(featured: true)
   scope :visible,      where(visible:  true)
@@ -31,6 +40,14 @@ class TopicArea < ActiveRecord::Base
 
   def featured?
     self.featured
+  end
+
+  def improving_indicators
+    indicators.keep_if{|i| i.trend == :improving}.count
+  end
+
+  def declining_indicators
+    indicators.count - improving_indicators
   end
 
   rails_admin do

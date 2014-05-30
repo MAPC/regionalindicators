@@ -18,12 +18,20 @@
 
 .DS_Store
 
-solr/data/*
-solr/development/*
-solr/test/*
-solr/pids/*
+.env
+.test
+doc/*
 
-/log/sunspot*
+# The Procfile changes between deploy environments.
+# We don't want to merge changes to it across environments.
+
+Procfile
+
+# User fixtures should only be for staging
+
+/db/fixtures/users.rb
+
+database.yml
 
 .env
 .test

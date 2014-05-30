@@ -1,14 +1,13 @@
 <% if indicator.grouped? %>
   
   <% if indicator.first_in_group? %>
-    <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.group_slug %>">
+    <h3 class="<%= topic_area_slug %> <%= subject_slug %> scroll-target" id="<%= indicator.group_slug %>">
       <%= indicator.group_title %>
     </h3>
   <% end %>
 
-  <h4 id="<%= indicator.slug %>">
+  <h4 id="<%= indicator.slug %>" class="<%= indicator.slug %> group-subtitle scroll-target">
     <%= indicator.title %>
-    <!-- < indicator.title.gsub(indicator.group_title, '').titleize %> -->
   </h4>
 
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>    
@@ -21,7 +20,7 @@
 
 <% else %>
 
-  <h3 class="<%= topic_area_slug %> <%= subject_slug %>" id="<%= indicator.slug %>">
+  <h3 class="<%= topic_area_slug %> <%= subject_slug %> scroll-target" id="<%= indicator.slug %>">
     <%= indicator.title %>
   </h3>
 

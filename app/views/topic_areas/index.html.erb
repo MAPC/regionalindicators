@@ -1,27 +1,41 @@
 <% content_for :jumbotron do %>
   <div class="jumbotron">
-<<<<<<< HEAD
-	  <div class="container">
-	    <% if @topic_areas[:featured].length > 0 %>
-	      <%= render partial: 'featured', collection: @topic_areas[:featured] %>
-	    <% else %>
-	      <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].first } %>
-	    <% end %>
-	  </div>
-=======
+
     <div class="container">
       <% if @topic_areas[:featured].length > 0 %>
         <%= render partial: 'featured', collection: @topic_areas[:featured] %>
       <% else %>
-        <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].first } %>
+        <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].shift } %>
       <% end %>
+
+      <div class="col-md-4 state-of-equity featured">
+        <h1>State of Equity</h1>
+        
+        <h3>Tracking progress towards an equitable region</h3>
+        
+        <p>
+          <%= link_to 'Go to site >',
+                       'http://regionalindicators.org',
+                       class: "btn btn-primary btn-lg btn-featured",
+                       role: "button" %>
+        </p>
+        <div class="icons state-of-equity"></div>
+      </div>
+
     </div>
->>>>>>> c9f1e33bc48603cc388f9ead4249758532f21318
   </div>
 <% end %>
+
 
 <div class="container">
   <div class="row">
     <%= render partial: 'topic_area', collection: @topic_areas[:not_featured] %>
   </div>
+
+  <div class="row" id="framing">
+    <div class="col-md-12 col-xs-12 framing">
+      <%= framing_text %>
+    </div>
+  </div>
 </div>
+

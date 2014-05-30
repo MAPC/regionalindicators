@@ -2,21 +2,18 @@
   <%= @topic_area.title %>
 </h1>
   
-<div class="col-md-9">
-  <%= render partial: 'subject',
-             collection: @topic_area.subjects,
-             locals: { topic_area_slug: @topic_area.slug } %>
-</div>
-
-<!-- SIDENAV -->
-
-<div class="col-md-3 myscrollspy">
-  <div class="bs-sidebar hidden-print affix">
+<div class="col-md-3 col-sm-2 myscrollspy">
+  <div class="bs-sidebar hidden-print">
     <ul class="nav bs-sidenav">
       <%= render partial: 'scrollspy/subject', collection: @topic_area.subjects %>
     </ul>
   </div>
 </div>
 
+<div class="col-md-9 col-md-offset-3">
+  <%= render partial: 'subject',
+             collection: @topic_area.subjects,
+             locals: { topic_area_slug: @topic_area.slug } %>
+</div>
 
 <%= @snippet %>

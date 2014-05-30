@@ -1,8 +1,13 @@
-<h2 class="<%= topic_area_slug %> <%= subject.slug %>" id="<%= subject.slug %>">
-  <%= subject.title %>
-</h2>
+<% if subject.has_indicators? %>
 
-<%= render partial:   'dashboards/indicator',
-           collection: subject.indicators,
-           locals:   { subject_slug:    subject.slug,
-                       topic_area_slug: topic_area_slug } %>
+  <h2 class="<%= topic_area_slug %> <%= subject.slug %>" id="<%= subject.slug %>">
+    <%= subject.title %>
+  </h2>
+
+
+  <%= render partial:   'dashboards/indicator',
+             collection: subject.indicators,
+             locals:   { subject_slug:    subject.slug,
+                         topic_area_slug: topic_area_slug } %>
+
+<% end %>

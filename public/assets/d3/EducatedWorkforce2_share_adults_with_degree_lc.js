@@ -1,0 +1,55 @@
+(function() {
+
+
+var chart, 
+    config = { 
+      path: window.dataUrl,
+      data: ['Associate Degree or Higher'], 
+      series: 'MSA Name', 
+      errorflag: '', 
+      where: {
+        column: '',
+        value: ''
+      }
+    }
+
+var chart = d3.select(window.explainable)
+  .append('svg')
+  .chart('LineChart')
+  .height(400)
+  .colors(['#D22D33', '#1C164E'])
+  .callouts(["Boston, MA MSA", "United States"]);
+
+var ds = new Miso.Dataset({
+  url : config.path,
+  delimiter : ','
+});
+
+ds.fetch({
+  success : function() {
+
+  // we need to structure our data, from the dataset, into something d3 understands.
+  var output = []; // empty box
+
+ (ds.countBy('MSA Name')).each(function(unique, index) {
+    var values = [];
+    var dynamicCut = ds.where({ columns: ['MSA Name', 'Associate Degree or Higher', 'Year'], rows: function(row) { return row['MSA Name'] == unique['MSA Name'] }})
+
+    dynamicCut.each(function(row, rowIndex) {
+      values.push({ year: row['Year'], value: row['Associate Degree or Higher']})
+    });
+      output.push({series: unique['MSA Name'], values: values});
+    
+  });
+
+  chart.draw(output);
+
+  },
+
+  error : function() {
+    console.log("Failure loading data")
+  }
+});
+
+
+})();

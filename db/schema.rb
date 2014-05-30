@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140422163343) do
+ActiveRecord::Schema.define(:version => 20140508161852) do
 
   create_table "explanations", :force => true do |t|
     t.text     "narrative"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.integer "source_id"
   end
 
+  add_index "explanations_sources", ["explanation_id", "source_id"], :name => "index_explanations_sources_on_explanation_id_and_source_id"
+
   create_table "goals", :force => true do |t|
     t.integer  "number"
     t.string   "title"
@@ -34,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.datetime "updated_at",    :null => false
     t.string   "description"
   end
+
+  add_index "goals", ["topic_area_id"], :name => "index_goals_on_topic_area_id"
 
   create_table "indicator_groups", :force => true do |t|
     t.string   "title"
@@ -55,10 +59,16 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.integer  "indicator_group_id"
   end
 
+  add_index "indicators", ["indicator_group_id"], :name => "index_indicators_on_indicator_group_id"
+  add_index "indicators", ["objective_id"], :name => "index_indicators_on_objective_id"
+  add_index "indicators", ["subject_id"], :name => "index_indicators_on_subject_id"
+
   create_table "indicators_issue_areas", :force => true do |t|
     t.integer "indicator_id"
     t.integer "issue_area_id"
   end
+
+  add_index "indicators_issue_areas", ["indicator_id", "issue_area_id"], :name => "index_indicators_issue_areas_on_indicator_id_and_issue_area_id"
 
   create_table "issue_areas", :force => true do |t|
     t.string   "title"
@@ -69,12 +79,14 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
   end
 
   create_table "objectives", :force => true do |t|
-    t.integer  "number"
     t.string   "title"
     t.integer  "goal_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "number"
   end
+
+  add_index "objectives", ["goal_id"], :name => "index_objectives_on_goal_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -82,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
@@ -97,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "snapshots", ["indicator_id"], :name => "index_snapshots_on_indicator_id"
 
   create_table "sources", :force => true do |t|
     t.string   "title"
@@ -124,6 +138,8 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.datetime "updated_at",    :null => false
     t.integer  "topic_area_id"
   end
+
+  add_index "subjects", ["topic_area_id"], :name => "index_subjects_on_topic_area_id"
 
   create_table "topic_areas", :force => true do |t|
     t.string   "abbr"
@@ -169,5 +185,7 @@ ActiveRecord::Schema.define(:version => 20140422163343) do
     t.integer  "d3_file_size"
     t.datetime "d3_updated_at"
   end
+
+  add_index "visualizations", ["explanation_id"], :name => "index_visualizations_on_explanation_id"
 
 end

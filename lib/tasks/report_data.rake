@@ -1,14 +1,10 @@
-require 'csv'
-
 namespace :db do
   desc "Fill database with report data from spreadsheets"
   task populate: :environment do
 
-    indicators_subjects = File.new(Rails.root + 'db/fixtures/csv/indicators-subjects.csv')
-    snapshots           = File.new(Rails.root + 'db/fixtures/csv/snapshots.csv')
-    subjects            = File.new(Rails.root + 'db/fixtures/csv/subjects.csv')
-    sources             = File.new(Rails.root + 'db/fixtures/csv/sources.csv')
-    
+    @spreadsheet = Roo::Excelx.new("#{Rails.root}/db/fixtures/xlsx/prosperity_indicators_spreadsheet.xlsx")
+    sheets      = %w( indicators-subjects snapshots subjects sources )
+
     
 =begin
     SUBJECTS
@@ -34,60 +30,133 @@ namespace :db do
 
 =end
 
-    # Subjects
 
-    prosperity = TopicArea.find 4
+    @prosperity = TopicArea.find 1
 
-    CSV.foreach(subjects, headers: true) do |s|
-      subject = prosperity.subjects.create(title: s['subject_title'])
-      explain = subject.create_explanation(narrative: s['subject_narrative'])
-      puts "created subject #{subject.title} (#{subject.id}) with explanation #{explain.id}"
+    def subjects
+
+      @spreadsheet.default_sheet = 'subjects'
+      count = 0
+      
+      @spreadsheet.each(headers: true) do |s|
+        count += 1
+        next if count == @spreadsheet.first_row
+
+        subject = Subject.find_by_title(s['subject_title']) || @prosperity.subjects.create(title: s['subject_title'])
+
+        explain = subject.explanation || subject.build_explanation
+        explain.assign_attributes({narrative: s['narrative']})
+        puts explain.errors.full_messages if !explain.valid?
+        explain.save
+
+        puts "created Subject #{subject.title} (#{subject.id})"
+        puts "\t with explanation \"#{explain.narrative[0..40]}\" (#{explain.id})"
+      end
     end
 
 
     # Indicators
 
-    CSV.foreach(indicators_subjects, headers: true) do |i|
+    def indicators
 
-      indicator = Indicator.find i['id']
-      indicator.subject ||= Subject.find_by_title(i['subject_title'])
-      indicator.save
+      @spreadsheet.default_sheet = 'indicators-subjects'
+      count = 0
 
-      # Assign issue areas
-      i['issue_area_title'].split(', ').each {|t| indicator.issue_areas << IssueArea.find_by_title(t) }
+      @spreadsheet.each(headers: true) do |i|
+        count += 1
+        next if count == @spreadsheet.first_row
 
-      # Create explanation / revise narrative
-      exp = indicator.create_explanation(narrative: i['narrative'])
-      puts i['narrative'].length
-      # puts "\t created or revised #{indicator.id} with narrative #{exp.narrative[0..20]}"
-      puts exp.errors.full_messages
+        indicator = Indicator.find i['id'].to_i
+        indicator.subject ||= Subject.find_by_title(i['subject_title'])
+        indicator.assign_attributes({ threshhold:             i['threshhold'],
+                                      higher_value_is_better: i['higher_value_is_better'],
+                                      lower_rank_is_better:   i['lower_rank_is_better']    }, without_protection: true)
+        indicator.save
+
+        if i['group']
+          puts i['group'].inspect
+          group = IndicatorGroup.find_by_title(i['group']) || IndicatorGroup.create(title: i['group'])
+          group.indicators << indicator
+        end
+
+        # Assign issue areas
+
+        issue_area_titles = i['issue_area_title'].to_s.split(', ')
+
+        issue_area_titles.each do |title|
+          indicator.issue_areas << IssueArea.find_by_title(title)
+        end
+
+        # Assign explanation#narrative
+        explanation = indicator.explanation || indicator.build_explanation
+        explanation.assign_attributes({ narrative: i['narrative']})
+        explanation.save
+
+        puts "saved Indicator #{indicator.id}"
+        puts "\t with explanation \"#{explanation.narrative[0..40]}\" (#{explanation.id})"
+        puts "\t with threshhold #{ indicator.threshhold }"
+      end
     end
 
     # Snapshots
 
-    CSV.foreach(snapshots, headers: true) do |s|
-      date = DateTime.parse("Jan #{s['year'][-4..-1]}")
+    def snapshots
+      Snapshot.destroy_all
+      Snapshot.reset_pk_sequence
 
-      indicator = Indicator.find(s['indicator_id'])
-      indicator.update_attribute(:units, s['unit'])
-      indicator.snapshots.create( date:  date,
-                                  value: s['value'].to_f,
-                                  rank:  s['rank'].to_i  )
+      @spreadsheet.default_sheet = 'snapshots'
+      count = 0
+
+      @spreadsheet.each(headers: true) do |s|
+        count += 1
+        next if count == @spreadsheet.first_row
+
+        indicator = Indicator.find(s['indicator_id'].to_i)
+        indicator.update_attribute(:units, s['unit'])
+
+        date  = DateTime.parse("Jan #{s['year'].to_i.to_s}")
+        value = s['value'].to_f
+        rank  = s['rank'].to_i
+
+        indicator.snapshots.create( date:  date,
+                                    value: value,
+                                    rank:  rank   )
+      end
     end
 
     # Sources
 
-    CSV.foreach(sources, headers: true) do |s|
-      indicator_ids = (s['indicator_id'].to_s.split(', '))
-      date = DateTime.parse(s['date']) if s['date']
-      s = Source.create( date:    date,
-                         title:   s['title'],
-                         author:  s['author'],
-                         url:     s['url'],
-                         comment: s['comment'])
-      Indicator.find(indicator_ids).each { |i| i.explanation.sources << s ; i.save ; puts "added #{s.id} to #{i.title} (#{i.id})" }
+    def sources
+      Source.destroy_all
+      Source.reset_pk_sequence
+
+      @spreadsheet.default_sheet = 'sources'
+      count = 0
+
+      @spreadsheet.each(headers: true) do |s|
+        count += 1
+        next if count == @spreadsheet.first_row
+
+        indicator_ids = (s['indicator_id'].to_s.split(', '))
+        
+        date   = DateTime.parse(s['date']) if s['date']
+        source = Source.create( date:    date,
+                                title:   s['title'],
+                                author:  s['author'],
+                                url:     s['url'],
+                                comment: s['comment'])
+        Indicator.find(indicator_ids).each do |i|
+          i.explanation.sources << source
+          puts "added #{source.id} to #{i.title} (#{i.id}) from #{count}"
+        end
+      end
+
     end
 
+    subjects
+    indicators
+    snapshots
+    sources
 
   end
 end

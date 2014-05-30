@@ -12,13 +12,15 @@ class Indicator < ActiveRecord::Base
                   :higher_value_is_better,
                   :lower_rank_is_better
 
+  attr_accessor :current_snapshot
+
   belongs_to :objective
   belongs_to :subject
   belongs_to :indicator_group
 
   has_one  :explanation, as: :explainable
   has_many :snapshots
-  has_and_belongs_to_many :issue_areas
+  has_and_belongs_to_many :issue_areas, uniq: true
 
   accepts_nested_attributes_for :explanation
 
@@ -26,7 +28,7 @@ class Indicator < ActiveRecord::Base
   validates :number, presence: true
   validates :units,  presence: true, length: { maximum: 140 }
 
-  default_scope { order('id ASC') }
+  default_scope { includes(:explanation).includes(:snapshots).order(:id) }
 
   def goal
     objective.goal unless objective.nil?
@@ -54,84 +56,40 @@ class Indicator < ActiveRecord::Base
   end
 
 
-  def passing?
-    return nil if threshhold.nil?
+  def pass_fail
+    return :non_recorded if threshhold.nil?
     status = ( value > threshhold )
-    higher_value_is_better ? status : !status 
+    if higher_value_is_better
+      status ? :pass : :fail
+    else
+      status ? :fail : :pass
+    end
   end
 
-  def failing?
-    return nil if threshhold.nil?
-    !passing?
-  end
-
-  def passing
-    :passing if passing?
-  end
-
-  def failing
-    :failing if failing?
-  end
-
-  def incr_decr
-    return nil if value_delta.nil?
-    return :stagnant if value_delta == 0
+  def direction
+    return :static if ( value_delta.nil? || value_delta == 0 )
     value_delta > 0 ? :improving : :declining
-  end
-
-  def rank_incr_decr
-    return nil if rank_delta.nil?
-    return :stagnant if rank_delta == 0
-    rank_delta > 0  ? :improving : :declining
   end
 
   def rank_position
     case rank
     when 1..10
-      lower_rank_is_better ? :passing : :failing
+      lower_rank_is_better ? :pass : :fail
     when 11..15
       :stagnant
     when 16..25
-      lower_rank_is_better ? :failing : :passing
+      lower_rank_is_better ? :fail : :pass
     end
   end
 
-
-  def improving?
-    return nil if value_delta.nil?
-    trend = ( value_delta > 0 )
-    higher_value_is_better ? trend : !trend
-  end
-
-  def stagnant?
-    return nil if value_delta.nil?
-    value_delta == 0
-  end
-
-  def trend
-    return nil        if  value_delta.nil?
-    return :stagnant  if  stagnant?
-    return :improving if  improving?
-    return :declining if !improving?
-  end
-
-
-  def rank_improving?
-    return nil if rank_delta.nil?
-    trend = ( rank_delta < 0 ) # rank should be decreasing i.e. moving toward 1
-    lower_rank_is_better ? trend : !trend
-  end
-
-  def rank_stagnant?
-    return nil if rank_delta.nil?
-    rank_delta == 0
-  end
-
-  def rank_trend
-    return nil        if  rank_delta.nil?
-    return :stagnant  if  rank_stagnant?
-    return :improving if  rank_improving?
-    return :declining if !rank_improving?
+  def trend # TODO: make it reflect the value judgement
+    return :stagnant if ( value_delta.nil? || value_delta == 0 )
+    status = ( value_delta > 0 )
+    if higher_value_is_better
+      status ? :improving : :declining
+    else
+      status ? :declining : :improving
+    end
   end
 
 
@@ -152,7 +110,7 @@ class Indicator < ActiveRecord::Base
   end
 
   def current_rank?
-    !current_snapshot.rank.nil?
+    !current_snapshot.rank.nil? && current_snapshot.rank != 0
   end
 
   def value_in(year=DEFAULT_YEAR)
@@ -165,16 +123,15 @@ class Indicator < ActiveRecord::Base
   
   def snapshot_since(year=DEFAULT_YEAR)
     date = DateTime.new(year.to_i)
-    self.snapshots.where('date BETWEEN ? and ?', date.beginning_of_year, DateTime.now.end_of_year).order('date DESC').first
+    self.snapshots.in_year(year).first
   end
 
-  def value_delta(year=DEFAULT_YEAR)
-    current_value - value_in(year) unless snapshots.empty?
+  def update_value_delta(year=DEFAULT_YEAR)
+    self.update_attribute(:value_delta, ( current_value - value_in(year) ) || 0)
   end
 
-  def rank_delta(year=DEFAULT_YEAR)
-    past_rank = rank_in(year)
-    current_rank - past_rank unless snapshots.empty?
+  def update_rank_delta(year=DEFAULT_YEAR)
+    self.update_attribute(:rank_delta, ( current_rank - rank_in(year) )    || 0)
   end
 
   alias_method :value, :current_value
@@ -184,13 +141,11 @@ class Indicator < ActiveRecord::Base
   alias_method :group,    :indicator_group
   alias_method :grouped?, :has_group?
 
-  alias_method :stagnant_rank?, :rank_stagnant?
-
   include SlugExtension
 
-  searchable do
-    text :title
-  end
+  # searchable do
+  #   text :title
+  # end
 
   rails_admin do
     list do
@@ -206,22 +161,21 @@ class Indicator < ActiveRecord::Base
 
   # private
 
-    def current_snapshot
-      return empty_snapshot if self.snapshots.empty?
-      self.snapshots.order('date DESC').limit(1).first
-    end
+  def current_snapshot
+    @current_snapshot ||= (self.snapshots.first || EMPTY_SNAPSHOT)
+  end
 
-    def snapshot_in(year=DEFAULT_YEAR)
-      return empty_snapshot if self.snapshots.empty?
-      date = DateTime.new(year.to_i)
-      snapshot = self.snapshots.where('date BETWEEN ? AND ?', date.beginning_of_year, date.end_of_year).order('date DESC').first
-      snapshot ||= self.snapshots.order('date DESC').last
-    end
+  def snapshot_in(year=DEFAULT_YEAR)
+    date = DateTime.new(year.to_i)
+    (self.snapshots.in_year(year).first || self.snapshots.last) || EMPTY_SNAPSHOT
+  end
 
-    def empty_snapshot
-      # lets other methods call .value and .rank without errors
-      OpenStruct.new(value: nil, rank: nil)
-    end
+  def year_of_last_snapshot(year=DEFAULT_YEAR)
+    snapshot = snapshot_in(year)
+    snapshot.date.year unless snapshot.date.nil?
+  end
 
+  # Allows sending of #value and #rank without NoMethodErrors
+  EMPTY_SNAPSHOT = OpenStruct.new(value: nil, rank: nil, date: nil)
 
 end

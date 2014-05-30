@@ -16,10 +16,13 @@
 //= require twitter/typeahead.min
 //= require d3.v3
 //= require miso.ds.deps.ie.0.4.1
+//= require lib/d3.chart.min.js
+//= require lib/tufted.js
+//= require lib/sticky-kit.min.js
 //= require_tree .
 
 $(document).ready(function () {
-
+  $('.sticky-title').stick_in_parent({offset_top: 10});
   $('.typeahead').typeahead({ prefetch: '/suggest.json' })
 
 })

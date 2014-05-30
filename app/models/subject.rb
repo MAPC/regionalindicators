@@ -13,6 +13,8 @@ class Subject < ActiveRecord::Base
 
   validates :title, presence: true, length: { maximum: 100, minimum: 8 }
 
+  default_scope { order(:id) }
+
   include SlugExtension
   
   rails_admin do
@@ -21,6 +23,10 @@ class Subject < ActiveRecord::Base
       field :title
       field :topic_area
     end
+  end
+
+  def has_indicators?
+    !indicators.empty?
   end
 
 end
