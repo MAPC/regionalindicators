@@ -1,7 +1,7 @@
 class Search < ActiveRecord::Base
   extend Textacular
 
-  attr_accessor :query
+  attr_accessor   :query
   attr_accessible :query
 
   belongs_to :searchable, polymorphic: true

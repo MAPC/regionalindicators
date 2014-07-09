@@ -36,5 +36,3 @@ model_names.each do |model_name|
 
   puts " -- DONE!"
 end
-
-

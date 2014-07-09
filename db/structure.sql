@@ -508,8 +508,10 @@ CREATE TABLE topic_areas (
     updated_at timestamp without time zone NOT NULL,
     subtitle character varying(255),
     explanation_id integer,
-    visible boolean DEFAULT false,
-    featured boolean DEFAULT false
+
+    visible boolean,
+    featured boolean,
+    dashboard_framing text
 );
 
 
@@ -1072,3 +1074,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140511221108');
 INSERT INTO schema_migrations (version) VALUES ('20140522232352');
 
 INSERT INTO schema_migrations (version) VALUES ('20140523000507');
+
+INSERT INTO schema_migrations (version) VALUES ('20140529202751');

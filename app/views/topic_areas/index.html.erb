@@ -1,5 +1,6 @@
 <% content_for :jumbotron do %>
   <div class="jumbotron">
+
     <div class="container">
       <% if @topic_areas[:featured].length > 0 %>
         <%= render partial: 'featured', collection: @topic_areas[:featured] %>
