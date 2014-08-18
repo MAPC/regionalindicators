@@ -21,31 +21,31 @@ $technology:                #000066;
 $transportation:            #FF6633;
 
 $sustainable:       rgba(112,184,101,1);
-$vitality:          rgba(255,35,100,1);
-$prosperity:        rgba(95,175,208,1);
+$vitality:          rgba(255,35, 100,1);
+$prosperity:        rgba(95, 175,208,1);
 $trans-choices:     rgba(243,123,112,1);
-$healthy:           rgba(25,100,10,1);
-$equity:            rgba(119,63,119,1);
+$healthy:           rgba(25, 100,10, 1);
+$equity:            rgba(119,63, 119,1);
 
 $featured-opacity: 0.65;
 
 $sustainable-featured:       rgba(112,184,101,$featured-opacity);
-$vitality-featured:          rgba(255,35,100,$featured-opacity);
-$prosperity-featured:        rgba(95,175,208,$featured-opacity);
+$vitality-featured:          rgba(255,35, 100,$featured-opacity);
+$prosperity-featured:        rgba(95, 175,208,$featured-opacity);
 $trans-choices-featured:     rgba(243,123,112,$featured-opacity);
-$healthy-featured:           rgba(25,100,10,$featured-opacity);
-$equity-featured:            rgba(119,63,119,$featured-opacity);
+$healthy-featured:           rgba(25, 100,10, $featured-opacity);
+$equity-featured:            rgba(119,63, 119,$featured-opacity);
 
 $text-color: #000000;
 $inverse-text-color: #000000;
 
 $headings:          rgba(0,0,0,1);
 $subheadings:       rgba(39,39,39,1);
+
 $links:          #006699;
 $linkshover:     #660066;
-
 $soft-highlight: #FFF;
-$mid-highlight: #E5E5E5;
+$mid-highlight:  #E5E5E5;
 
 /* fonts */
 @import url(http://fonts.googleapis.com/css?family=Lato);
@@ -555,7 +555,7 @@ li.group a {
 }
 
 .myscrollspy {
-  display:  none;
+  display:  block;
   position: fixed;
   top:      150px;
   bottom:    20px;
