@@ -510,49 +510,9 @@ li.group a {
     }
 }
 
-/* scroll spy */
 
-.bs-sidenav {
-  color: #787878;
-  li {
-    //font-weight: 400;
-    // font-size:   110%;
-    ul {
-      display: none;
-      padding-left: 10px;
-      font-family: 'Lato', sans-serif;
-      li.group {
-        font-weight: 400;
-        font-family: 'Lato', sans-serif;
-        ul {
-          display: none;
-          padding-left: 10px;
-          font-family: 'Lato', sans-serif;
-        }
-      }
-    }
 
-    &.active {
-      //font-weight: 800;
-      ul {
-        display: block;
-        color: $mid-highlight;
-        li.active {
-          //font-weight: 800;
-          background-color: $mid-highlight;;
-          ul {
-            display: block;
-            background-color: $mid-highlight;
-            li.active {
-              //font-weight: 400;
-              background-color: $mid-highlight;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+/* Scrollspy: Major structural elements */
 
 .myscrollspy {
   display:  block;
@@ -567,9 +527,43 @@ li.group a {
   }
 }
 
+/*    Temp fix for keeping the sidebar roughly in the column. */
+.bs-sidenav {
+  max-width: 250px;
+  position: relative;
+  left: 30px;
+}
+
+
 @media (min-width: 992px) {
   .myscrollspy { display: block; }
 }
+
+
+
+
+/* Scrollspy: List elements */
+
+.bs-sidenav {
+  color: #787878;
+  font-family: 'Lato', sans-serif;
+}
+
+.bs-sidenav > li { 
+  font-weight:  400;
+  font-size:    1.3em;
+  padding-left:  10px;
+}
+
+.bs-sidenav > li        > ul.nav { display: none; }
+.bs-sidenav > li.active > ul.nav { display: block; }
+
+.bs-sidenav > li        > ul     > li { font-size: 0.9em; }
+.bs-sidenav > li.active > ul.nav > li.active { background-color: $mid-highlight; }
+
+
+
+/* Scrollspy: Target elements (Topic Area headers) */
 
 .scroll-target {
   padding-top: 120px !important;
@@ -586,26 +580,8 @@ sup {
   z-index: 600;
 }
 
-// .bs-sidenav > li {
-//   border-left: 2px #F0F solid;
-//   color: #646464;
-// }
 
-// .bs-sidenav ul li {
-//   border-right: 2px #F0F solid;
-//   margin: 2px 0;
-// }
 
-// .bs-sidenav ul > li.active > a {
-//   font-weight: 800;
-// }
-
-/* Temp fix for keeping the sidebar roughly in the column. */
-.bs-sidenav {
-  max-width: 250px;
-  position: relative;
-  left: 30px;
-}
 
 .visualization {
 	width: 110%;
