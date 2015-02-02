@@ -1,5 +1,7 @@
 ### Regional Indicators
 
+[![Build Status](https://travis-ci.org/MAPC/regionalindicators.svg?branch=master)](https://travis-ci.org/MAPC/regionalindicators) [![Code Climate](https://codeclimate.com/github/MAPC/regionalindicators/badges/gpa.svg)](https://codeclimate.com/github/MAPC/regionalindicators) [![Test Coverage](https://codeclimate.com/github/MAPC/regionalindicators/badges/coverage.svg)](https://codeclimate.com/github/MAPC/regionalindicators)
+
 #### Development environment setup
 
 Clone the repository and cd into it.
