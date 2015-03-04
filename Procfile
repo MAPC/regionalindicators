@@ -1,1 +1,1 @@
-web:  bundle exec unicorn -c config/unicorn/production.rb
+web: rails s
