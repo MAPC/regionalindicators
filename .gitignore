@@ -19,5 +19,4 @@
 /log/*.log
 /tmp
 
-
 /db/fixtures/*
