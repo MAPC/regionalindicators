@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -343,7 +344,20 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE VIEW searches AS
-    (SELECT goals.id AS searchable_id, 'Goal'::text AS searchable_type, goals.title AS term FROM goals UNION SELECT goals.id AS searchable_id, 'Goal'::text AS searchable_type, goals.description AS term FROM goals) UNION SELECT indicators.id AS searchable_id, 'Indicator'::text AS searchable_type, indicators.title AS term FROM indicators;
+ SELECT goals.id AS searchable_id,
+    'Goal'::text AS searchable_type,
+    goals.title AS term
+   FROM goals
+UNION
+ SELECT goals.id AS searchable_id,
+    'Goal'::text AS searchable_type,
+    goals.description AS term
+   FROM goals
+UNION
+ SELECT indicators.id AS searchable_id,
+    'Indicator'::text AS searchable_type,
+    indicators.title AS term
+   FROM indicators;
 
 
 --
