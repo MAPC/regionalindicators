@@ -7,6 +7,7 @@ default: &default
   port:     <%= ENV.fetch('DB_PORT_5432_TCP_PORT') { '5432' }      %>
   timeout:  5000
   pool:     5
+  schema_search_path: <%= ENV.fetch('DB_SCHEMA_SEARCH_PATH') { "regionalindicators,public" } %>
 
 development: &development
   <<: *default
@@ -22,4 +23,3 @@ test:       &test
 
 production:
   <<: *default
-  schema_search_path: "regionalindicators,public"
