@@ -12,10 +12,8 @@
 
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>    
 
-  <% if indicator.last_in_group? %>
-    <% if indicator.explanation %>
-      <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
-    <% end %>
+  <% if indicator.explanation %>
+    <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
   <% end %>
 
 <% else %>
