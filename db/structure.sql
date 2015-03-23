@@ -344,6 +344,7 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE VIEW searches AS
+
         (         SELECT goals.id AS searchable_id,
                     'Goal'::text AS searchable_type,
                     goals.title AS term
@@ -358,6 +359,7 @@ UNION
             'Indicator'::text AS searchable_type,
             indicators.title AS term
            FROM indicators;
+
 
 
 --

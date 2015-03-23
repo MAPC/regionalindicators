@@ -23,6 +23,5 @@
 
 $(document).ready(function () {
   $('.sticky-title').stick_in_parent({offset_top: 10});
-  $('.typeahead').typeahead({ prefetch: '/suggest.json' })
-
+  $('.typeahead').typeahead({ prefetch: '/suggest.json' });
 })
