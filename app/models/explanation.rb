@@ -26,7 +26,7 @@ class Explanation < ActiveRecord::Base
   end
 
   def narrative_html
-    BlueCloth.new( narrative ).to_html.html_safe
+    narrative.html_safe
   end
 
   rails_admin do
