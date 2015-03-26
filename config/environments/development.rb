@@ -38,9 +38,23 @@ Regionalindicators::Application.configure do
   # Paperclip configuration
   Paperclip.options[:command_path] = "/usr/local/bin/convert"
   
+
+
   config.paperclip_defaults = {
     storage:     :filesystem,
     default_url: "/404.html",
     path:        ":url"
   }
+  
+  if ENV['AWS_ACCESS_KEY_ID']
+    config.paperclip_defaults = {
+      storage: :s3,
+      path:    ":url",
+      s3_credentials: {
+        bucket:            ENV['S3_BUCKET_NAME'],
+        access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      }
+    }
+  end
 end
