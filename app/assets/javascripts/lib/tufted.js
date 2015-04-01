@@ -193,8 +193,7 @@ d3.chart("BaseChart").extend("BarChart", {
 
           this.attr("text-anchor", "middle")
             .attr("x", function(d) { return chart.xScale(d.name) + (chart.xScale.rangeBand() / 2); })
-            .attr("y", function(d) { return chart.yScale(d.value); })
-            .text(function(d) { return d.value });
+            .attr("y", function(d) { return chart.yScale(d.value); });
 
         }
       }
@@ -212,7 +211,11 @@ d3.chart("BaseChart").extend("BarChart", {
     }
     // // update the scales
     chart.xScale.domain(data.map(function(d) { return d.name; }));
-    chart.yScale.domain([min,max]);
+    if (chart.yDomain().length > 0) {
+      chart.yScale.domain(chart.yDomain()); 
+    } else {
+      chart.yScale.domain([min,max]);      
+    }
 
     return data;
   }
@@ -237,6 +240,7 @@ d3.chart("BaseChart", {
     
     this._tickValues = [];
     this._yAxisLabel = "Y-Axis";
+    this._yDomain = [];
     this._margin = {top: 60, right: 20, bottom: 80, left: 80};
     this._width  = setInitialWidth();
     this._height = setInitialHeight();
@@ -382,12 +386,25 @@ d3.chart("BaseChart", {
   },
 
   xFormat: function(string) {
+
     if (arguments.length === 0) {
       return this._xFormat;
     }
 
     if (typeof string === "string") {
       this._xFormat = string;
+    } 
+
+    return this;
+  },
+
+  yDomain: function(array) {
+    if (arguments.length === 0) {
+      return this._yDomain;
+    }
+
+    if (array.constructor === Array) {
+      this._yDomain = array;
     } 
 
     return this;
@@ -412,6 +429,13 @@ d3.chart("BaseChart", {
   },
 
   tooltip: function (d, element, box) {
+    var format = d3.format("");
+    if(this._yFormat) {
+      var format = d3.format(this._yFormat);
+    }
+    if (typeof d === "number") {
+      d = format(d);
+    }
 
     var position = d3.mouse(element),
         xOffset = 0,
@@ -784,7 +808,11 @@ d3.chart('BaseChart').extend('GroupedBarChart', {
 
       chart.xScale.domain(data.map(function(d) { return d.series; }));
       chart.x1Scale.domain(buffer).rangeRoundBands([0, chart.xScale.rangeBand()]);
-      chart.yScale.domain([min, max]);
+      if (chart.yDomain().length > 0) {
+        chart.yScale.domain(chart.yDomain()); 
+      } else {
+        chart.yScale.domain([min,max]);      
+      }
 
       return data;
   }
@@ -799,7 +827,7 @@ d3.chart("BaseChart").extend("LineChart", {
     chart._callouts = [];
 
     chart.xScale = d3.scale.ordinal()
-      .rangeRoundBands([0, chart.width()], 1);
+      .rangePoints([0, chart.width()],0);
 
     chart.yScale = d3.scale.linear()
       .range([chart.height(), 0]);
@@ -848,7 +876,7 @@ d3.chart("BaseChart").extend("LineChart", {
       .append("text");
 
     chart.on('change:width', function(newWidth) {
-      chart.xScale.rangeRoundBands([0, newWidth], 1);
+      chart.xScale.rangePoints([0, newWidth], 0);
       chart.layer("lines").selectAll("path").attr('d', function(d) { return chart.renderLine(d.values); });
       chart.layer("circles").selectAll("circle").attr("cx", function(d) { return chart.xScale(d.year) })
     });
@@ -1103,7 +1131,12 @@ d3.chart("BaseChart").extend("LineChart", {
 
 
     chart.xScale.domain(buffer);
-    chart.yScale.domain([min,max]);
+    if (chart.yDomain().length > 0) {
+      chart.yScale.domain(chart.yDomain()); 
+    } else {
+      chart.yScale.domain([min,max]);      
+    }
+
 
     chart._callouts.forEach(function(d) {
       var pluck = [];
@@ -1242,7 +1275,11 @@ d3.chart("BaseChart").extend("ScatterPlot", {
     var chart = this;
 
     chart.xScale.domain(d3.extent(data,function(d) { return d.x }));
-    chart.yScale.domain(d3.extent(data,function(d) { return d.y }));
+    if (chart.yDomain().length > 0) {
+      chart.yScale.domain(chart.yDomain()); 
+    } else {
+      chart.yScale.domain(d3.extent(data,function(d) { return d.y }));      
+    }
     return data;
   }
 });
@@ -1261,7 +1298,7 @@ d3.chart('BaseChart').extend('StackedBarChart', {
     chart.yAxis = d3.svg.axis()
       .scale(chart.yScale)
       .tickSize(-chart.width(), 0, 0)
-      .orient("left")
+      .orient("left");
 
     chart.areas.xAxisLayer = chart.base.append('g').classed('x axis',true)
     chart.areas.yAxisLayer = chart.base.append('g').classed('y axis', true)
@@ -1401,22 +1438,25 @@ d3.chart('BaseChart').extend('StackedBarChart', {
     },
 
     transform: function(data) {
-      var data = data;
       var chart = this; 
-      console.log(data);
+      chart.data = data;
 
-      var groups = d3.keys(data[0]).filter(function(key) { return key !== "series"; });
+      var groups = d3.keys(chart.data[0]).filter(function(key) { return key !== "series"; });
 
-      data.forEach(function(d) {
+      chart.data.forEach(function(d) {
         var y0 = 0;
         d.groups = groups.map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
         d.total = d.groups[d.groups.length - 1].y1;
       });
       
-      chart.xScale.domain(data.map(function(d) { return d.series; }));
-      chart.yScale.domain([0, d3.max(data, function(d) { return d.total; })]);
+      chart.xScale.domain(chart.data.map(function(d) { return d.series; }));
+      if (chart.yDomain().length > 0) {
+        chart.yScale.domain(chart.yDomain()); 
+      } else {
+        chart.yScale.domain([0, d3.max(chart.data, function(d) { return d.total; })]);      
+      }
       
-      return data;
+      return chart.data;
   }
 });
 },{}]},{},[1]);
