@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/typeahead.min
-//= require d3.v3
 //= require miso.ds.deps.ie.0.4.1
+//= require lib/c3.min.js
 //= require lib/d3.chart.min.js
 //= require lib/tufted.js
 //= require lib/sticky-kit.min.js

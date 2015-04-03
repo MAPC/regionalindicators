@@ -1,7 +1,7 @@
+<h4>
+  <%= visualization.title %>
+</h4>
 <div class="visualization" id="<%= visualization.explainable_dom_id %>">
-  <h4>
-    <%= visualization.title %>
-  </h4>
 </div>
 <%= javascript_tag do %>
   window.explainable = "#<%= visualization.explainable_dom_id %>"
