@@ -62,4 +62,20 @@
     stroke: black;
   }
 
+  /*JESSIE EDITS*/
+g.data-points circle {
+  opacity: 0.3;
+  fill: grey;}
+
+g.x.axis text {
+  transform: rotate(-45deg);
+  text-anchor: end !important;}
+
+@media (max-width: 360px) {
+    text {
+      font-size: 0.9em;
+    }
+}
+/*END JESSIE EDITS*/
+
 }
