@@ -6,19 +6,19 @@
   src: url('/assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/assets/glyphicons-halflings-regular.woff') format('woff'), url('/assets/glyphicons-halflings-regular.ttf') format('truetype'), url('/assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
-$arts-culture:              #FFCC00;
-$civic-vitality-governance: #00CCCC;
 $demographics:              #660066;
-$economy:                   #3A8F1D;
-$education:                 #006699;
+$arts-culture:              #000066;
+$civic-vitality-governance: #006699;
+$economy:                   #00BFAC;
+$education:                 #46AD24;
 $environment-energy:        #91E248;
 $geographic-boundaries:     #999999;
-$housing:                   #FF9900;
-$land-use-zoning:           #FFEE2C;
-$public-health:             #CC3300;
-$public-safety:             #990033;
-$technology:                #000066;
-$transportation:            #FF6633;
+$housing:                   #FFEE2C;
+$land-use-zoning:           #FFCC00;
+$public-health:             #FF9900;
+$public-safety:             #FF6633;
+$technology:                #CC3300;
+$transportation:            #990033;
 
 $sustainable:       rgba(112,184,101,1);
 $vitality:          rgba(255,35, 100,1);
@@ -27,7 +27,7 @@ $trans-choices:     rgba(243,123,112,1);
 $healthy:           rgba(25, 100,10, 1);
 $equity:            rgba(119,63, 119,1);
 
-$featured-opacity: 0.65;
+$featured-opacity: 0.50;
 
 $sustainable-featured:       rgba(112,184,101,$featured-opacity);
 $vitality-featured:          rgba(255,35, 100,$featured-opacity);
@@ -52,6 +52,8 @@ $mid-highlight:  #E5E5E5;
 @import url(http://fonts.googleapis.com/css?family=Rokkitt);
 @import url(http://fonts.googleapis.com/css?family=Lora);
 @import url(http://fonts.googleapis.com/css?family=Vollkorn);
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,300,900,700,300italic,400italic,700italic,900italic);
+@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
 
 /* basic typography */
 
@@ -60,16 +62,17 @@ body {
   overflow-x: hidden;
 }
 
-html {font-family: 'Lato', sans-serif;
-	position: relative;
-	min-height: 100%;
+html {font-family: 'Roboto', sans-serif;
+  position: relative;
+  min-height: 100%;
 }
 
 p {
-  font-family: 'Rokkitt', serif;
-  font-size: 24px;
-  font-weight: 200;
-  line-height: 34px;
+  font-family: 'Merriweather', serif;
+  //font-family: 'Roboto', sans-serif;
+  font-size: 1.15em;
+  font-weight: 300;
+  line-height: 30px;
   color: #424242;
 }
 
@@ -96,12 +99,13 @@ a {
 
 a:hover {
   color: $linkshover;
-  transition: all 0.3s ease-in-out 0s;    
+  transition: all 0.3s ease-in-out 0s;
   -webkit-transition: all 0.3s ease-in-out 0s;
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   padding-top: 50px;
   margin-bottom: 200px;
 }
@@ -125,9 +129,37 @@ h6,
 
 
 h1 {
-  letter-spacing: 2px;
+  letter-spacing: 0px;
   color: $headings;
   font-size: 150%;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  }
+
+h2 {font-weight: 700;}
+
+h3 {
+  font-size: 2.1em;
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
+
+h4 {
+  padding: 10px 5px;
+  margin: 40px 0 20px;
+  }
+
+#framing {
+ padding: 20px 100px;
+}
+
+.framing {
+  p {
+    padding: 10px;
+    font-size: 1.3em;
+    line-height: 34px;
+    }
 }
 
 .sustainable-growth {
@@ -136,7 +168,7 @@ h1 {
   padding: 10px 15px;
   margin: 40px 0 40px;
 }
-  
+
 h2.sustainable-growth {
   background-color: $soft-highlight;
   color: $sustainable;
@@ -148,15 +180,11 @@ h2.sustainable-growth {
 h3.sustainable-growth {
   background-color: $soft-highlight;
   color: $sustainable;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
   }
 
 h4.sustainable-growth {
   background-color: $soft-highlight;
   color: $sustainable;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
   }
 
 .community-vitality {
@@ -165,7 +193,7 @@ h4.sustainable-growth {
   padding: 10px 15px;
   margin: 40px 0 40px;
 }
-  
+
 h2.community-vitality {
   background-color: $soft-highlight;
   color: $vitality;
@@ -177,17 +205,13 @@ h2.community-vitality {
 h3.community-vitality {
   background-color: $soft-highlight;
   color: $vitality;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 h4.community-vitality {
   background-color: $soft-highlight;
   color: $vitality;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
-  
+
 .regional-prosperity {
   background-color: $prosperity;
   color:   #FFFFFF;
@@ -210,15 +234,11 @@ h2.regional-prosperity{
 h3.regional-prosperity{
   background-color: transparent;
   color: $prosperity;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 h4.regional-prosperity{
   background-color: transparent;
   color: $prosperity;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 .transportation-choices {
@@ -227,27 +247,23 @@ h4.regional-prosperity{
   padding: 10px 15px;
   margin: 40px 0 40px;
 }
-  
-h2.transportation-choices { 
+
+h2.transportation-choices {
   background-color: $soft-highlight;
   color: $trans-choices;
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $trans-choices;
   }
-  
+
 h3.transportation-choices {
   background-color: $soft-highlight;
   color: $trans-choices;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 h4.transportation-choices {
   background-color: $soft-highlight;
   color: $trans-choices;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 .healthy-environment {
@@ -256,27 +272,23 @@ h4.transportation-choices {
   padding: 10px 15px;
   margin: 40px 0 40px;
   }
-  
-h2.healthy-environment {  
+
+h2.healthy-environment {
   background-color: $soft-highlight;
   color: $healthy;
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $healthy;
   }
-  
+
 h3.healthy-environment {
   background-color: $soft-highlight;
   color: $healthy;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 h4.healthy-environment {
   background-color: $soft-highlight;
   color: $healthy;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 .state-of-equity {
@@ -285,27 +297,23 @@ h4.healthy-environment {
   padding: 10px 15px;
   margin: 40px 0 40px;
   }
-  
-h2.state-of-equity {  
+
+h2.state-of-equity {
   background-color: $soft-highlight;
   color: $equity;
   padding: 10px 5px;
   margin: 40px 0 20px;
   border-bottom: 2px solid $equity;
   }
-  
+
 h3.state-of-equity {
   background-color: $soft-highlight;
   color: $equity;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 h4.state-of-equity {
   background-color: $soft-highlight;
   color: $equity;
-  padding: 10px 5px;
-  margin: 40px 0 20px;
 }
 
 
@@ -313,13 +321,25 @@ h4.state-of-equity {
   z-index: 1000;
 }
 
+.col-sm-4 {
+  width: 32%;
+}
+
+.alert {
+  padding: 5px;
+  margin: 0px 5px 20px 5px;
+}
+
 .featured {
   @media (max-width: 1199px) {
-    background: transparent;
+    //background: transparent;
+    //opacity: $featured-opacity;
     h1 {
       color:     #FFF;
-      font-size: 220%;
+      font-size: 1.5em;
     }
+    h3 {font-size: 1.2em}
+
     div.icons {
       position: absolute;
       opacity: $featured-opacity;
@@ -328,6 +348,11 @@ h4.state-of-equity {
       width: 95%;
       min-width: 300px;
       height: 20px;
+    }
+     a {
+      font-family: Oswald;
+      text-transform: uppercase;
+      font-size: 0.6em;
     }
   }
 
@@ -344,7 +369,7 @@ h4.state-of-equity {
       left:       188px;
       top:        -63px;
       opacity:    0.8;
-      
+
       &.sustainable-growth {
         background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
         background-size: 100% 100%;
@@ -354,7 +379,7 @@ h4.state-of-equity {
         background-size: 100% 100%;
       }
       &.regional-prosperity{
-        background: url('icon_sets/regional-prosperity-sm.png') no-repeat; 
+        background: url('icon_sets/regional-prosperity-sm.png') no-repeat;
         background-size: 100% 100%;
       }
       &.transportation-choices {
@@ -366,17 +391,20 @@ h4.state-of-equity {
         background-size: 100% 100%;
       }
       &.state-of-equity {
-        background: url('icon_sets/state-of-equity-sm.png') no-repeat; 
+        background: url('icon_sets/state-of-equity-sm.png') no-repeat;
         background-size: 100% 100%;
       }
     }
 
-    h1 { 
+    h1 {
       position: relative;
       top:  80px;
       left: 10px;
-      font-size: 250%;
+      font-size: 200%;
       z-index: 999;
+      font-family: Oswald;
+      letter-spacing: 0px;
+      text-transform: uppercase;
     }
 
     h3 {
@@ -390,6 +418,10 @@ h4.state-of-equity {
       position: relative;
       top: 70px;
       left: 110px;
+      font-family: Oswald;
+     // font-weight: 300;
+      text-transform: uppercase;
+      font-size: 0.6em;
     }
 
     &.sustainable-growth {     background-color: $sustainable-featured;    }
@@ -401,26 +433,39 @@ h4.state-of-equity {
   }
 }
 
-button {font-weight: 200;
+button {
+  font-weight: 500;
   text-transform: uppercase;
+  font-family: 'Oswald',sans-serif;
+  letter-spacing: 1px;
+  font-size: 1.0em;
 }
 
 .scroll_title {
-	font-family: 'Rokkitt', serif;
-	//font-weight: 700;
-	letter-spacing: 1px;
-	font-size: 18px;
-	line-height: 20px;
+  font-family: 'Rokkitt', serif;
+  //font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 18px;
+  line-height: 20px;
 }
 
 li.group {
-	font-size: 14px;
+  font-size: 14px;
 }
 
 li.group a {
-	color: #656565;
+  color: #656565;
+  //font-family: 'Roboto', sans-serif;
+  //font-weight: 300;
+  //font-size: 0.9em;
 }
 
+.row {
+  display: block;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
 
 /* navigation */
 
@@ -438,7 +483,7 @@ li.group a {
   font-family: 'Rokkitt';
   font-size: 24px;
     color: #fff;
-    transition: all 0.3s ease-in-out 0s;    
+    transition: all 0.3s ease-in-out 0s;
   -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-brand:hover,
@@ -449,24 +494,24 @@ li.group a {
 /* link */
 .navbar-default .navbar-nav > li > a {
     color: #fff;
-    transition: all 0.3s ease-in-out 0s;    
+    transition: all 0.3s ease-in-out 0s;
   -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #333;
     background-color: #c0c0c0;
-    transition: all 0.3s ease-in-out 0s;    
+    transition: all 0.3s ease-in-out 0s;
   -webkit-transition: all 0.3s ease-in-out 0s;
 }
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: #555;
     background-color: #E7E7E7;
 }
-.navbar-default .navbar-nav > .open > a, 
-.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
     color: #555;
     background-color: #D5D5D5;
@@ -482,8 +527,8 @@ li.group a {
     border-top-color: #333;
     border-bottom-color: #333;
 }
-.navbar-default .navbar-nav > .open > a .caret, 
-.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
 .navbar-default .navbar-nav > .open > a:focus .caret {
     border-top-color: #555;
     border-bottom-color: #555;
@@ -535,33 +580,27 @@ li.group a {
 }
 
 
-@media (min-width: 992px) {
-  .myscrollspy { display: block; }
-}
-
-
-
-
 /* Scrollspy: List elements */
 
 .bs-sidenav {
   color: #787878;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
-.bs-sidenav > li { 
+.bs-sidenav > li {
   font-weight:  400;
-  font-size:    1.3em;
+  font-size:    1.5em;
   padding-left:  10px;
+  letter-spacing: 0px;
 }
 
 .bs-sidenav > li        > ul.nav { display: none; }
 .bs-sidenav > li.active > ul.nav { display: block; }
 
-.bs-sidenav > li        > ul     > li { font-size: 0.9em; }
-.bs-sidenav > li.active > ul.nav > li.active { background-color: $mid-highlight; }
+.bs-sidenav > li        > ul     > li { font-size: 0.8em; }
+.bs-sidenav > li.active > ul.nav > li.active {background-color: $prosperity-featured;}
 
-
+.scroll_title {font-size: 3em;}
 
 /* Scrollspy: Target elements (Topic Area headers) */
 
@@ -580,12 +619,13 @@ sup {
   z-index: 600;
 }
 
-
-
-
 .visualization {
-  margin-top: 40px;
-  // height: 450px;
+  width: 100%;
+  margin: 10px 100px 10px -10px;
+  padding: 20px 20px;
+  font-size: 0.9em;
+  //background-color: #fafafa;
+  //border: 1px solid #ececec;
 
   h4 {
     font-size: 24px;
@@ -600,22 +640,14 @@ sup {
 }
 
 
-#framing {
- padding: 20px 100px;
-}
 
-.framing {
-  p {
-    padding: 10px;
-    }
-}
 
 /* form-group search */
 .form-group {
-	background-color: #ffffff;
-	border-radius: 5px;
-	}
-  
+  background-color: #ffffff;
+  border-radius: 5px;
+  }
+
 /* Jumbotron */
 
 .jumbotron {
@@ -623,24 +655,33 @@ sup {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-
   margin-bottom: 20px;
 
   h3 {
    // color: transparent;
    color: #fff;
+   font-size: 1.3em;
+   line-height: 0.9em;
+   padding-top: 5px;
   }
 }
 
 div.col-md-4.regional-prosperity.featured {
-	background-color: rgba(95,175,208,.75);
+  background-color: $prosperity-featured;
 }
 
 div.col-md-4.state-of-equity.featured {
-	background-color: rgba(119,63,119,.75);
+  background-color: $equity-featured;
 }
 
+div.col-md-4.transportation-choices.featured {
+  background-color: $trans-choices-featured;
+}
 
+.featured div.icons {
+  //background-color: transparent;
+  display: none;
+}
 
 /*.jumbotron {
   .container {
@@ -696,8 +737,8 @@ div.col-md-4.state-of-equity.featured {
   //text-decoration: none ! important;
   text-decoration: none;
   text-shadow: none;
-  transition: all 0.3s ease-in-out 0s;    
-  -webkit-transition: all 0.3s ease-in-out 0s;    
+  transition: all 0.3s ease-in-out 0s;
+  -webkit-transition: all 0.3s ease-in-out 0s;
 }
 .btn:hover {
   background: #333;
@@ -710,7 +751,11 @@ div.col-md-4.state-of-equity.featured {
 }
 
 .alert-default {
-	background-color: #b0b0b0;
+  background-color: #dcddde;
+}
+
+.rank {
+  min-height: 52px;
 }
 
 /* footer */
@@ -718,7 +763,7 @@ div.col-md-4.state-of-equity.featured {
 #footer {
   position: absolute;
   bottom: -100px;
-  width:  100%;
+  max-width: 1170px;
   height: 320px;
   background-color: #fafafa;
 }
@@ -727,14 +772,13 @@ div.col-md-4.state-of-equity.featured {
   text-align: center;
   top: 50px;
   position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  float: none;
   img {
-    
     max-height: 120px;
   }
-}
-
-.rank {
-  min-height: 72px;
 }
 
 /* icons */
@@ -749,22 +793,23 @@ div.col-md-4.state-of-equity.featured {
 }
 
 .issue-area-icon {
-  display: block;
+  display: inline-block;
   width: 80px;
   height: 80px;
   margin: 20px 5px;
-  float: left;
+  //float: left;
   border-radius: 50%;
   padding-top: 20px;
 }
 
 .issue-area-text {
-	padding-top: 70px;
-	font-size: 12px;
-	font-weight: 200;
-	line-height: 16px;
-	color: $text-color;
-	text-align: center;
+  padding-top: 70px;
+  font-family: Rokkitt;
+  font-size: 1.1em;
+  font-weight: 200;
+  line-height: 16px;
+  color: $text-color;
+  text-align: center;
 }
 
 
@@ -854,4 +899,65 @@ div.col-md-4.state-of-equity.featured {
 
 .geographic-boundaries {
   background-color: $geographic-boundaries;
+}
+
+
+//MEDIA QUERIES
+
+@media (min-width: 992px) {
+  .myscrollspy { display: block; }
+}
+
+@media (max-width: 992px) {
+  .row {overflow-x: hidden;}
+  .navbar-default .navbar-brand {
+    max-width: 80%;
+    position: absolute;
+    padding-top: 5px;
+  }
+  .container > .navbar-header, .container > .navbar-collapse {
+    max-width: 100%;}
+  .myscrollspy {display: none;}
+  p {
+    font-size: 1.1em;
+    //text-align: justify;
+  }
+  h2 { font-size: 1.9em;
+    letter-spacing: 0;}
+  h3 {font-size: 1.8em;}
+
+  .jumbotron {padding: 0px;}
+
+  #framing {
+    padding: 10px 0px;
+  }
+  .framing {
+    padding: 0px;
+  h3 {font-size: 2em;}
+
+  p {
+    padding: 0px;
+    font-size: 1.1em;
+    line-height: 28px;
+    margin: 0;
+      }
+    }
+  .issue-area-icon {
+    margin: 60px 5px 5px 5px;
+  }
+  div.sticky-title.row.is_stuck {
+    width: 100%;
+  }
+  .col-sm-4 {
+  width: 30%;
+  }
+  .alert {
+    margin: 0px 2px 20px 2px;
+  }
+  .visualization {
+  height: 50%;
+  font-size: 0.7em;
+  padding: 0px;
+  h4 {font-size: 1.9em;}
+  }
 }
