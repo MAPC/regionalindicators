@@ -7,3 +7,4 @@
 <% if indicator.explanation %>
   <%= render partial: 'topic_areas/explanation', locals: { explanation: indicator.explanation } %>
 <% end %>
+<%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas %>

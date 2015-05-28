@@ -12,7 +12,7 @@ gem 'foreman', '0.63.0'
 
 gem 'bluecloth',                 '2.2.0'
 gem 'validates_timeliness',      '~> 3.0'
-
+gem "d3-rails"
 gem 'twitter-typeahead-rails',   '0.9.3'
 gem 'bootstrap-typeahead-rails', '0.9.3.3'
 

@@ -8,6 +8,9 @@ class Explanation < ActiveRecord::Base
 
   belongs_to :explainable, polymorphic: true
 
+  # has_and_belongs_to_many :indicators
+  # has_and_belongs_to_many :subjects
+
   has_and_belongs_to_many :sources
   has_many :visualizations
 

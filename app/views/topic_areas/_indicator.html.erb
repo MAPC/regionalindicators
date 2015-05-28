@@ -4,6 +4,7 @@
     <h3 class="<%= topic_area_slug %> <%= subject_slug %> scroll-target" id="<%= indicator.group_slug %>">
       <%= indicator.group_title %>
     </h3>
+
   <% end %>
 
   <h4 id="<%= indicator.slug %>" class="<%= indicator.slug %> group-subtitle scroll-target">
@@ -11,7 +12,7 @@
   </h4>
 
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>    
-
+  <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
   <% if indicator.explanation %>
       <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
   <% end %>
@@ -23,7 +24,7 @@
   </h3>
 
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>
-
+  <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
   <% if indicator.explanation %>
     <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
   <% end %>

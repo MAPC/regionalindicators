@@ -10,6 +10,8 @@ class Subject < ActiveRecord::Base
   has_many :indicators
   has_one :explanation, as: :explainable
 
+  # has_and_belongs_to_many :explanations
+
   accepts_nested_attributes_for :explanation
 
   validates :title, presence: true, length: { maximum: 100, minimum: 8 }

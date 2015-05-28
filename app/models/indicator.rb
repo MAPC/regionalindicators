@@ -21,12 +21,15 @@ class Indicator < ActiveRecord::Base
   has_one  :explanation, as: :explainable
   has_many :snapshots
   has_and_belongs_to_many :issue_areas, uniq: true
-
+  # has_and_belongs_to_many :explanations
+  
   accepts_nested_attributes_for :explanation
 
   validates :title,  presence: true, length: { maximum: 160, minimum: 8 }
   validates :number, presence: true
   validates :units,  presence: true, length: { maximum: 140 }
+
+  self.primary_key = :id 
 
   default_scope { includes(:explanation).includes(:snapshots).order(:id) }
 
