@@ -12,14 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap.min
 //= require twitter/typeahead.min
-//= require d3.v3
+//= require d3
+//= require lib/c3.min.js
 //= require miso.ds.deps.ie.0.4.1
+//= require lib/d3.chart.min.js
+//= require lib/tufted.js
+//= require lib/sticky-kit.min.js
 //= require_tree .
 
+
+
 $(document).ready(function () {
-
-  $('.typeahead').typeahead({ prefetch: '/suggest.json' })
-
+  $('.sticky-title').stick_in_parent({offset_top: 10});
+  $('.typeahead').typeahead({ prefetch: '/suggest.json' });
 })

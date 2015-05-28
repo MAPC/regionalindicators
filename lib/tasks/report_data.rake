@@ -7,11 +7,6 @@ namespace :db do
 
     
 =begin
-
-
-TODO: 
-
-
     SUBJECTS
       1.  Loop through subjects, creating them and their narratives.
 
@@ -34,6 +29,7 @@ TODO:
           No explanation? This should throw an error.
 
 =end
+
 
     @prosperity = TopicArea.find 1
 
@@ -85,7 +81,7 @@ TODO:
 
         # Assign issue areas
 
-        issue_area_titles = i['issue_area_title'].split(', ')
+        issue_area_titles = i['issue_area_title'].to_s.split(', ')
 
         issue_area_titles.each do |title|
           indicator.issue_areas << IssueArea.find_by_title(title)
@@ -142,6 +138,7 @@ TODO:
         next if count == @spreadsheet.first_row
 
         indicator_ids = (s['indicator_id'].to_s.split(', '))
+        
         date   = DateTime.parse(s['date']) if s['date']
         source = Source.create( date:    date,
                                 title:   s['title'],
@@ -150,7 +147,7 @@ TODO:
                                 comment: s['comment'])
         Indicator.find(indicator_ids).each do |i|
           i.explanation.sources << source
-          puts "added #{source.id} to #{i.title} (#{i.id})"
+          puts "added #{source.id} to #{i.title} (#{i.id}) from #{count}"
         end
       end
 
@@ -160,7 +157,6 @@ TODO:
     indicators
     snapshots
     sources
-
 
   end
 end

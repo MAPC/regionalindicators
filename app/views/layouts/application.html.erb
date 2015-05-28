@@ -6,13 +6,12 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 
 <body data-spy="scroll" data-offset="300" data-target=".myscrollspy">
 
 <%= yield :jumbotron %>
-
-<%= yield :framing %>
 
 <div class="container">
   <div class="row">
@@ -23,11 +22,10 @@
   <div class="row">
     <%= yield %>
   </div>
-
+  <%= debug(params) if Rails.env.development? %>
 </div>
-  
-<%= render 'layouts/footer' %>
 
+<%= render 'layouts/footer' %>
 
 
 <script type="text/javascript">

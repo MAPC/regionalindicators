@@ -1,21 +1,14 @@
 module TopicAreasHelper
 
-  # content_tag(:span, nil, class: "glyphicon glyphicon-#{icon}")
-
-  # success: '',
-  # failure: '',
-  # neutral: ''
-
-  # "alert-#{status}".html_safe
-
   
 
   @@thumbs =    { improving: 'thumbs-up',
                   declining: 'thumbs-down',
-                  pass:      'thumbs-up',
-                  fail:      'thumbs-down',
+
+                  pass:         'thumbs-up',
+                  fail:         'thumbs-down',
                   non_recorded: '',
-                  stagnant:  ''      }
+                  stagnant:     ''      }
 
   @@chevrons =  { improving: 'chevron-up',
                   declining: 'chevron-down',
@@ -23,12 +16,12 @@ module TopicAreasHelper
                   failing:   'chevron-down',
                   stagnant:  'minus'      }
 
-  @@alerts =    { improving: 'success',
-                  declining: 'danger',
-                  pass:      'success',
-                  fail:      'danger',
+  @@alerts =    { improving:    'success',
+                  declining:    'danger',
+                  pass:         'success',
+                  fail:         'danger',
                   non_recorded: 'info',
-                  stagnant:  'info'       }
+                  stagnant:     'info'       }
 
 
   def alert_class(indicator, property)

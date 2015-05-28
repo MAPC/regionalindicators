@@ -3,7 +3,9 @@ class Visualization < ActiveRecord::Base
                   :d3_file_name,
                   :data_file_name,
                   :explainable_type,
-                  :explainable_id
+                  :explainable_id,
+                  :explanation_id
+
   attr_accessor :delete_file
   
   belongs_to :explanation
@@ -13,7 +15,7 @@ class Visualization < ActiveRecord::Base
   
   before_validation { self.file.clear if self.delete_file == '1' }
   
-  validates :title, presence: true, length: { maximum: 200, minimum: 4 }
+  validates :title, presence: true, length: { maximum: 200, minimum: 4 }, uniqueness: { scope: :explanation_id }
 
   validates_attachment :d3#,   content_type: { content_type: [/\A.*\/.*javascript\z/, 'text/html'] }
   validates_attachment :data, content_type: { content_type: ['text/csv'] }
@@ -40,6 +42,7 @@ class Visualization < ActiveRecord::Base
   rails_admin do
     list do
       field :id
+      field :title
       field :d3
       field :data
       field :updated_at do

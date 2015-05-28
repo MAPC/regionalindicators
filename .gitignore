@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+# Ignore environment
+.env
+
 # Ignore bundler config
 /.bundle
 
@@ -16,24 +19,6 @@
 /log/*.log
 /tmp
 
-.DS_Store
+/db/fixtures/*
 
-solr/data/*
-solr/development/*
-solr/test/*
-solr/pids/*
-
-/log/sunspot*
-
-.env
-.test
-doc/*
-
-# The Procfile changes between deploy environments.
-# We don't want to merge changes to it across environments.
-
-Procfile
-
-# User fixtures should only be for staging
-
-/db/fixtures/users.rb
+/public/assets

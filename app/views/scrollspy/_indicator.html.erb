@@ -1,18 +1,18 @@
 <% if indicator.grouped? && indicator.first_in_group? %>
+
   <li class="group">
     <a href="#<%= indicator.group_slug %>">
       <%= scrollspy_item(indicator.group_title) %>
     </a>
-    <ul class="nav">
-<% end %>
+  </li>
 
-<li>
-  <a href="#<%= indicator.slug %>">
-    <%= scrollspy_item(indicator.title) %>
-  </a>
-</li>
+<% elsif indicator.grouped? %>
 
-<% if indicator.grouped? && indicator.last_in_group? %>
-    </ul>
+<% else %>
+
+  <li class="group">
+    <a href="#<%= indicator.slug %>">
+      <%= scrollspy_item(indicator.title) %>
+    </a>
   </li>
 <% end %>

@@ -5,7 +5,8 @@ class TopicArea < ActiveRecord::Base
                   :visible,
                   :featured,
                   :goal_ids,
-                  :subject_ids
+                  :subject_ids,
+                  :dashboard_framing
 
   has_many :goals
   has_many :subjects
@@ -39,6 +40,14 @@ class TopicArea < ActiveRecord::Base
 
   def featured?
     self.featured
+  end
+
+  def improving_indicators
+    indicators.keep_if{|i| i.trend == :improving}.count
+  end
+
+  def declining_indicators
+    indicators.count - improving_indicators
   end
 
   rails_admin do

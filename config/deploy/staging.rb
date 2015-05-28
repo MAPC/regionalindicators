@@ -1,4 +1,4 @@
-server '10.10.10.89', :app, :web, :db, primary: true
+server '66.181.92.20', :app, :web, :db, primary: true
 ssh_options[:keys] = ["~/.ssh/id_rsa"]
 
 set :user,        'deployer'

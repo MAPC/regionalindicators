@@ -1,5 +1,6 @@
 <% content_for :jumbotron do %>
   <div class="jumbotron">
+
     <div class="container">
       <% if @topic_areas[:featured].length > 0 %>
         <%= render partial: 'featured', collection: @topic_areas[:featured] %>
@@ -7,17 +8,18 @@
         <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].shift } %>
       <% end %>
 
-      <div class="col-md-3 col-md-offset-1">
+      <div class="col-md-4 state-of-equity featured">
         <h1>State of Equity</h1>
         
         <h3>Tracking progress towards an equitable region</h3>
         
         <p>
-          <%= link_to 'Go to site',
+          <%= link_to 'Go to site >',
                        'http://regionalindicators.org',
-                       class: "btn btn-primary btn-lg",
+                       class: "btn btn-primary btn-lg btn-featured",
                        role: "button" %>
         </p>
+        <div class="icons state-of-equity"></div>
       </div>
 
     </div>
@@ -32,9 +34,6 @@
 
   <div class="row" id="framing">
     <div class="col-md-12 col-xs-12 framing">
-      <p><em><a href="http://www.mapc.org/metrofuture" target="_blank">MetroFuture: Making a Greater Boston Region</a></em> is the Metropolitan Area Planning Council's (MAPC) comprehensive long-range plan to improve the lives of the people who live and work in Metropolitan Boston by the year 2030. <em>MetroFuture</em> identifies goals for the future of the region organized into six cross-cutting topic areas, including Regional Prosperity, Sustainable Transportation, Sustainable Growth Patterns, Housing Choices, Community Vitality, and Energy, Air, Water, and Wildlife. To meet the MetroFuture Goals and achieve the MetroFuture Vision, MAPC has identified specific measurable indicators to track over the coming decades.</p> 
-      <p>This MAPC Regional Indicators website presents these indicators and evaluates the region's progress toward MetroFuture. You can explore indicators for Regional Prosperity and Sustainable Transportation, the first two cross-cutting Topic Areas, organized into comprehensive Topical Reports, get a snapshot view on the Dashboards page, or view all the indicators related to a specific Issue Area (e.g. Economy or Transportation). You can also use the search bar to find a specific indicator by keyword. </p>
-      <p>MAPC published <em>State of Equity</em> in 2011 in order to frame <em>MetroFuture</em> with an equity lens. It provides baseline values for indicators related to equity from all six of the Topic Areas and evaluates the region's progress in becoming a more equitable region.</p>
       <%= framing_text %>
     </div>
   </div>

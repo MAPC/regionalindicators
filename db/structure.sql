@@ -9,20 +9,6 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -63,6 +49,16 @@ ALTER SEQUENCE explanations_id_seq OWNED BY explanations.id;
 
 
 --
+-- Name: explanations_indicators; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE explanations_indicators (
+    explanation_id integer,
+    indicator_id integer
+);
+
+
+--
 -- Name: explanations_sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -90,6 +86,16 @@ CREATE SEQUENCE explanations_sources_id_seq
 --
 
 ALTER SEQUENCE explanations_sources_id_seq OWNED BY explanations_sources.id;
+
+
+--
+-- Name: explanations_subjects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE explanations_subjects (
+    explanation_id integer,
+    subject_id integer
+);
 
 
 --
@@ -344,20 +350,22 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE VIEW searches AS
-        (         SELECT goals.id AS searchable_id, 
-                    'Goal'::text AS searchable_type, 
-                    goals.title AS term
-                   FROM goals
-        UNION 
-                 SELECT goals.id AS searchable_id, 
-                    'Goal'::text AS searchable_type, 
-                    goals.description AS term
-                   FROM goals)
-UNION 
-         SELECT indicators.id AS searchable_id, 
-            'Indicator'::text AS searchable_type, 
-            indicators.title AS term
-           FROM indicators;
+
+ SELECT goals.id AS searchable_id,
+    'Goal'::text AS searchable_type,
+    goals.title AS term
+   FROM goals
+UNION
+ SELECT goals.id AS searchable_id,
+    'Goal'::text AS searchable_type,
+    goals.description AS term
+   FROM goals
+UNION
+ SELECT indicators.id AS searchable_id,
+    'Indicator'::text AS searchable_type,
+    indicators.title AS term
+   FROM indicators;
+
 
 
 --
@@ -473,7 +481,8 @@ CREATE TABLE subjects (
     title character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    topic_area_id integer
+    topic_area_id integer,
+    sort_order integer
 );
 
 
@@ -509,7 +518,12 @@ CREATE TABLE topic_areas (
     subtitle character varying(255),
     explanation_id integer,
     visible boolean DEFAULT false,
+<<<<<<< HEAD
     featured boolean DEFAULT false
+=======
+    featured boolean DEFAULT false,
+    dashboard_framing text
+>>>>>>> f94de5060ca65d2a9cb7a5540bbe7afa705a3ad7
 );
 
 
@@ -885,7 +899,7 @@ CREATE INDEX index_goals_on_topic_area_id ON goals USING btree (topic_area_id);
 -- Name: index_indicators_issue_areas_on_indicator_id_and_issue_area_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_indicators_issue_areas_on_indicator_id_and_issue_area_id ON indicators_issue_areas USING btree (indicator_id, issue_area_id);
+CREATE UNIQUE INDEX index_indicators_issue_areas_on_indicator_id_and_issue_area_id ON indicators_issue_areas USING btree (indicator_id, issue_area_id);
 
 
 --
@@ -963,6 +977,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 --
 
 CREATE INDEX index_visualizations_on_explanation_id ON visualizations USING btree (explanation_id);
+
+
+--
+-- Name: index_visualizations_on_title_and_explanation_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_visualizations_on_title_and_explanation_id ON visualizations USING btree (title, explanation_id);
 
 
 --
@@ -1061,3 +1082,15 @@ INSERT INTO schema_migrations (version) VALUES ('20140508161852');
 INSERT INTO schema_migrations (version) VALUES ('20140508192416');
 
 INSERT INTO schema_migrations (version) VALUES ('20140511221108');
+
+INSERT INTO schema_migrations (version) VALUES ('20140522232352');
+
+INSERT INTO schema_migrations (version) VALUES ('20140523000507');
+
+INSERT INTO schema_migrations (version) VALUES ('20140529202751');
+
+INSERT INTO schema_migrations (version) VALUES ('20150323193123');
+
+INSERT INTO schema_migrations (version) VALUES ('20150528182101');
+
+INSERT INTO schema_migrations (version) VALUES ('20150528182124');

@@ -8,10 +8,13 @@ class Explanation < ActiveRecord::Base
 
   belongs_to :explainable, polymorphic: true
 
+  has_and_belongs_to_many :indicators
+  has_and_belongs_to_many :subjects
+
   has_and_belongs_to_many :sources
   has_many :visualizations
 
-  accepts_nested_attributes_for :visualizations, reject_if: lambda { |v| v[:title].blank? && v[:file_file_name].blank? }
+  accepts_nested_attributes_for :visualizations, reject_if: lambda { |viz| viz[:title].blank? && viz[:d3_file_name].blank? }
 
   validates :narrative, length: { maximum: 6000 }
 
@@ -22,11 +25,11 @@ class Explanation < ActiveRecord::Base
   end
 
   def has_visualizations?
-    self.visualizations
+    !self.visualizations.empty?
   end
 
   def narrative_html
-    BlueCloth.new( narrative ).to_html.html_safe
+    narrative.html_safe
   end
 
   rails_admin do

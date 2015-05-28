@@ -1,10 +1,12 @@
+<h4>
+  <%= visualization.title %>
+</h4>
 <div class="visualization" id="<%= visualization.explainable_dom_id %>">
-  <h4>
-    <%= visualization.title %>
-  </h4>
 </div>
 <%= javascript_tag do %>
   window.explainable = "#<%= visualization.explainable_dom_id %>"
   window.dataUrl = "<%= visualization.data.url %>"
 <% end %>
 <%= javascript_include_tag( visualization.d3.url ) %>
+
+<%= link_to 'Download the data behind this visualization', visualization.data.url %>

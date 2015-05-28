@@ -10,7 +10,8 @@ class Indicator < ActiveRecord::Base
                   :objective_id,
                   :threshhold,
                   :higher_value_is_better,
-                  :lower_rank_is_better
+                  :lower_rank_is_better,
+                  :explanation_ids
 
   attr_accessor :current_snapshot
 
@@ -20,13 +21,16 @@ class Indicator < ActiveRecord::Base
 
   has_one  :explanation, as: :explainable
   has_many :snapshots
-  has_and_belongs_to_many :issue_areas
-
+  has_and_belongs_to_many :issue_areas, uniq: true
+  has_and_belongs_to_many :explanations
+  
   accepts_nested_attributes_for :explanation
 
   validates :title,  presence: true, length: { maximum: 160, minimum: 8 }
   validates :number, presence: true
   validates :units,  presence: true, length: { maximum: 140 }
+
+  self.primary_key = :id 
 
   default_scope { includes(:explanation).includes(:snapshots).order(:id) }
 
@@ -110,7 +114,7 @@ class Indicator < ActiveRecord::Base
   end
 
   def current_rank?
-    !current_snapshot.rank.nil?
+    !current_snapshot.rank.nil? && current_snapshot.rank != 0
   end
 
   def value_in(year=DEFAULT_YEAR)
@@ -170,7 +174,12 @@ class Indicator < ActiveRecord::Base
     (self.snapshots.in_year(year).first || self.snapshots.last) || EMPTY_SNAPSHOT
   end
 
+  def year_of_last_snapshot(year=DEFAULT_YEAR)
+    snapshot = snapshot_in(year)
+    snapshot.date.year unless snapshot.date.nil?
+  end
+
   # Allows sending of #value and #rank without NoMethodErrors
-  EMPTY_SNAPSHOT = OpenStruct.new(value: nil, rank: nil)
+  EMPTY_SNAPSHOT = OpenStruct.new(value: nil, rank: nil, date: nil)
 
 end

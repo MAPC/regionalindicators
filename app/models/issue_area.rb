@@ -3,7 +3,7 @@ class IssueArea < ActiveRecord::Base
                   :title,
                   :sort_order
 
-  has_and_belongs_to_many :indicators
+  has_and_belongs_to_many :indicators, uniq: true
   
   DATACOMMON_REGEX = /metrobostondatacommon.org/
 
