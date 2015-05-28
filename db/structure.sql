@@ -9,20 +9,6 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -63,6 +49,16 @@ ALTER SEQUENCE explanations_id_seq OWNED BY explanations.id;
 
 
 --
+-- Name: explanations_indicators; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE explanations_indicators (
+    explanation_id integer,
+    indicator_id integer
+);
+
+
+--
 -- Name: explanations_sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -90,6 +86,16 @@ CREATE SEQUENCE explanations_sources_id_seq
 --
 
 ALTER SEQUENCE explanations_sources_id_seq OWNED BY explanations_sources.id;
+
+
+--
+-- Name: explanations_subjects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE explanations_subjects (
+    explanation_id integer,
+    subject_id integer
+);
 
 
 --
@@ -344,22 +350,20 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE VIEW searches AS
-
-        (         SELECT goals.id AS searchable_id,
-                    'Goal'::text AS searchable_type,
-                    goals.title AS term
-                   FROM goals
-        UNION
-                 SELECT goals.id AS searchable_id,
-                    'Goal'::text AS searchable_type,
-                    goals.description AS term
-                   FROM goals)
+ SELECT goals.id AS searchable_id,
+    'Goal'::text AS searchable_type,
+    goals.title AS term
+   FROM goals
 UNION
-         SELECT indicators.id AS searchable_id,
-            'Indicator'::text AS searchable_type,
-            indicators.title AS term
-           FROM indicators;
-
+ SELECT goals.id AS searchable_id,
+    'Goal'::text AS searchable_type,
+    goals.description AS term
+   FROM goals
+UNION
+ SELECT indicators.id AS searchable_id,
+    'Indicator'::text AS searchable_type,
+    indicators.title AS term
+   FROM indicators;
 
 
 --
@@ -475,7 +479,8 @@ CREATE TABLE subjects (
     title character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    topic_area_id integer
+    topic_area_id integer,
+    sort_order integer
 );
 
 
@@ -510,9 +515,8 @@ CREATE TABLE topic_areas (
     updated_at timestamp without time zone NOT NULL,
     subtitle character varying(255),
     explanation_id integer,
-
-    visible boolean,
-    featured boolean,
+    visible boolean DEFAULT false,
+    featured boolean DEFAULT false,
     dashboard_framing text
 );
 
@@ -1078,3 +1082,9 @@ INSERT INTO schema_migrations (version) VALUES ('20140522232352');
 INSERT INTO schema_migrations (version) VALUES ('20140523000507');
 
 INSERT INTO schema_migrations (version) VALUES ('20140529202751');
+
+INSERT INTO schema_migrations (version) VALUES ('20150323193123');
+
+INSERT INTO schema_migrations (version) VALUES ('20150528182101');
+
+INSERT INTO schema_migrations (version) VALUES ('20150528182124');

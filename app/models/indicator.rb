@@ -10,7 +10,8 @@ class Indicator < ActiveRecord::Base
                   :objective_id,
                   :threshhold,
                   :higher_value_is_better,
-                  :lower_rank_is_better
+                  :lower_rank_is_better,
+                  :explanation_ids
 
   attr_accessor :current_snapshot
 
@@ -21,7 +22,7 @@ class Indicator < ActiveRecord::Base
   has_one  :explanation, as: :explainable
   has_many :snapshots
   has_and_belongs_to_many :issue_areas, uniq: true
-  # has_and_belongs_to_many :explanations
+  has_and_belongs_to_many :explanations
   
   accepts_nested_attributes_for :explanation
 
