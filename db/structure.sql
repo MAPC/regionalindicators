@@ -350,7 +350,6 @@ CREATE TABLE schema_migrations (
 --
 
 CREATE VIEW searches AS
-
  SELECT goals.id AS searchable_id,
     'Goal'::text AS searchable_type,
     goals.title AS term
@@ -365,7 +364,6 @@ UNION
     'Indicator'::text AS searchable_type,
     indicators.title AS term
    FROM indicators;
-
 
 
 --
@@ -518,12 +516,8 @@ CREATE TABLE topic_areas (
     subtitle character varying(255),
     explanation_id integer,
     visible boolean DEFAULT false,
-<<<<<<< HEAD
-    featured boolean DEFAULT false
-=======
     featured boolean DEFAULT false,
     dashboard_framing text
->>>>>>> f94de5060ca65d2a9cb7a5540bbe7afa705a3ad7
 );
 
 
