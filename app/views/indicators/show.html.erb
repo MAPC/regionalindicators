@@ -1,26 +1,58 @@
-<br/>
+<% if @indicator.grouped? %>
+  <% @indicator.indicator_group.indicators.each do |grouped_indicator| %>
 
-<h2 id="<%= @indicator.slug %>">
-  <%= @indicator.title %>
-</h2>
+    <br/>
 
-<br/>
+    <h2 id="<%= @indicator.slug %>">
+      <%= grouped_indicator.title %>
+    </h2>
 
-<%= render partial: 'topic_areas/status',
-           locals: { indicator: @indicator } %>
+    <br/>
 
-<br/>
+    <%= render partial: 'topic_areas/status',
+               locals: { indicator: grouped_indicator } %>
 
-<% if @indicator.explanation %>
-  <%= render partial: 'topic_areas/explanation',
-             locals: { explanation: @indicator.explanation } %>
+    <br/>
 
+    <% if @indicator.explanation %>
+      <%= render partial: 'topic_areas/explanation', collection: grouped_indicator.explanations %>
+      <% if grouped_indicator.last_in_group? %>
+        <%= render partial: 'topic_areas/explanation', collection: grouped_indicator.indicator_group.explanations %>
+      <% end %>
+    <% else %>
+
+      <p>
+        This indicator has not yet been analyzed as part of the Regional Indicators project.
+      </p>
+      <p>
+        To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
+      </p>
+    <% end %>
+  <% end %>
 <% else %>
 
-  <p>
-    This indicator has not yet been analyzed as part of the Regional Indicators project.
-  </p>
-  <p>
-    To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
-  </p>
+  <br/>
+
+  <h2 id="<%= @indicator.slug %>">
+    <%= @indicator.title %>
+  </h2>
+
+  <br/>
+
+  <%= render partial: 'topic_areas/status',
+             locals: { indicator: @indicator } %>
+
+  <br/>
+
+  <% if @indicator.explanation %>
+    <%= render partial: 'topic_areas/explanation', collection: @indicator.explanations %>
+  <% else %>
+
+    <p>
+      This indicator has not yet been analyzed as part of the Regional Indicators project.
+    </p>
+    <p>
+      To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
+    </p>
+  <% end %>
 <% end %>

@@ -11,10 +11,16 @@
     <%= indicator.title %>
   </h4>
 
-  <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>    
-  <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
+  <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>   
+
+  <% if indicator.has_explanations? %>
+    <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
+  <% end %> 
   <%= render partial: 'explanation', collection: indicator.explanations %>
   <% if indicator.last_in_group? %>
+    <% if indicator.has_group_explanations? %>
+      <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
+    <% end %>
     <%= render partial: 'explanation', collection: indicator.indicator_group.explanations %>
   <% end %>
 
@@ -27,14 +33,14 @@
   </h3>
 
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>
-  <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
   <% if indicator.explanation %>
+    <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
     <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
   <% end %>
 
 <% end %>
 
-<% if indicator.explanation %>
+<% if indicator.has_explanations? || indicator.has_group? %>
   <%= render partial: 'visualizations/visualization', 
              collection: indicator.explanation.visualizations  %>
 

@@ -53,6 +53,14 @@ class Indicator < ActiveRecord::Base
     self == group.last
   end
 
+  def has_explanations?
+    !self.explanations.empty?
+  end
+
+  def has_group_explanations?
+    !self.indicator_group.explanations.empty?
+  end
+
   def group_title
     group.title
   end
