@@ -1,7 +1,7 @@
 class IndicatorGroup < ActiveRecord::Base
-  attr_accessible :title, :indicator_ids
+  attr_accessible :title, :indicator_ids, :explanation_ids
   has_many :indicators
-
+  has_and_belongs_to_many :explanations
   validates :title, presence: true
 
   def first
@@ -13,5 +13,4 @@ class IndicatorGroup < ActiveRecord::Base
   end
 
   include SlugExtension
-  
 end

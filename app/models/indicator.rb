@@ -18,13 +18,15 @@ class Indicator < ActiveRecord::Base
   belongs_to :objective
   belongs_to :subject
   belongs_to :indicator_group
-
+  
+  has_and_belongs_to_many :explanations
   has_one  :explanation, as: :explainable
   has_many :snapshots
   has_and_belongs_to_many :issue_areas, uniq: true
-  has_and_belongs_to_many :explanations
+  
   
   accepts_nested_attributes_for :explanation
+  accepts_nested_attributes_for :explanations
 
   validates :title,  presence: true, length: { maximum: 160, minimum: 8 }
   validates :number, presence: true

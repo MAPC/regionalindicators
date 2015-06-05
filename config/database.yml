@@ -1,6 +1,6 @@
 default: &default
   adapter:  postgresql
-  database: <%= ENV.fetch('DB_NAME') { 'metrofuture_development' } %>
+  database: <%= ENV.fetch('DB_NAME') { 'metrofuture_dev' } %>
   username: <%= ENV.fetch('DB_USERNAME') { nil } %>
   password: <%= ENV.fetch('DB_PASSWORD') { nil } %>
   host:     <%= ENV.fetch('DB_PORT_5432_TCP_ADDR') { 'localhost' } %>
@@ -19,7 +19,6 @@ test:       &test
   <<: *default
   database: metrofuture_test
   host:     localhost
-
 
 production:
   <<: *default

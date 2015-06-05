@@ -7,17 +7,18 @@
 
   <% end %>
 
-
   <h4 id="<%= indicator.slug %>" class="<%= indicator.slug %> group-subtitle scroll-target">
-
     <%= indicator.title %>
   </h4>
 
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>    
   <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
-  <% if indicator.explanation %>
-      <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
+  <%= render partial: 'explanation', collection: indicator.explanations %>
+  <% if indicator.last_in_group? %>
+    <%= render partial: 'explanation', collection: indicator.indicator_group.explanations %>
   <% end %>
+
+  
 
 <% else %>
 
