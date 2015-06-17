@@ -19,10 +19,6 @@ class IssueArea < ActiveRecord::Base
     !self.indicators.blank?
   end
 
-  # def indicators
-  #   Array(self.taggable).keep_if { |e| e.class.name == "Indicator" }
-  # end
-
   rails_admin do
     list do
       field :id

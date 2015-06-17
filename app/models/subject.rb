@@ -10,7 +10,7 @@ class Subject < ActiveRecord::Base
   has_many :indicators
   has_one :explanation, as: :explainable
 
-  has_and_belongs_to_many :explanations
+  # has_and_belongs_to_many :explanations
 
   accepts_nested_attributes_for :explanation
 

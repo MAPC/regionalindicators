@@ -16,50 +16,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: explanations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE explanations (
-    id integer NOT NULL,
-    narrative text,
-    explainable_id integer,
-    explainable_type character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    indicator_group_id integer
-);
-
-
---
--- Name: explanations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE explanations_id_seq
-    START WITH 123
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: explanations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE explanations_id_seq OWNED BY explanations.id;
-
-
---
--- Name: explanations_indicator_groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE explanations_indicator_groups (
-    explanation_id integer,
-    indicator_group_id integer
-);
-
-
---
 -- Name: explanations_indicators; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -67,36 +23,6 @@ CREATE TABLE explanations_indicators (
     explanation_id integer,
     indicator_id integer
 );
-
-
---
--- Name: explanations_sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE explanations_sources (
-    id integer NOT NULL,
-    explanation_id integer,
-    source_id integer
-);
-
-
---
--- Name: explanations_sources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE explanations_sources_id_seq
-    START WITH 1189
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: explanations_sources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE explanations_sources_id_seq OWNED BY explanations_sources.id;
 
 
 --
@@ -118,8 +44,8 @@ CREATE TABLE goals (
     number integer,
     title character varying(255),
     topic_area_id integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     description character varying(255)
 );
 
@@ -129,7 +55,7 @@ CREATE TABLE goals (
 --
 
 CREATE SEQUENCE goals_id_seq
-    START WITH 65
+    START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -144,45 +70,14 @@ ALTER SEQUENCE goals_id_seq OWNED BY goals.id;
 
 
 --
--- Name: indicator_groups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE indicator_groups (
-    id integer NOT NULL,
-    title character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: indicator_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE indicator_groups_id_seq
-    START WITH 24
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: indicator_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE indicator_groups_id_seq OWNED BY indicator_groups.id;
-
-
---
 -- Name: indicators; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE indicators (
     id integer NOT NULL,
     title character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     units character varying(255),
     number integer,
     objective_id integer,
@@ -201,7 +96,7 @@ CREATE TABLE indicators (
 --
 
 CREATE SEQUENCE indicators_id_seq
-    START WITH 320
+    START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -213,138 +108,6 @@ CREATE SEQUENCE indicators_id_seq
 --
 
 ALTER SEQUENCE indicators_id_seq OWNED BY indicators.id;
-
-
---
--- Name: indicators_issue_areas; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE indicators_issue_areas (
-    id integer NOT NULL,
-    indicator_id integer,
-    issue_area_id integer
-);
-
-
---
--- Name: indicators_issue_areas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE indicators_issue_areas_id_seq
-    START WITH 1472
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: indicators_issue_areas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE indicators_issue_areas_id_seq OWNED BY indicators_issue_areas.id;
-
-
---
--- Name: issue_areas; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE issue_areas (
-    id integer NOT NULL,
-    title character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    datacommon_url character varying(255),
-    sort_order integer
-);
-
-
---
--- Name: issue_areas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE issue_areas_id_seq
-    START WITH 14
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: issue_areas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE issue_areas_id_seq OWNED BY issue_areas.id;
-
-
---
--- Name: objectives; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE objectives (
-    id integer NOT NULL,
-    title character varying(255),
-    goal_id integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    number character varying(255)
-);
-
-
---
--- Name: objectives_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE objectives_id_seq
-    START WITH 204
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: objectives_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE objectives_id_seq OWNED BY objectives.id;
-
-
---
--- Name: rails_admin_histories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE rails_admin_histories (
-    id integer NOT NULL,
-    message text,
-    username character varying(255),
-    item integer,
-    "table" character varying(255),
-    month smallint,
-    year bigint,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: rails_admin_histories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE rails_admin_histories_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: rails_admin_histories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE rails_admin_histories_id_seq OWNED BY rails_admin_histories.id;
 
 
 --
@@ -378,275 +141,6 @@ UNION
 
 
 --
--- Name: snapshots; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE snapshots (
-    id integer NOT NULL,
-    date timestamp(6) without time zone,
-    value integer,
-    rank integer,
-    indicator_id integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: snapshots_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE snapshots_id_seq
-    START WITH 191
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: snapshots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE snapshots_id_seq OWNED BY snapshots.id;
-
-
---
--- Name: sources; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE sources (
-    id integer NOT NULL,
-    title character varying(255),
-    url character varying(255),
-    date timestamp(6) without time zone,
-    comment text,
-    author character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: sources_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE sources_id_seq
-    START WITH 26
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: sources_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE sources_id_seq OWNED BY sources.id;
-
-
---
--- Name: static_pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE static_pages (
-    id integer NOT NULL,
-    title character varying(255),
-    content text,
-    slug_id character varying(255),
-    top boolean,
-    sort_order integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: static_pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE static_pages_id_seq
-    START WITH 3
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: static_pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE static_pages_id_seq OWNED BY static_pages.id;
-
-
---
--- Name: subjects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE subjects (
-    id integer NOT NULL,
-    title character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    topic_area_id integer,
-    sort_order integer
-);
-
-
---
--- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE subjects_id_seq
-    START WITH 10
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
-
-
---
--- Name: topic_areas; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE topic_areas (
-    id integer NOT NULL,
-    abbr character varying(255),
-    title character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    subtitle character varying(255),
-    explanation_id integer,
-    visible boolean,
-    featured boolean,
-    dashboard_framing text
-);
-
-
---
--- Name: topic_areas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE topic_areas_id_seq
-    START WITH 6
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: topic_areas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE topic_areas_id_seq OWNED BY topic_areas.id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE users (
-    id integer NOT NULL,
-    email character varying(255) DEFAULT ''::character varying NOT NULL,
-    encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
-    reset_password_token character varying(255),
-    reset_password_sent_at timestamp(6) without time zone,
-    remember_created_at timestamp(6) without time zone,
-    sign_in_count integer DEFAULT 0 NOT NULL,
-    current_sign_in_at timestamp(6) without time zone,
-    last_sign_in_at timestamp(6) without time zone,
-    current_sign_in_ip character varying(255),
-    last_sign_in_ip character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    admin boolean DEFAULT false
-);
-
-
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE users_id_seq
-    START WITH 5
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE users_id_seq OWNED BY users.id;
-
-
---
--- Name: visualizations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE visualizations (
-    id integer NOT NULL,
-    title character varying(255),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    explanation_id integer,
-    data_file_name character varying(255),
-    data_content_type character varying(255),
-    data_file_size integer,
-    data_updated_at timestamp(6) without time zone,
-    d3_file_name character varying(255),
-    d3_content_type character varying(255),
-    d3_file_size integer,
-    d3_updated_at timestamp(6) without time zone
-);
-
-
---
--- Name: visualizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE visualizations_id_seq
-    START WITH 80
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: visualizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE visualizations_id_seq OWNED BY visualizations.id;
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY explanations ALTER COLUMN id SET DEFAULT nextval('explanations_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY explanations_sources ALTER COLUMN id SET DEFAULT nextval('explanations_sources_id_seq'::regclass);
-
-
---
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -657,107 +151,7 @@ ALTER TABLE ONLY goals ALTER COLUMN id SET DEFAULT nextval('goals_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY indicator_groups ALTER COLUMN id SET DEFAULT nextval('indicator_groups_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY indicators ALTER COLUMN id SET DEFAULT nextval('indicators_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY indicators_issue_areas ALTER COLUMN id SET DEFAULT nextval('indicators_issue_areas_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY issue_areas ALTER COLUMN id SET DEFAULT nextval('issue_areas_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY objectives ALTER COLUMN id SET DEFAULT nextval('objectives_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY rails_admin_histories ALTER COLUMN id SET DEFAULT nextval('rails_admin_histories_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY snapshots ALTER COLUMN id SET DEFAULT nextval('snapshots_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY sources ALTER COLUMN id SET DEFAULT nextval('sources_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY static_pages ALTER COLUMN id SET DEFAULT nextval('static_pages_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY subjects ALTER COLUMN id SET DEFAULT nextval('subjects_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY topic_areas ALTER COLUMN id SET DEFAULT nextval('topic_areas_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY visualizations ALTER COLUMN id SET DEFAULT nextval('visualizations_id_seq'::regclass);
-
-
---
--- Name: explanations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY explanations
-    ADD CONSTRAINT explanations_pkey PRIMARY KEY (id);
-
-
---
--- Name: explanations_sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY explanations_sources
-    ADD CONSTRAINT explanations_sources_pkey PRIMARY KEY (id);
 
 
 --
@@ -769,22 +163,6 @@ ALTER TABLE ONLY goals
 
 
 --
--- Name: indicator_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY indicator_groups
-    ADD CONSTRAINT indicator_groups_pkey PRIMARY KEY (id);
-
-
---
--- Name: indicators_issue_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY indicators_issue_areas
-    ADD CONSTRAINT indicators_issue_areas_pkey PRIMARY KEY (id);
-
-
---
 -- Name: indicators_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -793,90 +171,17 @@ ALTER TABLE ONLY indicators
 
 
 --
--- Name: issue_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: index_goals_on_description; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY issue_areas
-    ADD CONSTRAINT issue_areas_pkey PRIMARY KEY (id);
-
-
---
--- Name: objectives_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY objectives
-    ADD CONSTRAINT objectives_pkey PRIMARY KEY (id);
+CREATE INDEX index_goals_on_description ON goals USING gin (to_tsvector('english'::regconfig, (description)::text));
 
 
 --
--- Name: rails_admin_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: index_goals_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY rails_admin_histories
-    ADD CONSTRAINT rails_admin_histories_pkey PRIMARY KEY (id);
-
-
---
--- Name: snapshots_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY snapshots
-    ADD CONSTRAINT snapshots_pkey PRIMARY KEY (id);
-
-
---
--- Name: sources_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY sources
-    ADD CONSTRAINT sources_pkey PRIMARY KEY (id);
-
-
---
--- Name: static_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY static_pages
-    ADD CONSTRAINT static_pages_pkey PRIMARY KEY (id);
-
-
---
--- Name: subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY subjects
-    ADD CONSTRAINT subjects_pkey PRIMARY KEY (id);
-
-
---
--- Name: topic_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY topic_areas
-    ADD CONSTRAINT topic_areas_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: visualizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY visualizations
-    ADD CONSTRAINT visualizations_pkey PRIMARY KEY (id);
-
-
---
--- Name: index_explanations_sources_on_explanation_id_and_source_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_explanations_sources_on_explanation_id_and_source_id ON explanations_sources USING btree (explanation_id, source_id);
+CREATE INDEX index_goals_on_title ON goals USING gin (to_tsvector('english'::regconfig, (title)::text));
 
 
 --
@@ -884,13 +189,6 @@ CREATE INDEX index_explanations_sources_on_explanation_id_and_source_id ON expla
 --
 
 CREATE INDEX index_goals_on_topic_area_id ON goals USING btree (topic_area_id);
-
-
---
--- Name: index_indicators_issue_areas_on_indicator_id_and_issue_area_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_indicators_issue_areas_on_indicator_id_and_issue_area_id ON indicators_issue_areas USING btree (indicator_id, issue_area_id);
 
 
 --
@@ -915,59 +213,10 @@ CREATE INDEX index_indicators_on_subject_id ON indicators USING btree (subject_i
 
 
 --
--- Name: index_objectives_on_goal_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_indicators_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_objectives_on_goal_id ON objectives USING btree (goal_id);
-
-
---
--- Name: index_rails_admin_histories; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_rails_admin_histories ON rails_admin_histories USING btree (item, "table", month, year);
-
-
---
--- Name: index_snapshots_on_indicator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_snapshots_on_indicator_id ON snapshots USING btree (indicator_id);
-
-
---
--- Name: index_subjects_on_topic_area_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_subjects_on_topic_area_id ON subjects USING btree (topic_area_id);
-
-
---
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
-
-
---
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
-
-
---
--- Name: index_visualizations_on_explanation_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_visualizations_on_explanation_id ON visualizations USING btree (explanation_id);
-
-
---
--- Name: index_visualizations_on_title_and_explanation_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_visualizations_on_title_and_explanation_id ON visualizations USING btree (title, explanation_id);
+CREATE INDEX index_indicators_on_title ON indicators USING gin (to_tsvector('english'::regconfig, (title)::text));
 
 
 --
@@ -1078,13 +327,3 @@ INSERT INTO schema_migrations (version) VALUES ('20150323193123');
 INSERT INTO schema_migrations (version) VALUES ('20150528182101');
 
 INSERT INTO schema_migrations (version) VALUES ('20150528182124');
-
-INSERT INTO schema_migrations (version) VALUES ('20150604051150');
-
-INSERT INTO schema_migrations (version) VALUES ('20150605020127');
-
-INSERT INTO schema_migrations (version) VALUES ('20150605020319');
-
-INSERT INTO schema_migrations (version) VALUES ('20150605020639');
-
-INSERT INTO schema_migrations (version) VALUES ('20150605020840');
