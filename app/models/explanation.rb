@@ -9,11 +9,7 @@ class Explanation < ActiveRecord::Base
                   :indicator_ids
 
   belongs_to :explainable, polymorphic: true
-
-  # has_and_belongs_to_many :indicators
-  # has_and_belongs_to_many :subjects
-  # has_and_belongs_to_many :indicator_groups
-
+  
   has_and_belongs_to_many :sources
   has_many :visualizations
 
