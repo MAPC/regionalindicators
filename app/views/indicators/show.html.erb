@@ -1,7 +1,6 @@
-<% if @indicator.grouped? %>
-  <% @indicator.indicator_group.indicators.each do |grouped_indicator| %>
-
-    <br/>
+<h2 id="<%= @indicator.slug %>">
+  <%= @indicator.title %>
+</h2>
 
     <h2 id="<%= @indicator.slug %>">
       <%= grouped_indicator.title %>
@@ -31,28 +30,24 @@
   <% end %>
 <% else %>
 
-  <br/>
 
-  <h2 id="<%= @indicator.slug %>">
-    <%= @indicator.title %>
-  </h2>
+  <p>
+    This indicator has not yet been analyzed as part of the Regional Indicators project.
+  </p>
+  <p>
+    To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
+  </p>
+<% end %>
 
-  <br/>
-
-  <%= render partial: 'topic_areas/status',
-             locals: { indicator: @indicator } %>
-
-  <br/>
-
-  <% if @indicator.explanation %>
-    <%= render partial: 'topic_areas/explanation', collection: @indicator.explanations %>
-  <% else %>
-
-    <p>
-      This indicator has not yet been analyzed as part of the Regional Indicators project.
-    </p>
-    <p>
-      To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
-    </p>
+<% if @indicator.has_group? %>
+  <h3>Other Indicators in this group:<h3>
+  <h3><%= @indicator.group_title %></h3>
+  <% if !@indicator.indicator_group.explanation.nil? %>
+    <h3 class="<%= topic_area_slug %> <%= subject_slug %> scroll-target" id="<%= indicator.group_slug %>">
+      <%= @indicator.indicator_group.explanation %>
+    </h3>
   <% end %>
+  <%= render partial: 'indicators/indicator_card',
+             collection: @indicator.indicator_group.indicators.select { |ind| ind.id != @indicator.id },
+             as: :indicator %>
 <% end %>
