@@ -24,10 +24,10 @@
 <% end %>
 
 <% if @indicator.has_group? %>
-  <h3>Other Indicators in this group:<h3>
+  <h3>Other Indicators in this group:</h3>
   <h3><%= @indicator.group_title %></h3>
   <% if !@indicator.indicator_group.explanation.nil? %>
-    <h3 class="<%= topic_area_slug %> <%= subject_slug %> scroll-target" id="<%= indicator.group_slug %>">
+    <h3>
       <%= @indicator.indicator_group.explanation %>
     </h3>
   <% end %>
