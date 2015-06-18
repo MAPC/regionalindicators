@@ -1,0 +1,16 @@
+<h2 id="<%= @indicator.slug %>">
+  <%= indicator.title %>
+</h2>
+
+<br/>
+
+<%= render partial: 'topic_areas/status',
+           locals: { indicator: indicator } %>
+
+<br/>
+
+<% if indicator.explanation %>
+  <%= render partial: 'topic_areas/explanation',
+             locals: { explanation: indicator.explanation } %>
+
+<% end %>
