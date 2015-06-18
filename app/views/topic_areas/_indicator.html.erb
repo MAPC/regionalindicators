@@ -38,7 +38,7 @@
 
 <% end %>
 
-<% if indicator.has_explanations? || indicator.has_group? %>
+<% if !indicator.explanation.nil? || indicator.has_group? %>
   <% if !indicator.explanation.nil? %>
     <%= render partial: 'visualizations/visualization', 
                collection: indicator.explanation.visualizations  %>
