@@ -2,34 +2,18 @@
   <%= @indicator.title %>
 </h2>
 
-    <h2 id="<%= @indicator.slug %>">
-      <%= grouped_indicator.title %>
-    </h2>
+<br/>
 
-    <br/>
+<%= render partial: 'topic_areas/status',
+           locals: { indicator: @indicator } %>
 
-    <%= render partial: 'topic_areas/status',
-               locals: { indicator: grouped_indicator } %>
+<br/>
 
-    <br/>
+<% if @indicator.explanation %>
+  <%= render partial: 'topic_areas/explanation',
+             locals: { explanation: @indicator.explanation } %>
 
-    <% if @indicator.explanation %>
-      <%= render partial: 'topic_areas/explanation', collection: grouped_indicator.explanations %>
-      <% if grouped_indicator.last_in_group? %>
-        <%= render partial: 'topic_areas/explanation', collection: grouped_indicator.indicator_group.explanations %>
-      <% end %>
-    <% else %>
-
-      <p>
-        This indicator has not yet been analyzed as part of the Regional Indicators project.
-      </p>
-      <p>
-        To read about indicators that have been researched and analyzed, please see the Topical Reports above, or click on one of the Issue Area icons below.
-      </p>
-    <% end %>
-  <% end %>
 <% else %>
-
 
   <p>
     This indicator has not yet been analyzed as part of the Regional Indicators project.
