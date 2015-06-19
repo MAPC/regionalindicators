@@ -6,12 +6,12 @@ class SearchController < ApplicationController
     # end
 
     # @results = @search.results
-    @results = Search.new(query: params[:search]).results
+    @results = Search.new(query: params[:search]).results.compact
   end
 
   def suggest
     @suggestions = []
-    [Indicator, Goal].each do |klass|
+    [Indicator.where(:visible => true), Goal].each do |klass|
       @suggestions.concat( klass.all.map { |e| e.title } )
     end
 

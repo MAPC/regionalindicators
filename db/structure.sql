@@ -24,8 +24,8 @@ CREATE TABLE explanations (
     narrative text,
     explainable_id integer,
     explainable_type character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -34,7 +34,7 @@ CREATE TABLE explanations (
 --
 
 CREATE SEQUENCE explanations_id_seq
-    START WITH 1
+    START WITH 123
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -46,16 +46,6 @@ CREATE SEQUENCE explanations_id_seq
 --
 
 ALTER SEQUENCE explanations_id_seq OWNED BY explanations.id;
-
-
---
--- Name: explanations_indicators; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE explanations_indicators (
-    explanation_id integer,
-    indicator_id integer
-);
 
 
 --
@@ -74,7 +64,7 @@ CREATE TABLE explanations_sources (
 --
 
 CREATE SEQUENCE explanations_sources_id_seq
-    START WITH 1
+    START WITH 1189
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -89,16 +79,6 @@ ALTER SEQUENCE explanations_sources_id_seq OWNED BY explanations_sources.id;
 
 
 --
--- Name: explanations_subjects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE explanations_subjects (
-    explanation_id integer,
-    subject_id integer
-);
-
-
---
 -- Name: goals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -107,8 +87,8 @@ CREATE TABLE goals (
     number integer,
     title character varying(255),
     topic_area_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     description character varying(255)
 );
 
@@ -118,7 +98,7 @@ CREATE TABLE goals (
 --
 
 CREATE SEQUENCE goals_id_seq
-    START WITH 1
+    START WITH 65
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -139,8 +119,8 @@ ALTER SEQUENCE goals_id_seq OWNED BY goals.id;
 CREATE TABLE indicator_groups (
     id integer NOT NULL,
     title character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -149,7 +129,7 @@ CREATE TABLE indicator_groups (
 --
 
 CREATE SEQUENCE indicator_groups_id_seq
-    START WITH 1
+    START WITH 24
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -170,8 +150,8 @@ ALTER SEQUENCE indicator_groups_id_seq OWNED BY indicator_groups.id;
 CREATE TABLE indicators (
     id integer NOT NULL,
     title character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     units character varying(255),
     number integer,
     objective_id integer,
@@ -181,7 +161,8 @@ CREATE TABLE indicators (
     lower_rank_is_better boolean DEFAULT true,
     indicator_group_id integer,
     value_delta integer,
-    rank_delta integer
+    rank_delta integer,
+    visible boolean DEFAULT true
 );
 
 
@@ -190,7 +171,7 @@ CREATE TABLE indicators (
 --
 
 CREATE SEQUENCE indicators_id_seq
-    START WITH 1
+    START WITH 320
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -220,7 +201,7 @@ CREATE TABLE indicators_issue_areas (
 --
 
 CREATE SEQUENCE indicators_issue_areas_id_seq
-    START WITH 1
+    START WITH 1472
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -241,8 +222,8 @@ ALTER SEQUENCE indicators_issue_areas_id_seq OWNED BY indicators_issue_areas.id;
 CREATE TABLE issue_areas (
     id integer NOT NULL,
     title character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     datacommon_url character varying(255),
     sort_order integer
 );
@@ -253,7 +234,7 @@ CREATE TABLE issue_areas (
 --
 
 CREATE SEQUENCE issue_areas_id_seq
-    START WITH 1
+    START WITH 14
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -273,11 +254,11 @@ ALTER SEQUENCE issue_areas_id_seq OWNED BY issue_areas.id;
 
 CREATE TABLE objectives (
     id integer NOT NULL,
-    number integer,
     title character varying(255),
     goal_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    number character varying(255)
 );
 
 
@@ -286,7 +267,7 @@ CREATE TABLE objectives (
 --
 
 CREATE SEQUENCE objectives_id_seq
-    START WITH 1
+    START WITH 204
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -312,8 +293,8 @@ CREATE TABLE rails_admin_histories (
     "table" character varying(255),
     month smallint,
     year bigint,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -372,12 +353,12 @@ UNION
 
 CREATE TABLE snapshots (
     id integer NOT NULL,
-    date timestamp without time zone,
+    date timestamp(6) without time zone,
     value integer,
     rank integer,
     indicator_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -386,7 +367,7 @@ CREATE TABLE snapshots (
 --
 
 CREATE SEQUENCE snapshots_id_seq
-    START WITH 1
+    START WITH 191
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -408,11 +389,11 @@ CREATE TABLE sources (
     id integer NOT NULL,
     title character varying(255),
     url character varying(255),
-    date timestamp without time zone,
+    date timestamp(6) without time zone,
     comment text,
     author character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -421,7 +402,7 @@ CREATE TABLE sources (
 --
 
 CREATE SEQUENCE sources_id_seq
-    START WITH 1
+    START WITH 26
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -446,8 +427,8 @@ CREATE TABLE static_pages (
     slug_id character varying(255),
     top boolean,
     sort_order integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -456,7 +437,7 @@ CREATE TABLE static_pages (
 --
 
 CREATE SEQUENCE static_pages_id_seq
-    START WITH 1
+    START WITH 3
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -477,8 +458,8 @@ ALTER SEQUENCE static_pages_id_seq OWNED BY static_pages.id;
 CREATE TABLE subjects (
     id integer NOT NULL,
     title character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     topic_area_id integer,
     sort_order integer
 );
@@ -489,7 +470,7 @@ CREATE TABLE subjects (
 --
 
 CREATE SEQUENCE subjects_id_seq
-    START WITH 1
+    START WITH 10
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -511,12 +492,12 @@ CREATE TABLE topic_areas (
     id integer NOT NULL,
     abbr character varying(255),
     title character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     subtitle character varying(255),
     explanation_id integer,
-    visible boolean DEFAULT false,
-    featured boolean DEFAULT false,
+    visible boolean,
+    featured boolean,
     dashboard_framing text
 );
 
@@ -526,7 +507,7 @@ CREATE TABLE topic_areas (
 --
 
 CREATE SEQUENCE topic_areas_id_seq
-    START WITH 1
+    START WITH 6
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -549,15 +530,15 @@ CREATE TABLE users (
     email character varying(255) DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying(255) DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying(255),
-    reset_password_sent_at timestamp without time zone,
-    remember_created_at timestamp without time zone,
+    reset_password_sent_at timestamp(6) without time zone,
+    remember_created_at timestamp(6) without time zone,
     sign_in_count integer DEFAULT 0 NOT NULL,
-    current_sign_in_at timestamp without time zone,
-    last_sign_in_at timestamp without time zone,
+    current_sign_in_at timestamp(6) without time zone,
+    last_sign_in_at timestamp(6) without time zone,
     current_sign_in_ip character varying(255),
     last_sign_in_ip character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     admin boolean DEFAULT false
 );
 
@@ -567,7 +548,7 @@ CREATE TABLE users (
 --
 
 CREATE SEQUENCE users_id_seq
-    START WITH 1
+    START WITH 5
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -588,17 +569,17 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 CREATE TABLE visualizations (
     id integer NOT NULL,
     title character varying(255),
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
     explanation_id integer,
     data_file_name character varying(255),
     data_content_type character varying(255),
     data_file_size integer,
-    data_updated_at timestamp without time zone,
+    data_updated_at timestamp(6) without time zone,
     d3_file_name character varying(255),
     d3_content_type character varying(255),
     d3_file_size integer,
-    d3_updated_at timestamp without time zone
+    d3_updated_at timestamp(6) without time zone
 );
 
 
@@ -607,7 +588,7 @@ CREATE TABLE visualizations (
 --
 
 CREATE SEQUENCE visualizations_id_seq
-    START WITH 1
+    START WITH 80
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -869,20 +850,6 @@ CREATE INDEX index_explanations_sources_on_explanation_id_and_source_id ON expla
 
 
 --
--- Name: index_goals_on_description; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_goals_on_description ON goals USING gin (to_tsvector('english'::regconfig, (description)::text));
-
-
---
--- Name: index_goals_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_goals_on_title ON goals USING gin (to_tsvector('english'::regconfig, (title)::text));
-
-
---
 -- Name: index_goals_on_topic_area_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -915,13 +882,6 @@ CREATE INDEX index_indicators_on_objective_id ON indicators USING btree (objecti
 --
 
 CREATE INDEX index_indicators_on_subject_id ON indicators USING btree (subject_id);
-
-
---
--- Name: index_indicators_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_indicators_on_title ON indicators USING gin (to_tsvector('english'::regconfig, (title)::text));
 
 
 --
@@ -1085,6 +1045,4 @@ INSERT INTO schema_migrations (version) VALUES ('20140529202751');
 
 INSERT INTO schema_migrations (version) VALUES ('20150323193123');
 
-INSERT INTO schema_migrations (version) VALUES ('20150528182101');
-
-INSERT INTO schema_migrations (version) VALUES ('20150528182124');
+INSERT INTO schema_migrations (version) VALUES ('20150618171502');

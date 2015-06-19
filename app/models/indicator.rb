@@ -4,14 +4,16 @@ class Indicator < ActiveRecord::Base
                   :units,
                   :snapshot_ids,
                   :subject_id,
-                  :explanation_attributes,
                   :issue_area_ids,
                   :id,
                   :objective_id,
                   :threshhold,
+                  :explanation_id,
                   :higher_value_is_better,
                   :lower_rank_is_better,
-                  :explanation_ids
+                  :explanation_ids,
+                  :visible,
+                  :explanation
 
   attr_accessor :current_snapshot
 
@@ -32,7 +34,7 @@ class Indicator < ActiveRecord::Base
 
   self.primary_key = :id 
 
-  default_scope { includes(:explanation).includes(:snapshots).order(:id) }
+  default_scope { where(visible: true).includes(:explanation).includes(:snapshots).order(:id)  }
 
   def goal
     objective.goal unless objective.nil?
@@ -159,6 +161,8 @@ class Indicator < ActiveRecord::Base
       field :units
       field :value
       field :rank
+      field :visible
+      field :explanation
     end
   end
 
