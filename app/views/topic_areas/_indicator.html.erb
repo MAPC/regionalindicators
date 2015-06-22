@@ -16,11 +16,15 @@
   <% if !indicator.explanation.nil? %>
     <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
     <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
+    <%= render partial: 'visualizations/visualization', 
+               collection: indicator.explanation.visualizations  %>
   <% end %> 
   <% if indicator.last_in_group? %>
     <% if !indicator.indicator_group.explanation.nil? %>
       <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
       <%= render partial: 'explanation', locals: { explanation: indicator.indicator_group.explanation } %>
+      <%= render partial: 'visualizations/visualization', 
+                 collection: indicator.indicator_group.explanation.visualizations  %>
     <% end %>
   <% end %>
 
@@ -34,15 +38,13 @@
   <% if !indicator.explanation.nil? %>
     <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
     <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
+    <%= render partial: 'visualizations/visualization', 
+               collection: indicator.explanation.visualizations  %>
   <% end %>
 
 <% end %>
 
 <% if !indicator.explanation.nil? || indicator.has_group? %>
-  <% if !indicator.explanation.nil? %>
-    <%= render partial: 'visualizations/visualization', 
-               collection: indicator.explanation.visualizations  %>
-  <% end %>
 
   <% if !indicator.explanation.nil? %>
     <% if indicator.explanation.has_sources? %>
