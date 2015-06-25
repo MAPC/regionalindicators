@@ -6,7 +6,6 @@ Regionalindicators::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'admin'
 
-  root to: 'topic_areas#index'
 
   match '/search',  to: 'search#search'
   match '/suggest', to: 'search#suggest'
@@ -19,9 +18,12 @@ Regionalindicators::Application.routes.draw do
     end
   end
   resources :goals
-  resources :static_pages, path: ''
 
-  # get "/equity" => redirect("http://regionalindicators.org/")
+
+  match "/equity" => redirect("http://equity.regionalindicators.org/")
+
+  resources :static_pages, path: ''  
+  root to: 'topic_areas#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
