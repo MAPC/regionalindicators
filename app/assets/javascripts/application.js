@@ -22,9 +22,7 @@
 //= require_tree .
 
 
-
 $(document).ready(function () {
   $('.sticky-title').stick_in_parent({offset_top: 10});
   $('.typeahead').typeahead({ prefetch: '/suggest.json' });
-  console.log("Fired")
 })
