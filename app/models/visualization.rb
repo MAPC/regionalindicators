@@ -18,7 +18,7 @@ class Visualization < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 200, minimum: 4 }, uniqueness: { scope: :explanation_id }
 
   validates_attachment :d3#,   content_type: { content_type: [/\A.*\/.*javascript\z/, 'text/html'] }
-  validates_attachment :data, content_type: { content_type: ['text/csv','application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'] }
+  validates_attachment :data#, content_type: { content_type: ['text/csv','application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'] }
 
   default_scope { order(:id) }
 
