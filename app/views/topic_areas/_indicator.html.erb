@@ -14,7 +14,9 @@
   <%= render partial: 'topic_areas/status', locals: { indicator: indicator } %>   
 
   <% if !indicator.explanation.nil? %>
-    <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
+    <% if !indicator.explanation.narrative.include? "group/duplicate" %>
+      <%= render partial: 'issue_areas/issue_area', collection: indicator.issue_areas.ordered %>
+    <% end %>
     <%= render partial: 'explanation', locals: { explanation: indicator.explanation } %>
     <%= render partial: 'visualizations/visualization', 
                collection: indicator.explanation.visualizations  %>

@@ -21,6 +21,8 @@ Regionalindicators::Application.routes.draw do
   resources :goals
   resources :static_pages, path: ''
 
+  # get "/equity" => redirect("http://regionalindicators.org/")
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
