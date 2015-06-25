@@ -21,9 +21,9 @@ Regionalindicators::Application.routes.draw do
 
 
   match "/equity" => redirect("http://equity.regionalindicators.org/")
-
-  resources :static_pages, path: ''  
   root to: 'topic_areas#index'
+  resources :static_pages, path: ''  
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
