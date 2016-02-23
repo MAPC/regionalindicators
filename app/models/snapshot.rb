@@ -19,6 +19,7 @@ class Snapshot < ActiveRecord::Base
   after_save :update_indicator
 
   rails_admin do
+    configure :value, :float 
     list do
       field :id
       field :value
