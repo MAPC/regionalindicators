@@ -22,3 +22,6 @@
 /db/fixtures/*
 
 /public/assets
+
+.DS_Store
+.gitignore
