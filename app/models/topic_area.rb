@@ -6,7 +6,8 @@ class TopicArea < ActiveRecord::Base
                   :featured,
                   :goal_ids,
                   :subject_ids,
-                  :dashboard_framing
+                  :dashboard_framing,
+                  :rankable
 
   has_many :goals
   has_many :subjects
@@ -57,6 +58,7 @@ class TopicArea < ActiveRecord::Base
       field :subtitle
       field :visible
       field :featured
+      field :rankable
     end
   end
 
