@@ -1,12 +1,16 @@
 <div class="row">
   <button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :pass_fail) %> <%= indicator.slug %> value">
-    Value:<br/>
+    Value as of <%= indicator.year_of_last_snapshot %>:<br/>
     <%= thumb_class(indicator, :pass_fail) %> <%= number_with_delimiter(number_with_precision(indicator.value, strip_insignificant_zeros: true, precisions: 1), delimiter: ',') %> <%= indicator.units %>
   </button>
 
   <button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :trend) %> <%= indicator.slug %> delta">
     Change since <%= indicator.year_of_last_snapshot %>: <br/>
-    <%= chevron_class(indicator, :direction) %> <%= number_with_delimiter(number_with_precision(indicator.value_delta, strip_insignificant_zeros: true, precisions: 1), delimiter: ',') %> <%= indicator.units %>
+    <% if indicator.snapshots.count > 1 %>
+      <%= chevron_class(indicator, :direction) %> <%= number_with_delimiter(number_with_precision(indicator.value_delta, strip_insignificant_zeros: true, precisions: 1), delimiter: ',') %> <%= indicator.units %>
+    <% else %>
+      N/A
+    <% end %>
   </button>
 
   <% if indicator.rank? %>
@@ -16,6 +20,8 @@
       <%= indicator.rank %> / 25 top Metro Areas
     </button>
   <% else %>
-    <%= render partial: 'topic_areas/no_rank' %>
+    <% if @topic_area.rankable %>
+      <%= render partial: 'topic_areas/no_rank' %>
+    <% end %>
   <% end %>
 </div>

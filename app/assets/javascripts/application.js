@@ -23,6 +23,10 @@
 
 
 $(document).ready(function () {
-  $('.sticky-title').stick_in_parent({offset_top: 10});
+  setTimeout(function() {
+    console.log("Triggered!");
+    $('.sticky-title').stick_in_parent({offset_top: 10});  
+  }, 2000);
+  
   $('.typeahead').typeahead({ prefetch: '/suggest.json' });
 })
