@@ -11,7 +11,7 @@ The .ruby-gemset and .ruby-version files specify
 + gemset: regionalindicators
 + ruby: ruby-2.0.0-p247
 
-Then run `bundle install` to install all the gems.
+Then run `NOKOGIRI_USE_SYSTEM_LIBRARIES=1 bundle install` to install all the gems.
 
 #### Install ImageMagick
 
@@ -41,3 +41,7 @@ Each of the fixture classes has its own method in `db/seeds.rb`. If you are seed
 Tests are in `spec`. Run `rspec` to run unit tests and integration tests.
 
 This app is using the Test-Driven Development paradigm. If you are adding a feature, make sure to add the tests first.
+
+#### Installation issues
+
+Often, mysteriously, rubyracer fails to install. See this issue: https://github.com/cowboyd/therubyracer/issues/304
