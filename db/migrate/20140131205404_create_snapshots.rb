@@ -2,7 +2,7 @@ class CreateSnapshots < ActiveRecord::Migration
   def change
     create_table :snapshots do |t|
       t.timestamp :date
-      t.integer :value
+      t.float :value
       t.string :units
       t.integer :rank
 

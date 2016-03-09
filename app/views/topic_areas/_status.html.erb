@@ -13,7 +13,7 @@
     <% end %>
   </button>
 
-  <% if indicator.rank? %>
+  <% if indicator.rank? & @topic_area.rankable %>
     <button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :rank_position) %> <%= indicator.slug %> rank">
       Rank:<br/>
       <%= thumb_class(indicator, :rank_position) %>
