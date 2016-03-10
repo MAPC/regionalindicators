@@ -185,6 +185,11 @@ class Indicator < ActiveRecord::Base
     (self.snapshots.in_year(year).first || self.snapshots.last) || EMPTY_SNAPSHOT
   end
 
+  def year_of_current_snapshot(year=DEFAULT_YEAR)
+    snapshot = current_snapshot
+    snapshot.date.year unless snapshot.date.nil?
+  end
+
   def year_of_last_snapshot(year=DEFAULT_YEAR)
     snapshot = snapshot_in(year)
     snapshot.date.year unless snapshot.date.nil?

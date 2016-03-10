@@ -1,6 +1,6 @@
 <div class="row">
   <button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :pass_fail) %> <%= indicator.slug %> value">
-    Value as of <%= indicator.year_of_last_snapshot %>:<br/>
+    Value as of <%= indicator.year_of_current_snapshot %>:<br/>
     <%= thumb_class(indicator, :pass_fail) %> <%= number_with_delimiter(number_with_precision(indicator.value, strip_insignificant_zeros: true, precisions: 1), delimiter: ',') %> <%= indicator.units %>
   </button>
 
