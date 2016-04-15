@@ -765,6 +765,7 @@ div.col-md-4.transportation-choices.featured {
   max-width: 1170px;
   height: 320px;
   background-color: #fafafa;
+  z-index: -1000;
 }
 
 .logo {
@@ -960,3 +961,5 @@ div.col-md-4.transportation-choices.featured {
   h4 {font-size: 1.9em;}
   }
 }
+
+
