@@ -137,7 +137,11 @@ class Indicator < ActiveRecord::Base
   end
 
   def update_rank_delta(year=DEFAULT_YEAR)
-    self.update_attribute(:rank_delta, ( current_rank - rank_in(year) )    || 0)
+    if current_rank
+      self.update_attribute(:rank_delta, ( current_rank - rank_in(year) )    || 0)
+    else
+      self.update_attribute(:rank_delta, 0)
+    end
   end
 
   alias_method :value, :current_value
