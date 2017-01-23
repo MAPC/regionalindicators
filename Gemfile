@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.3'
+ruby '2.2.1'
 
 gem 'rails', '3.2.13'
 
@@ -20,6 +20,7 @@ gem 'paperclip',      '~> 3.0'
 gem 'aws-sdk',        '1.33.0'
 
 gem 'devise',         '3.2.2'
+gem 'syck'
 gem 'rails_admin',    '0.4.9'
 gem 'cancan',         '1.6.10'
 
