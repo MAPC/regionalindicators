@@ -7,6 +7,7 @@ class Snapshot < ActiveRecord::Base
   belongs_to :indicator
 
   validates :value, presence: true
+  validates :indicator_id, presence: true
   validates_datetime :date
 
   default_scope { order('date DESC') }
