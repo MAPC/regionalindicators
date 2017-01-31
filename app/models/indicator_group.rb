@@ -3,6 +3,8 @@ class IndicatorGroup < ActiveRecord::Base
   has_many :indicators
   has_one :explanation, as: :explainable
 
+  default_scope { order(:id).order(:position)  }
+
   validates :title, presence: true
 
   accepts_nested_attributes_for :explanation
