@@ -7,7 +7,7 @@ class Subject < ActiveRecord::Base
 
   belongs_to :topic_area
 
-  has_many :indicators
+  has_many :indicators, order: "position ASC"
   has_one :explanation, as: :explainable
 
   # has_and_belongs_to_many :explanations

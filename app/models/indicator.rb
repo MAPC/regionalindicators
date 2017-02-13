@@ -34,7 +34,9 @@ class Indicator < ActiveRecord::Base
 
   self.primary_key = :id 
 
-  default_scope { where(visible: true).includes(:explanation).includes(:snapshots).order(:id).order(:position)  }
+  default_scope { where(visible: true).includes(:explanation).includes(:snapshots).order('position ASC')  }
+
+  # scope :with_position, -> {  }
 
   def goal
     objective.goal unless objective.nil?
