@@ -36,8 +36,6 @@ class Indicator < ActiveRecord::Base
 
   default_scope { where(visible: true).includes(:explanation).includes(:snapshots).order('position ASC')  }
 
-  # scope :with_position, -> {  }
-
   def goal
     objective.goal unless objective.nil?
   end

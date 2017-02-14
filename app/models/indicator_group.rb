@@ -1,5 +1,5 @@
 class IndicatorGroup < ActiveRecord::Base
-  attr_accessible :title, :indicator_ids, :explanation_ids, :explanation_attributes, :position
+  attr_accessible :title, :indicators, :indicator_ids, :explanation_ids, :explanation_attributes, :position
   has_many :indicators, order: "position ASC"
   has_one :explanation, as: :explainable
 
@@ -19,11 +19,6 @@ class IndicatorGroup < ActiveRecord::Base
         x.id
       end
     }
-    # if position 
-    #   self.indicators.min_by{ |i| i.position }
-    # else
-      
-    # end
   end
 
   def last
@@ -40,4 +35,20 @@ class IndicatorGroup < ActiveRecord::Base
 
   include SlugExtension
 
+  # rails_admin do
+  #   list do
+  #     field :title 
+  #     field :indicator_ids 
+  #     field :explanation_ids 
+  #     field :explanation_attributes 
+  #     field :position
+  #   end
+  # end
 end
+
+
+
+
+
+
+
