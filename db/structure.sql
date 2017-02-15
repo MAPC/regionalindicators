@@ -1531,7 +1531,8 @@ CREATE TABLE indicators (
     value_delta numeric,
     rank_delta integer,
     visible boolean DEFAULT true,
-    "position" integer DEFAULT 0
+    "position" integer DEFAULT 0,
+    change_since_units character varying(255)
 );
 
 
@@ -3292,3 +3293,5 @@ INSERT INTO schema_migrations (version) VALUES ('20150618171502');
 INSERT INTO schema_migrations (version) VALUES ('20170131162704');
 
 INSERT INTO schema_migrations (version) VALUES ('20170131163842');
+
+INSERT INTO schema_migrations (version) VALUES ('20170215155611');

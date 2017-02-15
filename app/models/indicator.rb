@@ -14,7 +14,8 @@ class Indicator < ActiveRecord::Base
                   :explanation_ids,
                   :visible,
                   :position,
-                  :explanation
+                  :explanation,
+                  :change_since_units
 
   attr_accessor :current_snapshot
 

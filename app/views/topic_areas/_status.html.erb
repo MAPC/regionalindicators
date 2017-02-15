@@ -7,7 +7,12 @@
   <button type="button" class="col-xs-12 col-sm-4 alert alert-<%= alert_class(indicator, :trend) %> <%= indicator.slug %> delta">
     Change since <%= indicator.year_of_last_snapshot %>: <br/>
     <% if indicator.snapshots.count > 1 %>
-      <%= chevron_class(indicator, :direction) %> <%= number_with_delimiter(number_with_precision(indicator.value_delta, strip_insignificant_zeros: true, precisions: 1), delimiter: ',') %> <%= indicator.units %>
+      <%= chevron_class(indicator, :direction) %> <%= number_with_delimiter(number_with_precision(indicator.value_delta, strip_insignificant_zeros: true, precisions: 1), delimiter: ',') %> 
+      <% if indicator.change_since_units %>
+        <%= indicator.change_since_units %>
+      <% else %>
+        <%= indicator.units %>
+      <% end %>
     <% else %>
       N/A
     <% end %>
