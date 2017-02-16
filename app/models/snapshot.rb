@@ -2,7 +2,8 @@ class Snapshot < ActiveRecord::Base
   attr_accessible :date,
                   :rank,
                   :value,
-                  :indicator_id
+                  :indicator_id,
+                  :year_range
   
   belongs_to :indicator
 
