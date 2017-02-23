@@ -241,14 +241,14 @@ h4.regional-prosperity{
   color: $prosperity;
 }
 
-.transportation-choices {
+.sustainable-transportation {
   background-color: $trans-choices;
   color: #fff;
   padding: 10px 15px;
   margin: 40px 0 40px;
 }
 
-h2.transportation-choices {
+h2.sustainable-transportation {
   background-color: $soft-highlight;
   color: $trans-choices;
   padding: 10px 5px;
@@ -256,12 +256,12 @@ h2.transportation-choices {
   border-bottom: 2px solid $trans-choices;
   }
 
-h3.transportation-choices {
+h3.sustainable-transportation {
   background-color: $soft-highlight;
   color: $trans-choices;
 }
 
-h4.transportation-choices {
+h4.sustainable-transportation {
   background-color: $soft-highlight;
   color: $trans-choices;
 }
@@ -382,7 +382,7 @@ h4.state-of-equity {
         background: url('icon_sets/regional-prosperity-sm.png') no-repeat;
         background-size: 100% 100%;
       }
-      &.transportation-choices {
+      &.sustainable-transportation {
         background: url('icon_sets/sustainable-transportation-sm.png') no-repeat; 
         background-size: 100% 100%;
       }
@@ -427,7 +427,7 @@ h4.state-of-equity {
     &.sustainable-growth {     background-color: $sustainable-featured;    }
     &.community-vitality {     background-color: $vitality-featured;       }
     &.regional-prosperity{     background-color: $prosperity-featured;     }
-    &.transportation-choices { background-color: $trans-choices-featured;  }
+    &.sustainable-transportation { background-color: $trans-choices-featured;  }
     &.healthy-environment {    background-color: $healthy-featured;        }
     &.state-of-equity {        background-color: $equity-featured;         }
   }
@@ -673,7 +673,7 @@ div.col-md-4.state-of-equity.featured {
   background-color: $equity-featured;
 }
 
-div.col-md-4.transportation-choices.featured {
+div.col-md-4.sustainable-transportation.featured {
   background-color: $trans-choices-featured;
 }
 
