@@ -2,6 +2,7 @@ class Visualization < ActiveRecord::Base
   attr_accessible :title, :d3, :data, :delete_file,
                   :d3_file_name,
                   :data_file_name,
+                  :carto_embed_url,
                   :explainable_type,
                   :explainable_id,
                   :explanation_id
@@ -44,6 +45,7 @@ class Visualization < ActiveRecord::Base
       field :id
       field :title
       field :d3
+      field :carto_embed_url
       field :data
       field :updated_at do
         pretty_value do

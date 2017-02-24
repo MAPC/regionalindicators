@@ -3,10 +3,18 @@
 </h4>
 <div class="visualization" id="<%= visualization.explainable_dom_id %>">
 </div>
-<%= javascript_tag do %>
-  window.explainable = "#<%= visualization.explainable_dom_id %>"
-  window.dataUrl = "<%= visualization.data.url %>"
-<% end %>
-<%= javascript_include_tag( visualization.d3.url ) %>
+<%- if visualization.d3_file_name %>
+  <%= javascript_tag do %>
+    window.explainable = "#<%= visualization.explainable_dom_id %>"
+    window.dataUrl = "<%= visualization.data.url %>"
+  <% end %>
+  <%= javascript_include_tag( visualization.d3.url ) %>
+<%- end %>
 
-<%= link_to 'Download the data behind this visualization', visualization.data.url %>
+<%- if visualization.carto_embed_url %>
+  <iframe width="100%" height="520" frameborder="0" src="<%= visualization.carto_embed_url %>" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+<%- end %>
+
+<%- if visualization.data_file_name %>
+  <%= link_to 'Download the data behind this visualization', visualization.data.url %>
+<% end %>
