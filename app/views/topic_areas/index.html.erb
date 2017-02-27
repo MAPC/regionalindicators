@@ -7,21 +7,6 @@
       <% else %>
         <%= render partial: 'featured', locals: { featured: @topic_areas[:not_featured].shift } %>
       <% end %>
-
-      <div class="col-md-4 state-of-equity featured">
-        <h1>State of Equity</h1>
-        
-        <h3>Tracking progress towards an equitable region</h3>
-        
-        <p>
-          <%= link_to 'Go to site >',
-                       'http://equity.regionalindicators.org',
-                       class: "btn btn-primary btn-lg btn-featured",
-                       role: "button" %>
-        </p>
-        <div class="icons state-of-equity"></div>
-      </div>
-
     </div>
   </div>
 <% end %>
