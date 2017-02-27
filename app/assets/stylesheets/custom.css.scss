@@ -291,14 +291,14 @@ h4.healthy-environment {
   color: $healthy;
 }
 
-.state-of-equity {
+.state-of-equity-in-metro-boston {
   background-color: $equity;
   color: #fff;
   padding: 10px 15px;
   margin: 40px 0 40px;
   }
 
-h2.state-of-equity {
+h2.state-of-equity-in-metro-boston {
   background-color: $soft-highlight;
   color: $equity;
   padding: 10px 5px;
@@ -306,12 +306,12 @@ h2.state-of-equity {
   border-bottom: 2px solid $equity;
   }
 
-h3.state-of-equity {
+h3.state-of-equity-in-metro-boston {
   background-color: $soft-highlight;
   color: $equity;
 }
 
-h4.state-of-equity {
+h4.state-of-equity-in-metro-boston {
   background-color: $soft-highlight;
   color: $equity;
 }
@@ -390,8 +390,8 @@ h4.state-of-equity {
         background: url(http://www.mapc.org/sites/default/files/mapc_logo.png) no-repeat; 
         background-size: 100% 100%;
       }
-      &.state-of-equity {
-        background: url('icon_sets/state-of-equity-sm.png') no-repeat;
+      &.state-of-equity-in-metro-boston {
+        background: url('icon_sets/state-of-equity-in-metro-boston-sm.png') no-repeat;
         background-size: 100% 100%;
       }
     }
@@ -429,7 +429,7 @@ h4.state-of-equity {
     &.regional-prosperity{     background-color: $prosperity-featured;     }
     &.sustainable-transportation { background-color: $trans-choices-featured;  }
     &.healthy-environment {    background-color: $healthy-featured;        }
-    &.state-of-equity {        background-color: $equity-featured;         }
+    &.state-of-equity-in-metro-boston {        background-color: $equity-featured;         }
   }
 }
 
@@ -669,7 +669,7 @@ div.col-md-4.regional-prosperity.featured {
   background-color: $prosperity-featured;
 }
 
-div.col-md-4.state-of-equity.featured {
+div.col-md-4.state-of-equity-in-metro-boston.featured {
   background-color: $equity-featured;
 }
 
