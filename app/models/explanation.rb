@@ -15,8 +15,6 @@ class Explanation < ActiveRecord::Base
 
   accepts_nested_attributes_for :visualizations, reject_if: lambda { |viz| viz[:title].blank? && viz[:d3_file_name].blank? }
 
-  validates :narrative, length: { maximum: 6000 }
-
   default_scope { includes(:visualizations).includes(:sources) }
 
   def has_sources?
